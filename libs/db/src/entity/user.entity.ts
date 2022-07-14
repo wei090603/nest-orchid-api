@@ -120,6 +120,7 @@ export class User extends Base {
     length: 200,
     name: 'avatar',
     comment: '头像地址',
+    default: 'default_avatar',
   })
   public avatar: string;
 

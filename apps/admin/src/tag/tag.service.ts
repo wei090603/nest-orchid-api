@@ -18,7 +18,7 @@ export class TagService {
     limit = 10,
     ...params
   }: FindTagDto): Promise<PageResult<Tag>> {
-    const { name } = params;
+    const { name = '' } = params;
     const [list, total] = await this.tagRepository.findAndCount({
       skip: limit * (page - 1),
       take: limit,

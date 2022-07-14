@@ -1,6 +1,7 @@
 import { Article } from '@libs/db/entity/article.entity';
 import { Category } from '@libs/db/entity/category.entity';
 import { Tag } from '@libs/db/entity/tag.entity';
+import { User } from '@libs/db/entity/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PageResult } from 'apps/shared/dto/page.dto';
@@ -15,12 +16,18 @@ export class ArticleService {
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
     @InjectRepository(Tag) private readonly tagRepository: Repository<Tag>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
   // 创建新文章
   async create(params: CreateArticleDto) {
-    const { title, content, image, tag, categoryId } = params;
-    const category = await this.categoryRepository.findOneBy({ categoryId });
+    const { title, content, image, tag, categoryId, status } = params;
+    const category = await this.categoryRepository.findOne({
+      where: { id: categoryId },
+    });
+
+    const randId = Math.floor(Math.random() * 10) + 1;
+    const author = await this.userRepository.findOneBy({ id: randId });
     // save 存在即更新不存在则插入
     const tagData = await this.tagRepository.save(tag);
     await this.articleRepository.save({
@@ -28,7 +35,8 @@ export class ArticleService {
       content,
       image,
       category,
-      author: user,
+      author,
+      status,
       tag: tagData,
     });
   }
@@ -58,8 +66,8 @@ export class ArticleService {
       .leftJoinAndSelect('article.category', 'category')
       .select('article')
       .addSelect('author.id')
-      .addSelect('author.nickName') // 和这里
-      .addSelect('author.avatar') // 和这里
+      .addSelect('author.nickName')
+      .addSelect('author.avatar')
       .addSelect('tag.id')
       .addSelect('tag.name')
       .addSelect('category.id')
@@ -96,12 +104,6 @@ export class ArticleService {
       .addSelect('category.title')
       .addSelect('tag.id')
       .addSelect('tag.name')
-      .loadRelationCountAndMap(
-        'article.likeCount',
-        'article.like',
-        'like',
-        (qb) => qb.andWhere('like.user = :user', { user: user.id }),
-      )
       .where('article.id = :id', { id })
       .getOne();
   }

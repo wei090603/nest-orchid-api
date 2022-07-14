@@ -36,7 +36,7 @@ export class ArticleInfo {
     example: 1,
     required: false,
   })
-  readonly categoryId: string;
+  readonly categoryId: number;
 
   @ApiProperty({
     description: '帖子权限',

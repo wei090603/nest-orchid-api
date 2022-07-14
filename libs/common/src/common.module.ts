@@ -45,6 +45,6 @@ import { diskStorage } from 'multer';
     }),
   ],
   providers: [CommonService],
-  exports: [CommonService],
+  exports: [CommonService, MulterModule],
 })
 export class CommonModule {}

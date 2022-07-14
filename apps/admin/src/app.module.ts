@@ -7,9 +7,10 @@ import { CategoryModule } from './category/category.module';
 import { TagModule } from './tag/tag.module';
 import { ArticleModule } from './article/article.module';
 import { UploadModule } from './upload/upload.module';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [CommonModule, AuthModule, CategoryModule, TagModule, ArticleModule, UploadModule],
+  imports: [CommonModule, AuthModule, CategoryModule, TagModule, ArticleModule, UploadModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })

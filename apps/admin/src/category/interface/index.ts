@@ -9,6 +9,7 @@ export class CategoryInfo {
   })
   @IsInt()
   @Min(0)
+  @IsNotEmpty({ message: '父级ID不能为空' })
   readonly parentId: number;
 
   @ApiProperty({
@@ -17,6 +18,7 @@ export class CategoryInfo {
   })
   @IsInt()
   @Min(0)
+  @IsNotEmpty({ message: '级数不能为空' })
   readonly grade: number;
 
   @ApiProperty({

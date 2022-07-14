@@ -9,7 +9,7 @@ import {
 import { Base } from './base.entity';
 // import { LoginLogger } from './loginLogger.entity';
 // import { Roles } from './roles.entity';
-// import { hashSync } from 'bcryptjs';
+import { hashSync } from 'bcryptjs';
 
 @Entity('manager')
 export class Manager extends Base {

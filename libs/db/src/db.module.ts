@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DbService } from './db.service';
 import { Article } from './entity/article.entity';
 import { Category } from './entity/category.entity';
+import { Manager } from './entity/manager.entity';
 import { Tag } from './entity/tag.entity';
 import { User } from './entity/user.entity';
 
