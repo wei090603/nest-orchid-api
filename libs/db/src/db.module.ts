@@ -5,10 +5,11 @@ import { DbService } from './db.service';
 import { Article } from './entity/article.entity';
 import { Category } from './entity/category.entity';
 import { Manager } from './entity/manager.entity';
+import { Navgation } from './entity/navgation.entity';
 import { Tag } from './entity/tag.entity';
 import { User } from './entity/user.entity';
 
-const table = [Category, Tag, Article, User];
+const table = [Category, Tag, Article, User, Manager, Navgation];
 
 const entity = TypeOrmModule.forFeature(table);
 

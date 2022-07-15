@@ -8,9 +8,10 @@ import { TagModule } from './tag/tag.module';
 import { ArticleModule } from './article/article.module';
 import { UploadModule } from './upload/upload.module';
 import { UserModule } from './user/user.module';
+import { NavgationModule } from './navgation/navgation.module';
 
 @Module({
-  imports: [CommonModule, AuthModule, CategoryModule, TagModule, ArticleModule, UploadModule, UserModule],
+  imports: [CommonModule, AuthModule, CategoryModule, TagModule, ArticleModule, UploadModule, UserModule, NavgationModule],
   controllers: [AppController],
   providers: [AppService],
 })

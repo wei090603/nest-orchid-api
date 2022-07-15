@@ -18,10 +18,11 @@ export class UserService {
     ...params
   }: FindUserDto): Promise<PageResult<User>> {
     const { account } = params;
+    // account: Like(`%${account}%`)
     const [list, total] = await this.userRepository.findAndCount({
       skip: limit * (page - 1),
       take: limit,
-      where: { account: Like(`%${account}%`) },
+      where: {},
       order: { id: 'DESC' },
     });
     return { list, total };
