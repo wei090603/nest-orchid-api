@@ -6,6 +6,9 @@ import * as path from 'path';
 import { DbModule } from '@libs/db';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { IpModule } from '@libs/ip';
 
 @Global()
 @Module({
@@ -18,6 +21,12 @@ import { diskStorage } from 'multer';
       envFilePath: [], // 配置文件路径
     }),
     DbModule,
+    PassportModule.register({ defaultStrategy: 'JWT' }),
+    JwtModule.registerAsync({
+      useFactory: async (configService: ConfigService) =>
+        configService.get('jwt'),
+      inject: [ConfigService],
+    }),
     MulterModule.registerAsync({
       useFactory: async (configService: ConfigService) => ({
         storage: diskStorage({
@@ -43,8 +52,9 @@ import { diskStorage } from 'multer';
       }),
       inject: [ConfigService],
     }),
+    IpModule,
   ],
   providers: [CommonService],
-  exports: [CommonService, MulterModule],
+  exports: [CommonService, MulterModule, JwtModule, IpModule],
 })
 export class CommonModule {}
