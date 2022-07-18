@@ -1,3 +1,4 @@
+import { Transform, TransformFnParams } from 'class-transformer';
 import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
@@ -13,6 +14,7 @@ export abstract class Base {
   })
   id: number;
 
+  @Transform((row: TransformFnParams) => +new Date(row.value))
   @CreateDateColumn({
     type: 'timestamp',
     name: 'created_at',
@@ -20,6 +22,7 @@ export abstract class Base {
   })
   public createdAt: Date;
 
+  @Transform((row: TransformFnParams) => +new Date(row.value))
   @UpdateDateColumn({
     type: 'timestamp',
     name: 'updated_at',
@@ -27,11 +30,12 @@ export abstract class Base {
   })
   public updatedAt: Date;
 
+  @Transform((row: TransformFnParams) => +new Date(row.value))
   @DeleteDateColumn({
     type: 'timestamp',
     name: 'delete_at',
-    comment: '删除日期',
     select: false,
+    comment: '软删除时间',
   })
   public deleteAt: Date;
 }

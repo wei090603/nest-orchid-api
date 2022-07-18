@@ -9,10 +9,29 @@ import { ArticleModule } from './article/article.module';
 import { UploadModule } from './upload/upload.module';
 import { UserModule } from './user/user.module';
 import { NavgationModule } from './navgation/navgation.module';
+import { LoginLoggerModule } from './login-logger/login-logger.module';
+import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
-  imports: [CommonModule, AuthModule, CategoryModule, TagModule, ArticleModule, UploadModule, UserModule, NavgationModule],
+  imports: [
+    CommonModule,
+    AuthModule,
+    CategoryModule,
+    TagModule,
+    ArticleModule,
+    UploadModule,
+    UserModule,
+    NavgationModule,
+    LoginLoggerModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}

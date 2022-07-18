@@ -18,6 +18,8 @@ import {
 import { NavgationService } from './navgation.service';
 import { CreateMenuDto, FindMenuDto, NavgationInfo } from './interface';
 
+@ApiTags('导航管理')
+@ApiBearerAuth()
 @Controller('navgation')
 export class NavgationController {
   constructor(private readonly navgationService: NavgationService) {}

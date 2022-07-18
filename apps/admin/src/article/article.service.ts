@@ -82,15 +82,6 @@ export class ArticleService {
 
   // 查询文章详情
   async findOne(id: number) {
-    this.articleRepository
-      .createQueryBuilder()
-      .update(Article)
-      .set({
-        reading: () => 'reading + 1',
-      })
-      .where('id = :id', { id })
-      .execute();
-
     return await this.articleRepository
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.author', 'author')

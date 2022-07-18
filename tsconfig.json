@@ -29,6 +29,12 @@
       ],
       "@libs/db/*": [
         "libs/db/src/*"
+      ],
+      "@libs/ip": [
+        "libs/ip/src"
+      ],
+      "@libs/ip/*": [
+        "libs/ip/src/*"
       ]
     }
   }

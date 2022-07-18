@@ -7,7 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Base } from './base.entity';
-// import { LoginLogger } from './loginLogger.entity';
+import { LoginLogger } from './loginLogger.entity';
 // import { Roles } from './roles.entity';
 import { hashSync } from 'bcryptjs';
 
@@ -79,6 +79,6 @@ export class Manager extends Base {
   // @ManyToMany(() => Roles, (roles) => roles.manager)
   // public roles: Roles[];
 
-  // @OneToMany(() => LoginLogger, (loginLogger) => loginLogger.manager) // 将另一面指定为第二个参数
-  // public loginLogger: LoginLogger;
+  @OneToMany(() => LoginLogger, (loginLogger) => loginLogger.manager) // 将另一面指定为第二个参数
+  public loginLogger: LoginLogger;
 }

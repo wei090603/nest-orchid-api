@@ -44,6 +44,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/db/tsconfig.lib.json"
       }
+    },
+    "ip": {
+      "type": "library",
+      "root": "libs/ip",
+      "entryFile": "index",
+      "sourceRoot": "libs/ip/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/ip/tsconfig.lib.json"
+      }
     }
   }
 }
