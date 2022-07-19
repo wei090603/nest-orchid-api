@@ -22,14 +22,14 @@ export class ArticleService {
   // 创建新文章
   async create(params: CreateArticleDto) {
     const { title, content, image, tag, categoryId, status } = params;
-    const category = await this.categoryRepository.findOne({
-      where: { id: categoryId },
+    const category = await this.categoryRepository.findOneBy({
+      id: categoryId,
     });
 
     const randId = Math.floor(Math.random() * 10) + 1;
     const author = await this.userRepository.findOneBy({ id: randId });
     // save 存在即更新不存在则插入
-    const tagData = await this.tagRepository.save(tag);
+    const tagData = await this.tagRepository.find({ where: { id: In(tag) } });
     await this.articleRepository.save({
       title,
       content,

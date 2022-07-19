@@ -28,7 +28,7 @@ export class ArticleInfo {
     description: '帖子图片',
     required: false,
   })
-  @IsArray({ message: '帖子内容不是有效的数据' })
+  @IsArray({ message: '帖子图片不是有效的数据' })
   readonly image: string[];
 
   @ApiProperty({

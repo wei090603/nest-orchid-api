@@ -22,7 +22,7 @@ export class Article extends Base {
     name: 'content',
     comment: '文章内容富文本',
   })
-  public text: string;
+  public content: string;
 
   @Column({
     type: 'varchar',

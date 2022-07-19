@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2022-07-18 17:02:12
+Date: 2022-07-19 18:09:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,11 +41,12 @@ CREATE TABLE `article` (
   KEY `FK_16d4ce4c84bd9b8562c6f396262` (`author_id`),
   CONSTRAINT `FK_16d4ce4c84bd9b8562c6f396262` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_cdd234ef147c8552a8abd42bd29` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of article
 -- ----------------------------
+INSERT INTO `article` VALUES ('1', '2022-07-19 17:58:38.782655', '2022-07-19 17:58:38.782655', null, '<p>测试发测试</p>', '111', '1658382145923.jpeg', '0', '1', '0', null, '0', '0', '1', '0', '10');
 
 -- ----------------------------
 -- Table structure for category
@@ -112,7 +113,7 @@ CREATE TABLE `manager` (
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新日期',
   `delete_at` timestamp(6) NULL DEFAULT NULL COMMENT '软删除时间',
   `account` varchar(32) NOT NULL COMMENT '用户登录账号',
-  `password` varchar(200) NOT NULL DEFAULT '$2a$10$rtK22lj/oSkYUWkTpfrrjeHc2QHq91B5Rotgq7jiGDsltj9YAiTFK' COMMENT '用户登录密码',
+  `password` varchar(200) NOT NULL DEFAULT '$2a$10$WV.bPh5ebOgAUEPIXbdnsOfuzb45YaQL1UBnQ8HucC78oU80N3.IG' COMMENT '用户登录密码',
   `name` varchar(32) NOT NULL COMMENT '用户显示的名称',
   `phone` varchar(11) DEFAULT NULL COMMENT '用户手机号码',
   `email` varchar(200) DEFAULT NULL COMMENT '邮箱地址',
@@ -178,13 +179,16 @@ CREATE TABLE `tag` (
   `name` varchar(30) NOT NULL COMMENT '标签名称',
   PRIMARY KEY (`id`),
   UNIQUE KEY `IDX_6a9775008add570dc3e5a0bab7` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tag
 -- ----------------------------
 INSERT INTO `tag` VALUES ('1', '2022-07-13 15:48:17.226957', '2022-07-13 15:48:17.226957', null, '兰花开了	');
 INSERT INTO `tag` VALUES ('2', '2022-07-13 16:18:53.725726', '2022-07-13 16:18:53.725726', null, '兰花交流	');
+INSERT INTO `tag` VALUES ('3', '2022-07-19 10:03:07.400334', '2022-07-19 10:03:07.400334', null, '我们的兰花');
+INSERT INTO `tag` VALUES ('4', '2022-07-19 10:11:16.857310', '2022-07-19 10:11:16.857310', null, '兰花植料');
+INSERT INTO `tag` VALUES ('5', '2022-07-19 13:43:20.392558', '2022-07-19 13:43:20.392558', null, '兰花植料	');
 
 -- ----------------------------
 -- Table structure for tags_articles
@@ -203,6 +207,8 @@ CREATE TABLE `tags_articles` (
 -- ----------------------------
 -- Records of tags_articles
 -- ----------------------------
+INSERT INTO `tags_articles` VALUES ('1', '1');
+INSERT INTO `tags_articles` VALUES ('2', '1');
 
 -- ----------------------------
 -- Table structure for user
