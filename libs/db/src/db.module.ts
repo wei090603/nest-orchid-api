@@ -7,10 +7,24 @@ import { Category } from './entity/category.entity';
 import { LoginLogger } from './entity/loginLogger.entity';
 import { Manager } from './entity/manager.entity';
 import { Navgation } from './entity/navgation.entity';
+import { Notice } from './entity/notice.entity';
+import { Resources } from './entity/resources.entity';
+import { Roles } from './entity/roles.entity';
 import { Tag } from './entity/tag.entity';
 import { User } from './entity/user.entity';
 
-const table = [Category, Tag, Article, User, Manager, Navgation, LoginLogger];
+const table = [
+  Category,
+  Tag,
+  Article,
+  User,
+  Manager,
+  Roles,
+  Resources,
+  Navgation,
+  LoginLogger,
+  Notice,
+];
 
 const entity = TypeOrmModule.forFeature(table);
 

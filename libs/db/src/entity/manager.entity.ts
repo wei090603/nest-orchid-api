@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Base } from './base.entity';
 import { LoginLogger } from './loginLogger.entity';
-// import { Roles } from './roles.entity';
+import { Roles } from './roles.entity';
 import { hashSync } from 'bcryptjs';
 
 @Entity('manager')
@@ -76,8 +76,8 @@ export class Manager extends Base {
   })
   public status: boolean;
 
-  // @ManyToMany(() => Roles, (roles) => roles.manager)
-  // public roles: Roles[];
+  @ManyToMany(() => Roles, (roles) => roles.manager)
+  public roles: Roles[];
 
   @OneToMany(() => LoginLogger, (loginLogger) => loginLogger.manager) // 将另一面指定为第二个参数
   public loginLogger: LoginLogger;

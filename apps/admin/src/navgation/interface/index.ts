@@ -26,9 +26,9 @@ export class NavgationInfo {
   readonly sort: number;
 }
 
-export class CreateMenuDto extends NavgationInfo {}
+export class CreateNavgationDto extends NavgationInfo {}
 
-export class FindMenuDto {
+export class FindNavgationDto {
   @ApiProperty({
     description: '菜单名',
     required: false,

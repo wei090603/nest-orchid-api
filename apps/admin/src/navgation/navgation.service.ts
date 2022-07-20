@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Navgation } from '@libs/db/entity/navgation.entity';
 import { Repository } from 'typeorm';
-import { FindMenuDto, NavgationInfo } from './interface';
+import { FindNavgationDto, NavgationInfo } from './interface';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class NavgationService {
     private readonly navgationRepository: Repository<Navgation>,
   ) {}
 
-  async findAll(query: FindMenuDto): Promise<Navgation[]> {
+  async findAll(query: FindNavgationDto): Promise<Navgation[]> {
     return await this.navgationRepository.find({
       where: query,
       order: { sort: 'ASC', id: 'DESC' },

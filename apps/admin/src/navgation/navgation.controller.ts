@@ -16,7 +16,11 @@ import {
   ApiOperation,
 } from '@nestjs/swagger';
 import { NavgationService } from './navgation.service';
-import { CreateMenuDto, FindMenuDto, NavgationInfo } from './interface';
+import {
+  CreateNavgationDto,
+  FindNavgationDto,
+  NavgationInfo,
+} from './interface';
 
 @ApiTags('导航管理')
 @ApiBearerAuth()
@@ -27,19 +31,19 @@ export class NavgationController {
   @Get()
   @ApiOkResponse({ type: [NavgationInfo] })
   @ApiOperation({ summary: '获取菜单列表-无分页' })
-  async findAll(@Query() query: FindMenuDto) {
+  async findAll(@Query() query: FindNavgationDto) {
     return await this.navgationService.findAll(query);
   }
 
   @Post()
   @ApiOperation({ summary: '添加菜单' })
-  async create(@Body() data: CreateMenuDto) {
+  async create(@Body() data: CreateNavgationDto) {
     return this.navgationService.create(data);
   }
 
   @Patch(':id')
   @ApiOperation({ summary: '修改菜单信息' })
-  async update(@Param('id') id: string, @Body() data: CreateMenuDto) {
+  async update(@Param('id') id: string, @Body() data: CreateNavgationDto) {
     return await this.navgationService.update(+id, data);
   }
 
