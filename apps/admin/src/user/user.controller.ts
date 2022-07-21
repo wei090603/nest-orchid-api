@@ -16,7 +16,7 @@ export class UserController {
 
   @Get()
   @ApiOkResponse({ type: [PageUserList] })
-  @ApiOperation({ summary: '获取标签列表' })
+  @ApiOperation({ summary: '获取用户列表' })
   async find(@Query() query: FindUserDto) {
     return await this.userService.find(query);
   }

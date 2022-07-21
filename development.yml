@@ -35,12 +35,6 @@ email:
 file:
   destination: uploads
 
-# OSS
-REGION: oss-cn-shenzhen
-ACCESSKEY_ID: LTAI5tRgUsdTqCD26PQDqZrh
-ACCESS_KEY_SECRET: DYLymQNXbi7oWFVe23OKgVPGUdSpZg
-BUCKET: tobmovie
-
 # 腾讯地图的key
 TENCENT_MAP_KEY: NT4BZ-XI7K3-YY23I-YKHUR-H2UTV-JMFUU
 

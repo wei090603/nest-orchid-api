@@ -6,14 +6,14 @@ export class CommonRoles {
   @ApiProperty({
     description: '角色名',
   })
-  @IsString({ message: '不是有效的数据' })
+  @IsString({ message: '角色名不是有效的数据' })
   @MinLength(2, { message: '角色名至少需要2位' })
   readonly roleName: string;
 
   @ApiProperty({
     description: '角色标识',
   })
-  @IsString({ message: '不是有效的数据' })
+  @IsString({ message: '角色标识不是有效的数据' })
   @MinLength(2, { message: '角色标识至少需要2位' })
   readonly mark: string;
 
@@ -22,7 +22,7 @@ export class CommonRoles {
     required: false,
     example: '',
   })
-  @IsString({ message: '不是有效的数据' })
+  @IsString({ message: '描述不是有效的数据' })
   readonly remark: string;
 }
 

@@ -2,6 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DbService } from './db.service';
+import { Advertise } from './entity/advertise.entity';
 import { Article } from './entity/article.entity';
 import { Category } from './entity/category.entity';
 import { LoginLogger } from './entity/loginLogger.entity';
@@ -24,6 +25,7 @@ const table = [
   Navgation,
   LoginLogger,
   Notice,
+  Advertise,
 ];
 
 const entity = TypeOrmModule.forFeature(table);
