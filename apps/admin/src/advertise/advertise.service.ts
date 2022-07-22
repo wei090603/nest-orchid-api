@@ -13,35 +13,39 @@ export class AdvertiseService {
   ) {}
 
   async findAll({ page = 1, limit = 10, ...params }: FindAdvertiseDto) {
-    const { title = '', type = '' } = params;
+    const { title = '', position = '' } = params;
     const [list, total] = await this.advertiseRepository.findAndCount({
       skip: limit * (page - 1),
       take: limit,
-      where: { title: Like(`%${title}%`), type: Like(`%${type}%`) },
+      where: { title: Like(`%${title}%`), position: Like(`%${position}%`) },
       order: { id: 'DESC' },
     });
     return { list, total };
   }
 
   async create(data: AdvertiseInfo) {
-    const { title, status, picture, type, describe } = data;
+    const { title, status, picture, position, describe, link, sort } = data;
     await this.advertiseRepository.insert({
       title,
       status,
       picture,
-      type,
+      position,
       describe,
+      link,
+      sort,
     });
   }
 
   async update(id: number, data: AdvertiseInfo) {
-    const { title, status, picture, type, describe } = data;
+    const { title, status, picture, position, describe, link, sort } = data;
     await this.advertiseRepository.update(id, {
       title,
       status,
       picture,
-      type,
+      position,
       describe,
+      link,
+      sort,
     });
   }
 

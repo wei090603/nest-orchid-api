@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsBoolean,
+  IsNumber,
+} from 'class-validator';
 import { PageOptionsDto } from 'apps/shared/dto/page.dto';
 
 export enum AdvertiseType {
@@ -27,7 +33,7 @@ export class AdvertiseInfo {
   })
   @IsString({ message: '不是有效的数据' })
   @IsNotEmpty({ message: '广告位置不能为空' })
-  readonly type: AdvertiseType;
+  readonly position: AdvertiseType;
 
   @ApiProperty({
     description: '描述',
@@ -36,12 +42,25 @@ export class AdvertiseInfo {
   readonly describe: string;
 
   @ApiProperty({
+    description: '链接',
+  })
+  @IsString({ message: '不是有效的数据' })
+  readonly link: string;
+
+  @ApiProperty({
     description: '状态 false-隐藏 true-显示',
     example: true,
   })
   @IsOptional()
   @IsBoolean({ message: '不是有效的数据' })
   readonly status: boolean;
+
+  @ApiProperty({
+    description: '排序',
+    example: true,
+  })
+  @IsOptional()
+  readonly sort: number;
 }
 
 export class FindAdvertiseDto extends PageOptionsDto {
@@ -58,7 +77,7 @@ export class FindAdvertiseDto extends PageOptionsDto {
     example: '',
   })
   @IsOptional()
-  readonly type: AdvertiseType;
+  readonly position: AdvertiseType;
 }
 
 export class PageAdvertiseList {

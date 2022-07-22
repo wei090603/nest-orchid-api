@@ -34,9 +34,9 @@ export class ManagerService {
       skip: limit * (page - 1),
       take: limit,
       where: {
-        account: Like(`%${account}%`),
-        name: Like(`%${name}%`),
-        phone: Like(`%${phone}%`),
+        // account: Like(`%${account}%`),
+        // name: Like(`%${name}%`),
+        // phone: Like(`%${phone}%`),
       },
       order: { id: 'DESC' },
     });

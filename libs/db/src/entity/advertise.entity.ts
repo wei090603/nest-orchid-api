@@ -21,11 +21,11 @@ export class Advertise extends Base {
 
   @Column({
     type: 'varchar',
-    name: 'type',
+    name: 'position',
     length: 30,
     comment: '使用位置 home-首页',
   })
-  public type: string;
+  public position: string;
 
   @Column({
     type: 'varchar',
@@ -43,4 +43,21 @@ export class Advertise extends Base {
     default: true,
   })
   public status: boolean;
+
+  @Column({
+    type: 'int',
+    nullable: true,
+    name: 'sort',
+    comment: '排序',
+    default: 1,
+  })
+  public sort: number;
+
+  @Column({
+    type: 'varchar',
+    name: 'link',
+    length: 255,
+    comment: '链接',
+  })
+  public link: string;
 }
