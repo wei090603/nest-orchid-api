@@ -26,17 +26,17 @@ export class ManagerService {
       page = 1,
       limit = 10,
       account = '',
-      name = '',
-      phone = '',
+      name = null,
+      phone = null,
     } = params;
     const [list, total] = await this.managerRepository.findAndCount({
       relations: ['roles'],
       skip: limit * (page - 1),
       take: limit,
       where: {
-        // account: Like(`%${account}%`),
-        // name: Like(`%${name}%`),
-        // phone: Like(`%${phone}%`),
+        account: Like(`%${account}%`),
+        name: name ? Like(`%${name}%`) : name,
+        phone: phone ?  Like(`%${phone}%`) : phone
       },
       order: { id: 'DESC' },
     });
