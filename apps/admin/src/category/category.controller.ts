@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  Put,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -36,7 +37,7 @@ export class CategoryController {
     return this.categoryService.create(data);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiOperation({ summary: '修改分类信息' })
   async update(@Param('id') id: string, @Body() data: CategoryInfo) {
     return await this.categoryService.update(+id, data);

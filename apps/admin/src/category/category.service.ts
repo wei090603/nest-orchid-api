@@ -46,6 +46,8 @@ export class CategoryService {
 
   async update(id: number, data: CategoryInfo) {
     const { title } = data;
+    const existing = await this.categoryRepository.findOneBy({ title });
+    if (existing) throw new ApiException(10400, '分类名已存在');
     await this.categoryRepository.update(id, { title });
   }
 

@@ -16,14 +16,14 @@ export class AdvertiseInfo {
   @ApiProperty({
     description: '标题',
   })
-  @IsString({ message: '不是有效的数据' })
+  @IsString({ message: '广告标题不是有效的数据' })
   @IsNotEmpty({ message: '广告标题不能为空' })
   readonly title: string;
 
   @ApiProperty({
     description: '类型',
   })
-  @IsString({ message: '不是有效的数据' })
+  @IsString({ message: '广告图片不是有效的数据' })
   @IsNotEmpty({ message: '广告图片不能为空' })
   readonly picture: string;
 
@@ -31,20 +31,20 @@ export class AdvertiseInfo {
     description: '广告位置',
     example: AdvertiseType.Home,
   })
-  @IsString({ message: '不是有效的数据' })
+  @IsString({ message: '广告位置不是有效的数据' })
   @IsNotEmpty({ message: '广告位置不能为空' })
   readonly position: AdvertiseType;
 
   @ApiProperty({
     description: '描述',
   })
-  @IsString({ message: '不是有效的数据' })
+  @IsString({ message: '描述不是有效的数据' })
   readonly describe: string;
 
   @ApiProperty({
     description: '链接',
   })
-  @IsString({ message: '不是有效的数据' })
+  @IsString({ message: '链接不是有效的数据' })
   readonly link: string;
 
   @ApiProperty({
@@ -52,14 +52,16 @@ export class AdvertiseInfo {
     example: true,
   })
   @IsOptional()
-  @IsBoolean({ message: '不是有效的数据' })
+  @IsBoolean({ message: '状态不是有效的数据' })
   readonly status: boolean;
 
   @ApiProperty({
     description: '排序',
-    example: true,
+    required: false,
+    example: 255,
   })
   @IsOptional()
+  @IsNumber({ maxDecimalPlaces: 255 }, { message: '排序不是有效的数据' })
   readonly sort: number;
 }
 

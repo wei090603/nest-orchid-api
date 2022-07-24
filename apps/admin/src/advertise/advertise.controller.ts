@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import {
@@ -37,7 +38,7 @@ export class AdvertiseController {
     return this.advertiseService.create(data);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiOperation({ summary: '修改广告信息' })
   async update(@Param('id') id: string, @Body() data: AdvertiseInfo) {
     return await this.advertiseService.update(+id, data);

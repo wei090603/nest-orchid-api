@@ -1,6 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsNotEmpty, IsOptional, IsBoolean } from "class-validator";
-
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
 
 export enum AdvertiseType {
   Home = 'home', // 首页
@@ -20,24 +19,21 @@ export class AdvertiseInfo {
   @IsString({ message: '不是有效的数据' })
   @IsNotEmpty({ message: '广告图片不能为空' })
   readonly picture: string;
-
 }
-
 
 export class FindAdvertiseDto {
   @ApiProperty({
     description: '广告位置 home-首页',
     required: false,
-    example: 'home'
+    example: 'home',
   })
-  readonly type: AdvertiseType;
+  readonly position: AdvertiseType;
 }
-
 
 export class AdvertiseList {
   @ApiProperty({
     description: '总数',
-    type: [AdvertiseInfo]
+    type: [AdvertiseInfo],
   })
-  data: AdvertiseInfo[]
+  data: AdvertiseInfo[];
 }

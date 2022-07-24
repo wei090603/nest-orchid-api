@@ -11,10 +11,11 @@ export class AdvertiseService {
     private readonly advertiseRepository: Repository<Advertise>,
   ) {}
 
-  async findAll(params : FindAdvertiseDto) : Promise<Advertise[]> {
+  async findAll(params: FindAdvertiseDto): Promise<Advertise[]> {
+    const { position } = params;
     return await this.advertiseRepository.find({
       select: ['id', 'picture', 'title'],
-      where: {...params, status: true},
+      where: { position, status: true },
       order: { id: 'DESC' },
     });
   }

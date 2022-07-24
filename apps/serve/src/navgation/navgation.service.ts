@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Navgation } from '@libs/db/entity/navgation.entity';
 import { Repository } from 'typeorm';
-import { FindNavgationDto } from './dto';
 
 @Injectable()
 export class NavgationService {
