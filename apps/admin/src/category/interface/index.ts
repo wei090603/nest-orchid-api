@@ -12,14 +12,14 @@ export class CategoryInfo {
   @IsNotEmpty({ message: '父级ID不能为空' })
   readonly parentId: number;
 
-  @ApiProperty({
-    description: '级数',
-    example: 0,
-  })
-  @IsInt()
-  @Min(0)
-  @IsNotEmpty({ message: '级数不能为空' })
-  readonly grade: number;
+  // @ApiProperty({
+  //   description: '级数',
+  //   example: 0,
+  // })
+  // @IsInt()
+  // @Min(0)
+  // @IsNotEmpty({ message: '级数不能为空' })
+  // readonly grade: number;
 
   @ApiProperty({
     description: '分类名',

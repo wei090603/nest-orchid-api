@@ -37,11 +37,11 @@ export class CategoryService {
   }
 
   async create(data: CategoryInfo) {
-    const { title, parentId, grade } = data;
+    const { title, parentId } = data;
     const existing = await this.categoryRepository.findOneBy({ title });
     if (existing) throw new ApiException(10400, '分类名已存在');
     const parent = await this.categoryRepository.findOneBy({ id: parentId });
-    await this.categoryRepository.insert({ title, parent, grade });
+    await this.categoryRepository.insert({ title, parent });
   }
 
   async update(id: number, data: CategoryInfo) {

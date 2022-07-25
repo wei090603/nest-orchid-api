@@ -13,13 +13,13 @@ export class Category extends Base {
   })
   public title: string;
 
-  @Column({
-    type: 'int',
-    name: 'grade',
-    comment: '数级',
-    default: 0,
-  })
-  public grade: number;
+  // @Column({
+  //   type: 'int',
+  //   name: 'grade',
+  //   comment: '数级',
+  //   default: 0,
+  // })
+  // public grade: number;
 
   @ManyToOne(() => Category, (category) => category.children)
   @JoinColumn({ name: 'parent_id' })
