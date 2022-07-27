@@ -16,6 +16,7 @@ import { AdvertiseModule } from './advertise/advertise.module';
 import { LoginLoggerModule } from './login-logger/login-logger.module';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
 import { APP_GUARD } from '@nestjs/core';
+import { NoticeModule } from './notice/notice.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { APP_GUARD } from '@nestjs/core';
     ResourcesModule,
     AdvertiseModule,
     LoginLoggerModule,
+    NoticeModule,
   ],
   controllers: [AppController],
   providers: [

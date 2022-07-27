@@ -22,8 +22,8 @@ export class Notice extends Base {
   @Column({
     type: 'boolean',
     name: 'status',
-    comment: '状态 (0隐藏 1显示)',
-    default: true,
+    comment: '状态 (0未发布 1已发布)',
+    default: 0,
   })
   public status: boolean;
 
