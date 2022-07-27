@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from '@libs/db/entity/category.entity';
-import { Like, Repository } from 'typeorm';
+import { Like, Repository, IsNull } from 'typeorm';
 import { CategoryInfo, FindCategoryDto } from './interface';
 import { PageResult } from 'apps/shared/dto/page.dto';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
@@ -13,17 +13,13 @@ export class CategoryService {
     private readonly categoryRepository: Repository<Category>,
   ) {}
 
-  async find({
-    page = 1,
-    limit = 10,
-    ...params
-  }: FindCategoryDto): Promise<PageResult<Category>> {
-    const { title } = params;
+  async find(params: FindCategoryDto): Promise<PageResult<Category>> {
+    const { title = '', page = 1, limit = 10 } = params;
     const [list, total] = await this.categoryRepository.findAndCount({
       relations: ['children'],
       skip: limit * (page - 1),
       take: limit,
-      where: { title: Like(`%${title ?? ''}%`), parent: null },
+      where: { title: Like(`%${title}%`), parent: IsNull() },
       order: { id: 'ASC' },
     });
     return { list, total };
