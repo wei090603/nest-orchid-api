@@ -1,10 +1,16 @@
-import { ApiHideProperty, ApiProperty, OmitType } from "@nestjs/swagger";
-import { IsString, IsNotEmpty, IsNumber, IsOptional, IsBoolean } from "class-validator";
-import { PageOptionsDto } from "apps/shared/dto/page.dto";
+import { ApiHideProperty, ApiProperty, OmitType } from '@nestjs/swagger';
+import {
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsBoolean,
+} from 'class-validator';
+import { PageOptionsDto } from 'apps/shared/dto/page.dto';
 
 enum Type {
   Notify = 1,
-  Announcement = 2
+  Announcement = 2,
 }
 
 export class NoticeInfo {
@@ -24,33 +30,24 @@ export class NoticeInfo {
 
   @ApiProperty({
     description: '类型 1-通知 2-公告',
-    example: Type.Notify
+    example: Type.Notify,
   })
-  @IsNumber({maxDecimalPlaces: 10}, { message: '不是有效的数据' })
+  @IsNumber({ maxDecimalPlaces: 10 }, { message: '不是有效的数据' })
   readonly type: number;
 
-  @ApiProperty({
-    description: '状态 false-未发布 true-已发布',
-    required: false,
-    example: true
-  })
-  @IsOptional()
-  @IsBoolean({ message: '不是有效的数据' })
-  readonly status: boolean;
+  // @ApiProperty({
+  //   description: '状态 false-未发布 true-已发布',
+  //   required: false,
+  //   example: true,
+  // })
+  // @IsOptional()
+  // @IsBoolean({ message: '不是有效的数据' })
+  // readonly status: boolean;
 }
 
-export class CreateNoticDto extends NoticeInfo {
-  @ApiProperty({
-    description: '创建人',
-    required: false,
-  })
-  @IsOptional()
-  @ApiHideProperty()
-  createBy: string;
-}
+export class CreateNoticDto extends NoticeInfo {}
 
-
-export class FindNoticeDto extends PageOptionsDto{
+export class FindNoticeDto extends PageOptionsDto {
   @ApiProperty({
     description: '标题',
     required: false,
@@ -66,8 +63,6 @@ export class FindNoticeDto extends PageOptionsDto{
   readonly createBy: string;
 }
 
-
-
 export class NoticeListDto extends NoticeInfo {
   @ApiProperty({
     description: '创建人',
@@ -80,9 +75,9 @@ export class NoticeListDto extends NoticeInfo {
 export class PageNoticeList {
   @ApiProperty({
     description: '列表',
-    type: [NoticeListDto]
+    type: [NoticeListDto],
   })
-  list: NoticeListDto[]
+  list: NoticeListDto[];
 
   @ApiProperty({
     description: '总数',

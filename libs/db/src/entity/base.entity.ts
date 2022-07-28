@@ -1,9 +1,10 @@
-import { Transform, TransformFnParams } from 'class-transformer';
+import dayjs from 'dayjs';
 import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  AfterLoad,
 } from 'typeorm';
 
 export abstract class Base {
@@ -14,15 +15,24 @@ export abstract class Base {
   })
   id: number;
 
-  @Transform((row: TransformFnParams) => +new Date(row.value))
   @CreateDateColumn({
     type: 'timestamp',
     name: 'created_at',
     comment: '创建日期',
+    // default: () => 'CURRENT_TIMESTAMP',
+    // precision: null,
+    // transformer: {
+    //   from(value) {
+    //     // return value ? value.toString().slice(0, 19) : value;
+    //     return value;
+    //   },
+    //   to: (value) => value,
+    // },
   })
+  // @AfterLoad()
+  // updateCreatedAt() {}
   public createdAt: Date;
 
-  @Transform((row: TransformFnParams) => +new Date(row.value))
   @UpdateDateColumn({
     type: 'timestamp',
     name: 'updated_at',
@@ -30,7 +40,6 @@ export abstract class Base {
   })
   public updatedAt: Date;
 
-  @Transform((row: TransformFnParams) => +new Date(row.value))
   @DeleteDateColumn({
     type: 'timestamp',
     name: 'delete_at',

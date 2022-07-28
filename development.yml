@@ -10,7 +10,7 @@ db:
     username: root
     password: weitao
     database: nest_orchid
-    logging: ['query', 'error']
+    logging: ['error']
     synchronize: true
     timezone: '+08:00'
     cache: { duration: 0 }

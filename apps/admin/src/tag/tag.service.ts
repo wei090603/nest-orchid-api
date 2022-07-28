@@ -37,6 +37,8 @@ export class TagService {
 
   async update(id: number, data: TagInfo) {
     const { name } = data;
+    const existing = await this.tagRepository.findOneBy({ name });
+    if (existing) throw new ApiException(10400, '标签名已存在');
     await this.tagRepository.update(id, { name });
   }
 

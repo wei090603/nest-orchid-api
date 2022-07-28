@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -37,7 +38,7 @@ export class TagController {
     return this.tagService.create(data);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiOperation({ summary: '修改标签信息' })
   async update(@Param('id') id: string, @Body() data: TagInfo) {
     return await this.tagService.update(+id, data);

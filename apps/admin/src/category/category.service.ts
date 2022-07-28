@@ -19,7 +19,7 @@ export class CategoryService {
       relations: ['children'],
       skip: limit * (page - 1),
       take: limit,
-      where: { title: Like(`%${title}%`), parent: IsNull() },
+      where: { title: Like(`%${title}%`), parentId: IsNull() },
       order: { id: 'ASC' },
     });
     return { list, total };
