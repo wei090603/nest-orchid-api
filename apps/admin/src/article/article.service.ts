@@ -41,6 +41,23 @@ export class ArticleService {
     });
   }
 
+  async update(id: number, params: CreateArticleDto) {
+    const { title, content, image, tag, categoryId, status } = params;
+    const category = await this.categoryRepository.findOneBy({
+      id: categoryId,
+    });
+    // save 存在即更新不存在则插入
+    const tagData = await this.tagRepository.find({ where: { id: In(tag) } });
+    await this.articleRepository.update(id, {
+      title,
+      content,
+      image,
+      category,
+      status,
+      tag: tagData,
+    });
+  }
+
   async find(
     params: FindArticleDto,
   ): Promise<{ list: Article[]; total: number }> {

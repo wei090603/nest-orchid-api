@@ -4,8 +4,8 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -29,11 +29,11 @@ export class ArticleController {
     return this.articleService.create(createArticleDto);
   }
 
-  // @Patch(':id')
-  // @ApiOperation({ summary: '修改文章信息' })
-  // async update(@Param('id') id: string, @Body() data: CategoryInfo) {
-  //   return await this.categoryService.update(+id, data);
-  // }
+  @Put(':id')
+  @ApiOperation({ summary: '修改文章信息' })
+  async update(@Param('id') id: string, @Body() data: CreateArticleDto) {
+    return await this.articleService.update(+id, data);
+  }
 
   // @Delete(':id')
   // @ApiOperation({ summary: '删除文章' })
