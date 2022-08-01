@@ -48,7 +48,8 @@ export class ArticleService {
     });
     // save 存在即更新不存在则插入
     const tagData = await this.tagRepository.find({ where: { id: In(tag) } });
-    await this.articleRepository.update(id, {
+    await this.articleRepository.save({
+      id,
       title,
       content,
       image,

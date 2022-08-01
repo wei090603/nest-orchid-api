@@ -77,9 +77,6 @@ export class RoleService {
       where: { roleName: data.roleName, id: Not(id) },
     });
     if (existing) throw new ApiException(10400, '角色名已存在');
-    const roles = new Roles();
-    roles.roleName = data.roleName;
-    roles.remark = data.remark;
     await this.rolesRepository.update(id, {
       roleName,
       remark,
