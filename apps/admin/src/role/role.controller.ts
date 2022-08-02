@@ -6,8 +6,8 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
-  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -59,7 +59,7 @@ export class RoleController {
     return await this.roleService.roleMenu(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiOperation({ summary: '修改角色信息', description: '修改角色信息' })
   async update(@Param('id') id: string, @Body() data: UpdateRoleDto) {
     return await this.roleService.update(+id, data);
