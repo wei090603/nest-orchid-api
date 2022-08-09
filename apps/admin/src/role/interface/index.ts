@@ -39,7 +39,7 @@ export class FindRolesDto extends PageOptionsDto {
 export class ResourcesDto {
   @ApiProperty({ description: '资源id', example: [1] })
   @IsArray({ message: '资源id不是有效的数据' })
-  readonly resourcesId: Number[];
+  readonly resourcesId: number[];
 }
 
 export class UpdateRoleDto extends PartialType(CommonRoles) {}

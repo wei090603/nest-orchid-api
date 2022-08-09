@@ -97,6 +97,12 @@ export class ManagerList extends CommonManager {
     example: ['超级管理员', '测试'],
   })
   readonly roles: number[];
+
+  @ApiProperty({
+    description: '帖子类型',
+    example: true,
+  })
+  readonly status: boolean;
 }
 
 export class PageManagerList {

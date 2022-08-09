@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import {
@@ -42,7 +43,7 @@ export class ManagerController {
     return this.managerService.create(data);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiOperation({ summary: '修改用户信息' })
   async updateInfo(@Param('id') id: string, @Body() data: CreateManagerDto) {
     return await this.managerService.updated(+id, data);
