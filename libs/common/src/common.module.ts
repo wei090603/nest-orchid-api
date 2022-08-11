@@ -9,6 +9,9 @@ import { diskStorage } from 'multer';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { IpModule } from '@libs/ip';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
 
 @Global()
 @Module({
@@ -52,9 +55,47 @@ import { IpModule } from '@libs/ip';
       }),
       inject: [ConfigService],
     }),
+    MailerModule.forRootAsync({
+      useFactory: async (configService: ConfigService) => {
+        const { host, user, pass, from } = configService.get('email');
+        return {
+          transport: {
+            host, //邮箱服务器地址
+            port: 465,
+            logger: false,
+            debug: false,
+            auth: {
+              user,
+              pass,
+            },
+          },
+          preview: false, //是否开启预览，开启了这个属性，在调试模式下会自动打开一个网页，预览邮件
+          defaults: {
+            from,
+          },
+          template: {
+            dir: path.join(__dirname, './template'),
+            adapter: new EjsAdapter(),
+            options: {
+              strict: true,
+            },
+          },
+        };
+      },
+      inject: [ConfigService],
+    }),
+    RedisModule.forRootAsync({
+      useFactory: async (configService: ConfigService) => ({
+        readyLog: true,
+        config: {
+          ...configService.get('redis'),
+        },
+      }),
+      inject: [ConfigService],
+    }),
     IpModule,
   ],
   providers: [CommonService],
-  exports: [CommonService, MulterModule, JwtModule, IpModule],
+  exports: [CommonService, MulterModule, MailerModule, JwtModule, IpModule],
 })
 export class CommonModule {}

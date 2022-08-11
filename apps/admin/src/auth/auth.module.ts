@@ -3,13 +3,10 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.startegy';
+import { CacheService } from 'apps/shared/redis';
 
 @Module({
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy,
-  ],
+  providers: [AuthService, LocalStrategy, JwtStrategy, CacheService],
 })
 export class AuthModule {}

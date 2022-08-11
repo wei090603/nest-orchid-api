@@ -17,6 +17,7 @@ import { LoginLoggerModule } from './login-logger/login-logger.module';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
 import { APP_GUARD } from '@nestjs/core';
 import { NoticeModule } from './notice/notice.module';
+import { RolesGuard } from 'apps/shared/guards/roles.guard';
 
 @Module({
   imports: [
@@ -41,6 +42,10 @@ import { NoticeModule } from './notice/notice.module';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })

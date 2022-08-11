@@ -7,6 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { LoginLogger } from '@libs/db/entity/loginLogger.entity';
 import { IpService } from '@libs/ip';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
+import { CacheService } from 'apps/shared/redis';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,7 @@ export class AuthService {
     private readonly loginLoggerRepository: Repository<LoginLogger>,
     private readonly jwtService: JwtService,
     private readonly iptoaddressService: IpService,
+    private readonly redisService: CacheService,
   ) {}
 
   public async login(manager: Manager, ip: string): Promise<{ token: string }> {
@@ -28,7 +30,13 @@ export class AuthService {
       manager,
     });
     const payload = { id: String(manager.id), account: manager.account };
-    return { token: this.jwtService.sign(payload) };
+    const token = this.jwtService.sign(payload);
+    await this.redisService.set(
+      `user-token-${manager.id}`,
+      token,
+      60 * 60 * 24,
+    ); // 在这里使用redis
+    return { token };
   }
 
   public async validateUser(
@@ -52,28 +60,26 @@ export class AuthService {
 
   async findMe(id: number): Promise<Manager> {
     let userInfo: Manager;
-    // userInfo = await this.cacheManager.get(id.toString());
+    const info = await this.redisService.get(`user-info-${id}`);
+    userInfo = JSON.parse(info);
     if (!userInfo) {
       userInfo = await this.authRepository
         .createQueryBuilder('auth')
-        // .leftJoinAndSelect('auth.roles', 'roles')
-        // .leftJoinAndSelect(
-        //   'roles.resources',
-        //   'resources',
-        //   'resources.type = :type',
-        //   { type: 'button' },
-        // )
-        // .select('auth')
-        // .addSelect('roles.id')
-        // .addSelect('roles.mark')
-        // .addSelect('resources.title')
-        // .addSelect('resources.path')
+        .leftJoinAndSelect('auth.roles', 'roles')
+        .leftJoinAndSelect(
+          'roles.resources',
+          'resources',
+          'resources.type = :type',
+          { type: 'button' },
+        )
+        .select('auth')
+        .addSelect('roles.id')
+        .addSelect('roles.mark')
+        .addSelect('resources.title')
+        .addSelect('resources.path')
         .where('auth.id = :id', { id })
         .getOne();
-      // findOne(id, {
-      //   relations: ['roles', 'roles.resources']
-      // });
-      // this.cacheManager.set(id.toString(), userInfo, { ttl: 7200 });
+      this.redisService.set(`user-info-${id}`, userInfo, 60 * 60 * 24);
     }
     return userInfo;
   }

@@ -21,6 +21,8 @@
     "test:e2e": "jest --config ./apps/admin/test/jest-e2e.json"
   },
   "dependencies": {
+    "@liaoliaots/nestjs-redis": "^9.0.1",
+    "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
@@ -37,7 +39,10 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "dayjs": "^1.11.3",
+    "ejs": "^3.1.8",
+    "ioredis": "^5.2.2",
     "mysql2": "^2.3.3",
+    "nodemailer": "^6.7.7",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -55,6 +60,7 @@
     "@types/jest": "28.1.4",
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^16.0.0",
+    "@types/nodemailer": "^6.4.5",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -94,7 +100,8 @@
     "moduleNameMapper": {
       "^@libs/common(|/.*)$": "<rootDir>/libs/common/src/$1",
       "^@libs/db(|/.*)$": "<rootDir>/libs/db/src/$1",
-      "^@libs/ip(|/.*)$": "<rootDir>/libs/ip/src/$1"
+      "^@libs/ip(|/.*)$": "<rootDir>/libs/ip/src/$1",
+      "^@libs/email(|/.*)$": "<rootDir>/libs/email/src/$1"
     }
   }
 }

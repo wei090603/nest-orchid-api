@@ -9,6 +9,7 @@ import { PageResult } from 'apps/shared/dto/page.dto';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { Resources } from '@libs/db/entity/resources.entity';
 import { initTree } from 'apps/shared/utils';
+import { CacheService } from 'apps/shared/redis';
 
 @Injectable()
 export class ManagerService {
@@ -19,6 +20,7 @@ export class ManagerService {
     private readonly rolesRepository: Repository<Roles>,
     @InjectRepository(Resources)
     private readonly resourcesRepository: Repository<Resources>,
+    private readonly redisService: CacheService,
   ) {}
 
   async findAll(params: FindManagerDto): Promise<PageResult<Manager>> {
@@ -86,6 +88,7 @@ export class ManagerService {
       id,
       roles: role,
     });
+    this.redisService.del(`user-info-${id}`);
   }
 
   async updateStatus(id: number) {

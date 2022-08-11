@@ -35,6 +35,12 @@
       ],
       "@libs/ip/*": [
         "libs/ip/src/*"
+      ],
+      "@libs/email": [
+        "libs/email/src"
+      ],
+      "@libs/email/*": [
+        "libs/email/src/*"
       ]
     }
   }
