@@ -23,6 +23,7 @@ import { PageManagerList } from './interface';
 import { ManagerService } from './manager.service';
 import { user } from 'apps/shared/decorators/user.decorator';
 import { Manager } from '@libs/db/entity/manager.entity';
+import { Permission } from 'apps/shared/decorators/permission.decorator';
 
 @ApiTags('后台用户管理')
 @ApiBearerAuth()
@@ -68,6 +69,7 @@ export class ManagerController {
   }
 
   @Get('resources')
+  @Permission()
   @ApiOperation({
     summary: '获取当前用户菜单权限',
     description: '获取当前用户菜单权限',
