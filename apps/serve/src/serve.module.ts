@@ -5,9 +5,10 @@ import { CommonModule } from '@libs/common/common.module';
 import { UserModule } from './user/user.module';
 import { AdvertiseModule } from './advertise/advertise.module';
 import { NavgationModule } from './navgation/navgation.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [CommonModule, UserModule, AdvertiseModule, NavgationModule],
+  imports: [CommonModule, UserModule, AdvertiseModule, NavgationModule, AuthModule],
   controllers: [ServeController],
   providers: [ServeService],
 })

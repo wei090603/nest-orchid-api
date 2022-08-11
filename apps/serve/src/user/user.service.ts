@@ -9,7 +9,6 @@ import { CreateUserDto, RegisterCode, UpdateUserDto } from './dto';
 import { User } from '@libs/db/entity/user.entity';
 import { getRepository, Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { hashSync } from 'bcryptjs';
 // import { EmailService } from '@libs/email';
 import { Article } from '@libs/db/entity/article.entity';
 // import { Cache } from 'cache-manager';
@@ -30,7 +29,7 @@ export class UserService {
     if (existing) throw new ApiException(10400, '该用户已注册');
     // const value = await this.cacheManager.get(email);
     // if (code !== value) throw new ApiException(10400, '验证码错误');
-    await this.repository.insert({ email, password: hashSync(password) });
+    await this.repository.insert({ email, password });
   }
 
   // 根据用户id获取用户文章列表

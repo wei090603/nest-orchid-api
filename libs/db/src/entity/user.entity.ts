@@ -1,9 +1,17 @@
-import { Entity, Column, OneToMany, JoinColumn, ManyToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  OneToMany,
+  JoinColumn,
+  ManyToMany,
+  BeforeInsert,
+} from 'typeorm';
 import { Base } from './base.entity';
 import { Article } from './article.entity';
 // import { ArticleLike } from './articleLike.entity';
 // import { Collect } from './collect.entity';
 // import { UserTag } from './userTag.entity';
+import { hashSync } from 'bcryptjs';
 
 @Entity('user')
 export class User extends Base {
@@ -23,6 +31,10 @@ export class User extends Base {
     select: false,
   })
   public password: string;
+  @BeforeInsert()
+  async encryptPwd() {
+    this.password = hashSync(this.password);
+  }
 
   @Column('varchar', {
     length: 32,
