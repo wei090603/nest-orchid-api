@@ -18,14 +18,15 @@ import { getTemAccount } from 'apps/shared/utils';
 
 import axios from 'axios';
 import * as crypto from 'crypto';
+import { CacheService } from 'apps/shared/redis';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly configService: ConfigService,
+    private readonly redisService: CacheService,
   ) {}
 
   // 生成token
@@ -125,13 +126,13 @@ export class AuthService {
    * @return {*}
    */
   async findMe(id: number): Promise<User> {
-    const userInfo: User = await this.cacheManager.get(id.toString());
+    const userInfo: User = await this.redisService.get(`${id}`);
     if (userInfo) return userInfo;
     const user = await this.userRepository.findOne({
       where: { id },
       relations: ['userTag'],
     });
-    await this.cacheManager.set(id.toString(), user, { ttl: 7200 });
+    await this.redisService.set(`user-info-${id}`, userInfo, 60 * 60 * 24);
     return user;
   }
 }
