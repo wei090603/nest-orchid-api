@@ -113,6 +113,7 @@ export class ManagerService {
   }
 
   async resources(roles: any[]) {
+    if (roles.length === 0) return [];
     const roleId: number[] = roles.map((item: any) => item.id);
     if (roleId.includes(1)) {
       // 超级管理员
@@ -137,9 +138,10 @@ export class ManagerService {
         .orderBy('resources.id', 'DESC')
         .getMany();
       const resourcesList = data.map((item: Roles) => item.resources);
-      // const resources = resourcesList.reduce((a: any[], b: any) => a.concat(b) ); // 二维数组转一维数组
-      const newArr = resourcesList.flat();
-      return initTree(newArr);
+      const resources = resourcesList.reduce((a: any[], b: any) => a.concat(b)); // 二维数组转一维数组
+      const newArr = resources.flat();
+      return newArr;
+      // return initTree(newArr);
     }
   }
 }
