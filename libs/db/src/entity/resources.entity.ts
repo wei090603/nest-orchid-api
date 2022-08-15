@@ -1,26 +1,32 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: tao.wei
  * @Date: 2021-09-22 14:36:23
  */
-import { Entity, Column, ManyToMany, ManyToOne, JoinColumn, OneToMany } from "typeorm";
-import { Base } from "./base.entity";
-import { Roles } from "./roles.entity";
+import {
+  Entity,
+  Column,
+  ManyToMany,
+  ManyToOne,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
+import { Base } from './base.entity';
+import { Roles } from './roles.entity';
 
 @Entity('resources')
 export class Resources extends Base {
-
   @Column('varchar', {
     name: 'title',
     length: 60,
-    comment: '菜单标题'
+    comment: '菜单标题',
   })
   public title: string;
 
   @Column('varchar', {
     name: 'type',
     length: 60,
-    comment: '类型'
+    comment: '类型',
   })
   public type: string;
 
@@ -28,15 +34,16 @@ export class Resources extends Base {
     nullable: true,
     name: 'icon',
     length: 60,
-    comment: '图标'
+    comment: '图标',
   })
   public icon: string;
 
   @Column('varchar', {
+    nullable: true,
     name: 'path',
     length: 200,
-    unique: true, // 将列标记为唯一
-    comment: '路径'
+    // unique: true, // 将列标记为唯一
+    comment: '路径',
   })
   public path: string;
 
@@ -44,9 +51,17 @@ export class Resources extends Base {
     nullable: true,
     name: 'component',
     length: 200,
-    comment: '组件路径'
+    comment: '组件路径',
   })
   public component: string;
+
+  @Column('varchar', {
+    nullable: true,
+    name: 'name',
+    length: 200,
+    comment: '组件名称',
+  })
+  public name: string;
 
   @Column({
     type: 'boolean',
@@ -60,22 +75,22 @@ export class Resources extends Base {
     nullable: true,
     name: 'level',
     default: 0,
-    comment: '子级数量'
+    comment: '子级数量',
   })
   public level: number;
 
   @Column('int', {
     name: 'sort',
     default: 255,
-    comment: '排序'
+    comment: '排序',
   })
   public sort: number;
 
-  @ManyToOne(() => Resources, type => type.children)
-  @JoinColumn({name: 'parent_id'})
+  @ManyToOne(() => Resources, (type) => type.children)
+  @JoinColumn({ name: 'parent_id' })
   public parent: Resources;
 
-  @OneToMany(() => Resources, type => type.parent, {
+  @OneToMany(() => Resources, (type) => type.parent, {
     cascade: true,
   })
   public children: Resources[];
@@ -84,10 +99,10 @@ export class Resources extends Base {
     nullable: true,
     name: 'parent_id',
     default: 0,
-    comment: '父级id'
+    comment: '父级id',
   })
   public parentId: number;
-  
+
   @ManyToMany(() => Roles, (roles) => roles.resources)
   public roles: Roles[];
 }

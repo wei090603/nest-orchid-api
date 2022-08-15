@@ -123,7 +123,7 @@ export class ManagerService {
           sort: 'ASC',
         },
       });
-      return initTree(data);
+      return data;
     } else {
       const data = await this.rolesRepository
         .createQueryBuilder('roles')
@@ -138,10 +138,10 @@ export class ManagerService {
         .orderBy('resources.id', 'DESC')
         .getMany();
       const resourcesList = data.map((item: Roles) => item.resources);
-      const resources = resourcesList.reduce((a: any[], b: any) => a.concat(b)); // 二维数组转一维数组
-      const newArr = resources.flat();
+      // const resources = resourcesList.reduce((a: any[], b: any) => a.concat(b)); // 二维数组转一维数组
+      const newArr = resourcesList.flat(); // 二维数组转一维数组
+      // return initTree(resourcesList);
       return newArr;
-      // return initTree(newArr);
     }
   }
 }
