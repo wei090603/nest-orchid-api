@@ -29,6 +29,7 @@ export class ResourcesService {
     if (existing) throw new ApiException(10400, '路径已存在');
     // 查询出父级
     const parent = await this.resourcesRepository.findOneBy({ id: parentId });
+    console.log(parent, 'parent');
     await this.resourcesRepository.save({
       path,
       type,
@@ -38,6 +39,7 @@ export class ResourcesService {
       component,
       status,
       sort,
+      parentId,
     });
     // 计算父级下存在的子级
     if (parent) {

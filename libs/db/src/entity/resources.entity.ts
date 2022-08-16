@@ -57,11 +57,11 @@ export class Resources extends Base {
 
   @Column('varchar', {
     nullable: true,
-    name: 'name',
+    name: 'active_menu',
     length: 200,
-    comment: '组件名称',
+    comment: '选中组件',
   })
-  public name: string;
+  public activeMenu: string;
 
   @Column({
     type: 'boolean',
@@ -98,7 +98,7 @@ export class Resources extends Base {
   @Column('int', {
     nullable: true,
     name: 'parent_id',
-    default: 0,
+    default: null,
     comment: '父级id',
   })
   public parentId: number;
