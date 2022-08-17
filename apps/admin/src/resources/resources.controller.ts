@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { ResourcesService } from './resources.service';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateResourceDto, UpdateResourceDto } from './interface';
@@ -21,7 +21,7 @@ export class ResourcesController {
     return await this.service.findAll();
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiOperation({summary: '根据用户id更新资源', description: '根据用户id更新资源'})
   async update(@Param('id') id: string, @Body() updateResourceDto: UpdateResourceDto) {
     return await this.service.update(+id, updateResourceDto);

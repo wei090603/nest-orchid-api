@@ -14,7 +14,7 @@ enum type {
 }
 
 export class CreateResourceDto {
-  @ApiProperty({ description: '父级id', example: '' })
+  @ApiProperty({ description: '父级id', example: null })
   readonly parentId: number;
 
   @ApiProperty({ description: '菜单标题', example: '系统管理' })

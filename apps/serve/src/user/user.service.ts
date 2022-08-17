@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto, RegisterCode, UpdateUserDto } from './dto';
 import { User } from '@libs/db/entity/user.entity';
-import { getRepository, Not, Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 // import { EmailService } from '@libs/email';
 import { Article } from '@libs/db/entity/article.entity';
@@ -17,7 +17,7 @@ import { ApiException } from 'apps/shared/exceptions/api.exception';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly repository: Repository<User>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Article)
     private readonly articleRepository: Repository<Article>,
   ) {}
@@ -25,11 +25,11 @@ export class UserService {
   async create(data: CreateUserDto) {
     const { email, password } = data;
     // 检查用户名是否存在
-    const existing = await this.repository.findOneBy({ email });
+    const existing = await this.userRepository.findOneBy({ email });
     if (existing) throw new ApiException(10400, '该用户已注册');
     // const value = await this.cacheManager.get(email);
     // if (code !== value) throw new ApiException(10400, '验证码错误');
-    await this.repository.insert({ email, password });
+    await this.userRepository.insert({ email, password });
   }
 
   // 根据用户id获取用户文章列表
@@ -57,7 +57,7 @@ export class UserService {
     //   }
     // })
 
-    const userInfo = await getRepository(User)
+    const userInfo = await this.userRepository
       .createQueryBuilder('user')
       .leftJoinAndSelect(
         'user.article',
@@ -84,6 +84,6 @@ export class UserService {
     user.location = dto.location;
     user.sex = dto.sex;
     user.nickName = dto.nickName;
-    await this.repository.save(user);
+    await this.userRepository.save(user);
   }
 }

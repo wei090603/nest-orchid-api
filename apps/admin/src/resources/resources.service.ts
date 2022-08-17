@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { initTree } from 'apps/shared/utils';
-import { Repository } from 'typeorm';
+import { Repository, Not } from 'typeorm';
 import { CreateResourceDto, UpdateResourceDto } from './interface';
 
 @Injectable()
@@ -13,8 +13,10 @@ export class ResourcesService {
     private readonly resourcesRepository: Repository<Resources>,
   ) {}
 
-  async findOneByPath(path: string): Promise<Resources> {
-    return await this.resourcesRepository.findOne({ where: { path } });
+  async findOneByPath(path: string, id?: number): Promise<Resources> {
+    return await this.resourcesRepository.findOne({
+      where: { path, id: Not(id) },
+    });
   }
 
   /**
@@ -29,17 +31,15 @@ export class ResourcesService {
     if (existing) throw new ApiException(10400, '路径已存在');
     // 查询出父级
     const parent = await this.resourcesRepository.findOneBy({ id: parentId });
-    console.log(parent, 'parent');
     await this.resourcesRepository.save({
       path,
       type,
       icon,
       title,
-      parent,
       component,
       status,
       sort,
-      parentId,
+      parentId: parentId ?? null,
     });
     // 计算父级下存在的子级
     if (parent) {
@@ -69,13 +69,16 @@ export class ResourcesService {
   }
 
   async update(id: number, data: UpdateResourceDto): Promise<void> {
-    const { path, type, icon, title, component } = data;
+    const { path, type, icon, title, component, sort } = data;
+    const existing = await this.findOneByPath(path, id);
+    if (existing) throw new ApiException(10400, '路径已存在');
     await this.resourcesRepository.update(id, {
       path,
       type,
       icon,
       title,
       component,
+      sort,
     });
   }
 
@@ -86,10 +89,18 @@ export class ResourcesService {
    * @return {*}
    */
   async remove(id: number): Promise<Resources> {
-    const resources = await this.resourcesRepository.findOneBy({ id });
-    if (resources.level > 0) {
+    const existing = await this.resourcesRepository.findOneBy({ id });
+    if (existing.level > 0) {
       throw new ApiException(10400, '存在子级不能删除');
     }
-    return await this.resourcesRepository.softRemove(resources);
+    await this.resourcesRepository
+      .createQueryBuilder()
+      .update(Resources)
+      .set({
+        level: () => 'level - 1',
+      })
+      .where('id = :id', { id: existing.parentId })
+      .execute();
+    return await this.resourcesRepository.softRemove(existing);
   }
 }
