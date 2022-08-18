@@ -1,6 +1,6 @@
 # SERVE PORT
 http:
-  adminPort: 3010
+  adminPort: 3000
   servePort: 4000
 db:
   mysql:
