@@ -32,7 +32,7 @@
 * 5、启动项目
 
   ```shell
-  npm run start:dev
+  nest start -w **
   ```
 * 6、如果你想初始化数据,可以直接导入文件种sql数据
 
