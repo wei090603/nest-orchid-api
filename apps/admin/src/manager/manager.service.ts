@@ -78,14 +78,12 @@ export class ManagerService {
     const role = await this.rolesRepository.findBy({
       id: In(roles),
     });
-    await this.managerRepository.update(id, {
+    await this.managerRepository.save({
+      id,
       email,
       name,
       phone,
       remark,
-    });
-    await this.managerRepository.save({
-      id,
       roles: role,
     });
     this.redisService.del(`user-info-${id}`);
