@@ -45,12 +45,15 @@ export class AuthService {
   ): Promise<Manager> {
     const user = await this.authRepository
       .createQueryBuilder('manager')
-      .select(['manager.id', 'id'])
-      .addSelect('manager.password')
-      .addSelect('manager.account')
-      .addSelect('manager.status')
+      .select([
+        'manager.id',
+        'manager.password',
+        'manager.account',
+        'manager.status',
+      ])
       .where('manager.account = :account', { account })
       .getOne();
+    console.log(user, 'user');
     if (!user) throw new ApiException(10404, '用户不存在');
     if (!user.status) throw new ApiException(10403, '用户被禁用');
     if (!compareSync(password, user.password))
