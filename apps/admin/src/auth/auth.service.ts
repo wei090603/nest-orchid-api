@@ -53,7 +53,6 @@ export class AuthService {
       ])
       .where('manager.account = :account', { account })
       .getOne();
-    console.log(user, 'user');
     if (!user) throw new ApiException(10404, '用户不存在');
     if (!user.status) throw new ApiException(10403, '用户被禁用');
     if (!compareSync(password, user.password))
