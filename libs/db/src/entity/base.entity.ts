@@ -24,7 +24,7 @@ export abstract class Base {
     transformer: {
       from(value) {
         return value
-          ? (dayjs(value).format('YYYY-MM-DD HH:MM:ss') as unknown as Date)
+          ? (dayjs(value).format('YYYY-MM-DD HH:mm:ss') as unknown as Date)
           : value;
       },
       to: (value) => value,
@@ -39,7 +39,7 @@ export abstract class Base {
     transformer: {
       from(value) {
         return value
-          ? (dayjs(value).format('YYYY-MM-DD HH:MM:ss') as unknown as Date)
+          ? (dayjs(value).format('YYYY-MM-DD HH:mm:ss') as unknown as Date)
           : value;
       },
       to: (value) => value,

@@ -43,7 +43,7 @@ export class AuthController {
   @Get()
   @Permission()
   @ApiOperation({ summary: '返回当前用户登录信息' })
-  @ApiBearerAuth() // 此接口需要传递token;
+  @ApiBearerAuth()
   userInfo(@user() userInfo: Manager) {
     return userInfo;
   }
@@ -51,7 +51,7 @@ export class AuthController {
   @Get('loginOut')
   @Permission()
   @ApiOperation({ summary: '退出登录' })
-  @ApiBearerAuth() // 此接口需要传递token;
+  @ApiBearerAuth()
   async loginOut(@user() user: Manager) {
     await this.redisService.del(`user-info-${user.id}`);
   }
