@@ -68,12 +68,12 @@ export class ArticleService {
       .addSelect('tag.name')
       .addSelect('category.id')
       .addSelect('category.title')
-      .loadRelationCountAndMap(
-        'article.likeCount',
-        'article.like',
-        'like',
-        (qb) => qb.andWhere('like.user = :user', { user: user.id }),
-      )
+      // .loadRelationCountAndMap(
+      //   'article.likeCount',
+      //   'article.like',
+      //   'like',
+      //   (qb) => qb.andWhere('like.user = :user', { user: user.id }),
+      // )
       .orderBy('article.id', 'DESC')
       .skip(limit * (page - 1))
       .take(limit)
