@@ -149,14 +149,16 @@ export class ArticleService {
       .leftJoinAndSelect('article.author', 'author')
       .leftJoinAndSelect('article.category', 'category')
       .leftJoinAndSelect('article.tag', 'tag')
-      .select('article')
-      .addSelect('author.id')
-      .addSelect('author.nickName')
-      .addSelect('author.avatar')
-      .addSelect('category.id')
-      .addSelect('category.title')
-      .addSelect('tag.id')
-      .addSelect('tag.name')
+      .select([
+        'article',
+        'author.id',
+        'author.nickName',
+        'author.avatar',
+        'category.id',
+        'category.title',
+        'tag.id',
+        'tag.name',
+      ])
       .loadRelationCountAndMap(
         'article.likeCount',
         'article.like',

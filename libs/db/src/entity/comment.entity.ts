@@ -22,11 +22,11 @@ export class Comment extends Base {
 
   @Column({
     type: 'int',
-    name: 'hands',
+    name: 'like_count',
     default: 0,
     comment: '点赞数量',
   })
-  public hands: number;
+  public likeCount: number;
 
   @Column({
     type: 'boolean',
@@ -60,11 +60,11 @@ export class Comment extends Base {
   @OneToMany(() => Comment, (type) => type.parent)
   public children: Comment[];
 
-  @Column('int', {
-    nullable: true,
-    name: 'parent_id',
-    default: null,
-    comment: '父级id',
-  })
-  public parentId: number;
+  // @Column('int', {
+  //   nullable: true,
+  //   name: 'parent_id',
+  //   default: null,
+  //   comment: '父级id',
+  // })
+  // public parentId: number;
 }

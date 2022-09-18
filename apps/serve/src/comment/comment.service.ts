@@ -2,7 +2,7 @@ import { Article } from '@libs/db/entity/article.entity';
 import { User } from '@libs/db/entity/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { Comment } from '@libs/db/entity/comment.entity';
 import { CreateCommenSubtDto, CreateCommentDto } from './dto';
 
@@ -72,7 +72,8 @@ export class CommentService {
         'reply.nickName',
       ])
       .where('comment.article = :article', { article: id })
-      .andWhere('comment.parentId = :parentId', { value: null })
+      // .andWhere('comment.parent = :parent', { parent: IsNull() }) // querybuilder 方式不支持IsNull()方式
+      .andWhere('comment.parent is null')
       .orderBy('children.id', 'DESC')
       .orderBy('comment.id', 'ASC')
       .getManyAndCount();
