@@ -6,7 +6,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PageResult } from 'apps/shared/dto/page.dto';
 import { In, Like, Not, Repository } from 'typeorm';
-import { ArticleDto, FindArticleDto, SearchArticleDto } from './type';
+import { ArticleDto, FindArticleDto, SearchArticleDto } from './dto';
 
 @Injectable()
 export class ArticleService {
@@ -60,20 +60,22 @@ export class ArticleService {
       .leftJoinAndSelect('article.author', 'author') // 控制返回参数
       .leftJoinAndSelect('article.tag', 'tag')
       .leftJoinAndSelect('article.category', 'category')
-      .select('article')
-      .addSelect('author.id')
-      .addSelect('author.nickName') // 和这里
-      .addSelect('author.avatar') // 和这里
-      .addSelect('tag.id')
-      .addSelect('tag.name')
-      .addSelect('category.id')
-      .addSelect('category.title')
-      // .loadRelationCountAndMap(
-      //   'article.likeCount',
-      //   'article.like',
-      //   'like',
-      //   (qb) => qb.andWhere('like.user = :user', { user: user.id }),
-      // )
+      .select([
+        'article',
+        'author.id',
+        'author.nickName',
+        'author.avatar',
+        'tag.id',
+        'tag.name',
+        'category.id',
+        'category.title',
+      ])
+      .loadRelationCountAndMap(
+        'article.likeCount',
+        'article.like',
+        'like',
+        (qb) => qb.andWhere('like.user = :user', { user: user.id }),
+      )
       .orderBy('article.id', 'DESC')
       .skip(limit * (page - 1))
       .take(limit)
@@ -142,7 +144,6 @@ export class ArticleService {
       })
       .where('id = :id', { id })
       .execute();
-
     return await this.articleRepository
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.author', 'author')

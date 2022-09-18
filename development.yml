@@ -2,6 +2,8 @@
 http:
   adminPort: 3000
   servePort: 4000
+prefix:
+  adminPrefix: api
 db:
   mysql:
     type: mysql

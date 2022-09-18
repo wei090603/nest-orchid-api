@@ -15,7 +15,7 @@ import { ResourcesModule } from './resources/resources.module';
 import { AdvertiseModule } from './advertise/advertise.module';
 import { LoginLoggerModule } from './login-logger/login-logger.module';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, RouterModule } from '@nestjs/core';
 import { NoticeModule } from './notice/notice.module';
 import { RolesGuard } from 'apps/shared/guards/roles.guard';
 
@@ -35,6 +35,12 @@ import { RolesGuard } from 'apps/shared/guards/roles.guard';
     AdvertiseModule,
     LoginLoggerModule,
     NoticeModule,
+    RouterModule.register([
+      {
+        path: 'admin',
+        module: AppModule,
+      },
+    ]),
   ],
   controllers: [AppController],
   providers: [

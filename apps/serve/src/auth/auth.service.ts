@@ -126,13 +126,21 @@ export class AuthService {
    * @return {*}
    */
   async findMe(id: number): Promise<User> {
-    const userInfo: User = await this.redisService.get(`${id}`);
-    if (userInfo) return userInfo;
+    const userInfo: string = await this.redisService.get(`user-info-${id}`);
+    if (userInfo) return JSON.parse(userInfo);
     const user = await this.userRepository.findOne({
+      select: {
+        userTag: {
+          id: true,
+          title: true,
+        },
+      },
+      relations: {
+        userTag: true,
+      },
       where: { id },
-      relations: ['userTag'],
     });
-    await this.redisService.set(`user-info-${id}`, userInfo, 60 * 60 * 24);
+    await this.redisService.set(`user-info-${id}`, user, 60 * 60 * 24);
     return user;
   }
 }

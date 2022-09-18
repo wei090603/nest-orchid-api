@@ -13,7 +13,7 @@ import { user } from 'apps/shared/decorators/user.decorator';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
 import { OptionAuthGuard } from 'apps/shared/guards/option.strategy';
 import { ArticleService } from './article.service';
-import { ArticleDto, FindArticleDto, SearchArticleDto } from './type';
+import { ArticleDto, FindArticleDto, SearchArticleDto } from './dto';
 
 @ApiTags('文章管理')
 @Controller('article')

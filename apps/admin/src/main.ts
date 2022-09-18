@@ -7,7 +7,7 @@ import { ApiTransformInterceptor } from 'apps/shared/interceptor/api-interceptor
 // import rateLimit from 'express-rate-limit';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from 'apps/shared/pipes/validation.pipe';
-import { Logger } from '@nestjs/common';
+import { Logger, VersioningType, VERSION_NEUTRAL } from '@nestjs/common';
 
 async function bootstrap() {
   // 设置cors允许跨域访问
@@ -17,6 +17,14 @@ async function bootstrap() {
     logger: ['log', 'error', 'warn'],
   });
   const config = app.get<ConfigService>(ConfigService);
+
+  const { adminPrefix } = config.get('prefix');
+  app.setGlobalPrefix(adminPrefix);
+
+  // app.enableVersioning({
+  //   defaultVersion: [VERSION_NEUTRAL, '1', '2'],
+  //   type: VersioningType.URI,
+  // });
 
   // 配置 文件夹为静态目录，以达到可直接访问下面文件的目的
   app.useStaticAssets('uploads', {

@@ -8,9 +8,9 @@ import {
 } from 'typeorm';
 import { Base } from './base.entity';
 import { Article } from './article.entity';
-// import { ArticleLike } from './articleLike.entity';
-// import { Collect } from './collect.entity';
-// import { UserTag } from './userTag.entity';
+import { ArticleLike } from './articleLike.entity';
+import { Collect } from './collect.entity';
+import { UserTag } from './userTag.entity';
 import { hashSync } from 'bcryptjs';
 
 @Entity('user')
@@ -154,13 +154,13 @@ export class User extends Base {
   @OneToMany(() => Article, (article) => article.author)
   public article: Article[];
 
-  // @OneToMany(() => ArticleLike, (like) => like.user)
-  // @JoinColumn({ name: 'article_like' })
-  // public articleLike: ArticleLike[];
+  @OneToMany(() => ArticleLike, (like) => like.user)
+  @JoinColumn({ name: 'article_like' })
+  public articleLike: ArticleLike[];
 
-  // @OneToMany(() => Collect, (collect) => collect.user)
-  // public collect: Collect[];
+  @OneToMany(() => Collect, (collect) => collect.user)
+  public collect: Collect[];
 
-  // @ManyToMany(() => UserTag, (userTag) => userTag.user)
-  // public userTag: UserTag[];
+  @ManyToMany(() => UserTag, (userTag) => userTag.user)
+  public userTag: UserTag[];
 }

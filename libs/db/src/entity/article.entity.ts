@@ -12,18 +12,11 @@ import { Base } from './base.entity';
 import { Category } from './category.entity';
 import { Tag } from './tag.entity';
 import { User } from './user.entity';
-// import { Comment } from './comment.entity';
-// import { ArticleLike } from './articleLike.entity';
+import { Comment } from './comment.entity';
+import { ArticleLike } from './articleLike.entity';
 
 @Entity('article')
 export class Article extends Base {
-  @Column({
-    type: 'text',
-    name: 'content',
-    comment: '文章内容富文本',
-  })
-  public content: string;
-
   @Column({
     type: 'varchar',
     name: 'title',
@@ -47,6 +40,30 @@ export class Article extends Base {
     comment: '阅读数量',
   })
   public reading: number;
+
+  @Column({
+    type: 'text',
+    name: 'content',
+    comment: '文章内容富文本',
+  })
+  public content: string;
+
+  @Column({
+    type: 'varchar',
+    name: 'summary',
+    length: 100,
+    comment: '文章摘要',
+  })
+  public summary: string;
+
+  @Column({
+    type: 'varchar',
+    name: 'cover_picture',
+    length: 255,
+    nullable: true,
+    comment: '文章封面图',
+  })
+  public coverPicture: string;
 
   @Column({
     type: 'int',
@@ -104,11 +121,11 @@ export class Article extends Base {
   public tag: Tag[];
 
   // 点赞用户
-  // @OneToMany(() => ArticleLike, (articleLike) => articleLike.article)
-  // public like: ArticleLike[];
+  @OneToMany(() => ArticleLike, (articleLike) => articleLike.article)
+  public like: ArticleLike[];
 
-  // @OneToMany(() => Comment, (comment) => comment.article)
-  // public comment: Comment[];
+  @OneToMany(() => Comment, (comment) => comment.article)
+  public comment: Comment[];
 
   @ManyToOne(() => User, (user) => user.article)
   @JoinColumn({ name: 'author_id' })
