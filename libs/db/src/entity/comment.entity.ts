@@ -44,18 +44,20 @@ export class Comment extends Base {
   @JoinColumn({ name: 'reply_id' }) // 回复
   public reply: User;
 
-  @ManyToOne(() => Article, (article) => article.comment)
+  @ManyToOne(() => Article, (article) => article.comment, {
+    nullable: false,
+    onDelete: 'CASCADE', // 删除文章时同时删除评论
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'article_id' })
   @JoinTable({ name: 'article_comment' })
   public article: Article;
 
-  @ManyToOne(() => Comment, (type) => type.children)
+  @ManyToOne(() => Comment, (type) => type.children, { onDelete: 'CASCADE' }) // 删除父级评论子级也删除
   @JoinColumn({ name: 'parent_id' })
   public parent: Comment;
 
-  @OneToMany(() => Comment, (type) => type.parent, {
-    cascade: true,
-  })
+  @OneToMany(() => Comment, (type) => type.parent)
   public children: Comment[];
 
   @Column('int', {

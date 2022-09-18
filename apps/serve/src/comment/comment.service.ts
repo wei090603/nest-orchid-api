@@ -29,7 +29,7 @@ export class CommentService {
       .createQueryBuilder()
       .update(Article)
       .set({
-        comments: () => 'comments + 1',
+        commentCount: () => 'comment_count + 1',
       })
       .where('id = :id', { id: articleId })
       .execute();
@@ -37,7 +37,7 @@ export class CommentService {
 
   // 添加子级评论
   async createSub(params: CreateCommenSubtDto, user: User) {
-    const { parentId, replyId, content } = params;
+    const { parentId, replyId, content, articleId } = params;
     // const parent = await this.commentRepository.findOneBy({
     //   id: parentId,
     // });
@@ -46,6 +46,7 @@ export class CommentService {
       content,
       user,
       reply: { id: replyId },
+      article: { id: articleId },
     });
   }
 
@@ -71,6 +72,7 @@ export class CommentService {
         'reply.nickName',
       ])
       .where('comment.article = :article', { article: id })
+      .andWhere('comment.parentId = :parentId', { value: null })
       .orderBy('children.id', 'DESC')
       .orderBy('comment.id', 'ASC')
       .getManyAndCount();

@@ -99,32 +99,32 @@ export class Article extends Base {
 
   @Column({
     type: 'int',
-    name: 'likes',
+    name: 'like_count',
     default: 0,
     comment: '点赞数量',
   })
-  public likes: number;
+  public likeCount: number;
 
   @Column({
     type: 'int',
-    name: 'comments',
+    name: 'comment_count',
     default: 0,
     comment: '评论数量',
   })
-  public comments: number;
+  public commentCount: number;
 
   @ManyToOne(() => Category, (category) => category.article)
   @JoinColumn({ name: 'category_id' })
   public category: Category;
 
-  @ManyToMany(() => Tag, (tag) => tag.article)
+  @ManyToMany(() => Tag, (tag) => tag.article, { cascade: true }) // cascade 如果标签不存在则会自动添加
   public tag: Tag[];
 
   // 点赞用户
   @OneToMany(() => ArticleLike, (articleLike) => articleLike.article)
   public like: ArticleLike[];
 
-  @OneToMany(() => Comment, (comment) => comment.article)
+  @OneToMany(() => Comment, (comment) => comment.article, { cascade: true })
   public comment: Comment[];
 
   @ManyToOne(() => User, (user) => user.article)
