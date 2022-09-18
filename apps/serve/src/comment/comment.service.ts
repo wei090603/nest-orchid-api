@@ -75,7 +75,6 @@ export class CommentService {
       .orderBy('comment.id', 'ASC')
       .getManyAndCount();
 
-    console.log(list, 'list');
     return { list, total };
   }
 
