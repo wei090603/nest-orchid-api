@@ -1,4 +1,5 @@
 import { Article } from '@libs/db/entity/article.entity';
+import { ArticleLike } from '@libs/db/entity/articleLike.entity';
 import { Category } from '@libs/db/entity/category.entity';
 import { Tag } from '@libs/db/entity/tag.entity';
 import { User } from '@libs/db/entity/user.entity';
@@ -6,7 +7,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PageResult } from 'apps/shared/dto/page.dto';
 import { In, Like, Not, Repository } from 'typeorm';
-import { ArticleDto, FindArticleDto, SearchArticleDto } from './dto';
+import {
+  ArticleDto,
+  CreateArticleLikeDto,
+  FindArticleDto,
+  SearchArticleDto,
+} from './dto';
 
 @Injectable()
 export class ArticleService {
@@ -16,6 +22,8 @@ export class ArticleService {
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
     @InjectRepository(Tag) private readonly tagRepository: Repository<Tag>,
+    @InjectRepository(ArticleLike)
+    private readonly articleLikeRepository: Repository<ArticleLike>,
   ) {}
 
   // 创建新文章
@@ -70,11 +78,8 @@ export class ArticleService {
         'category.id',
         'category.title',
       ])
-      .loadRelationCountAndMap(
-        'article.likeCount',
-        'article.like',
-        'like',
-        (qb) => qb.andWhere('like.user = :user', { user: user.id }),
+      .loadRelationCountAndMap('article.isLike', 'article.like', 'like', (qb) =>
+        qb.andWhere('like.user = :user', { user: user.id }),
       )
       .orderBy('article.id', 'DESC')
       .skip(limit * (page - 1))
@@ -159,13 +164,45 @@ export class ArticleService {
         'tag.id',
         'tag.name',
       ])
-      .loadRelationCountAndMap(
-        'article.likeCount',
-        'article.like',
-        'like',
-        (qb) => qb.andWhere('like.user = :user', { user: user.id }),
+      .loadRelationCountAndMap('article.isLike', 'article.like', 'like', (qb) =>
+        qb.andWhere('like.user = :user', { user: user.id }),
       )
       .where('article.id = :id', { id })
       .getOne();
+  }
+
+  // 添加文章点赞
+  async like(dto: CreateArticleLikeDto, user: User) {
+    const { articleId } = dto;
+    const article = await this.articleRepository.findOneByOrFail({
+      id: articleId,
+    });
+    await this.articleLikeRepository.insert({ user, article });
+
+    await this.articleRepository
+      .createQueryBuilder()
+      .update(Article)
+      .set({
+        likeCount: () => 'like_count + 1',
+      })
+      .where('id = :id', { id: articleId })
+      .execute();
+  }
+
+  // 文章取消点赞
+  async likeDel(id: number, user: User) {
+    const like = await this.articleLikeRepository.findOneByOrFail({
+      article: { id },
+      user: { id: user.id },
+    });
+    await this.articleLikeRepository.remove(like);
+    await this.articleLikeRepository
+      .createQueryBuilder()
+      .update(Article)
+      .set({
+        likeCount: () => 'like_count - 1',
+      })
+      .where('id = :id', { id })
+      .execute();
   }
 }

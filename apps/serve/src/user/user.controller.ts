@@ -64,12 +64,15 @@ export class UserController {
   //   return this.userService.updateTag(tag, user);
   // }
 
-  // @Get(':id')
+  @Get(':id')
   // @UseInterceptors(ClassSerializerInterceptor) // 不返回密码 使用注册dto
-  // @ApiOperation({ summary: '获取用户详情信息', description: '获取用户详情信息' })
-  // findOne(@Param('id') id: string, @user() user: User) {
-  //   return this.userService.findOne(+id, user);
-  // }
+  @ApiOperation({
+    summary: '获取用户详情信息',
+    description: '获取用户详情信息',
+  })
+  findOne(@Param('id') id: string) {
+    return this.userService.findOne(+id);
+  }
 
   // @Patch()
   // @ApiBearerAuth()

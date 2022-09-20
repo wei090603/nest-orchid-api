@@ -49,27 +49,11 @@ export class UserService {
   }
 
   // 根据用户id获取用户信息及文章
-  async findOne(id: number, user: User): Promise<User> {
-    // return await this.repository.findOne(id, {
-    //   relations: ['article'],
-    //   order: {
-    //     id: 'DESC'
-    //   }
-    // })
-
-    const userInfo = await this.userRepository
-      .createQueryBuilder('user')
-      .leftJoinAndSelect(
-        'user.article',
-        'article',
-        'article.status = :status',
-        { status: 1 },
-      )
-      .leftJoinAndSelect('user.userTag', 'tag')
-      .orderBy('article.id', 'DESC')
-      .where('user.id = :id', { id })
-      .getOne();
-    return userInfo;
+  async findOne(id: number): Promise<User> {
+    return await this.userRepository.findOneOrFail({
+      select: ['nickName', 'account', 'avatar', 'sign'],
+      where: { id },
+    });
   }
 
   // async registerCode({ email }: RegisterCode) {
