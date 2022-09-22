@@ -49,10 +49,16 @@ export class ArticleController {
   }
 
   @Get('hot/:id')
-  @ApiOperation({ summary: '获取热门文章列表' })
+  @ApiOperation({ summary: '根据分类获取热门文章列表' })
   @UseGuards(OptionAuthGuard)
   findHot(@Param('id') id: string, @user() user: User) {
     return this.articleService.findHot(+id, user);
+  }
+
+  @Get('hot')
+  @ApiOperation({ summary: '不根据分类获取热门文章列表' })
+  findHotList() {
+    return this.articleService.findHotList();
   }
 
   @Get(':id')

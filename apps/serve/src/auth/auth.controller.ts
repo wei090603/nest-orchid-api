@@ -17,11 +17,15 @@ import { user } from 'apps/shared/decorators/user.decorator';
 import { User } from '@libs/db/entity/user.entity';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
 import { LoginDto, WxLoginDto } from './type';
+import { CacheService } from 'apps/shared/redis';
 
 @ApiTags('登录管理')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly service: AuthService) {}
+  constructor(
+    private readonly service: AuthService,
+    private readonly redisService: CacheService,
+  ) {}
 
   @Post('login')
   @ApiBody({ type: LoginDto })
@@ -60,7 +64,7 @@ export class AuthController {
   // 此接口需要传递token;
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  loginOut() {
-    return true;
+  async loginOut(@user() user: User) {
+    await this.redisService.del(`user-info-${user.id}`);
   }
 }

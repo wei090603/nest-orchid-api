@@ -66,3 +66,42 @@
 * 1、本项目后续考虑采用qiankun 微前端方式抽离 有兴趣朋友可以持续关注
 
 * 2、本项目C端正在持续开发中 敬请期待...
+
+
+
+# Monorepo 模式
+
+# orm
+
+\$ 一对多 多对一 一定要存实体否则关系不存在
+
+# 创建一个子服务
+
+\$ nest g app name
+
+# 启动子项代码命令
+
+\$ nest start -w admin
+
+# 创建公用模块
+
+$ nest g lib db
+$ nest g lib common
+
+# hat prefix would you like to use for the library (default: @app)? 你要使用什么前缀 @libs
+
+# 一次生成模块
+
+\$ nest g res -p admin 模块名
+$ --no-spec 不添加测试文件
+
+# 项目 依赖升级
+
+yarn upgrade-interactive --latest
+
+# 打包
+
+nest build 项目名 admin
+
+# 升级依赖
+yarn upgrade nuxt@^2.3.2

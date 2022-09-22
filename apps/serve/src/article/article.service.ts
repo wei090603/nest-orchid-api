@@ -6,7 +6,7 @@ import { User } from '@libs/db/entity/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PageResult } from 'apps/shared/dto/page.dto';
-import { In, Like, Not, Repository } from 'typeorm';
+import { In, IsNull, Like, Not, Repository } from 'typeorm';
 import {
   ArticleDto,
   CreateArticleLikeDto,
@@ -103,6 +103,14 @@ export class ArticleService {
     return { list, total };
   }
 
+  findHotList() {
+    return this.articleRepository.find({
+      select: ['id', 'title', 'reading'],
+      take: 6,
+      order: { reading: 'DESC' },
+    });
+  }
+
   // 根据分类Id 查询热门文章
   async findHot(id: number, user: User): Promise<Article[]> {
     const { chidlId } = await this.categoryRepository
@@ -141,14 +149,18 @@ export class ArticleService {
 
   // 查询文章详情
   async findOne(id: number, user: User) {
-    this.articleRepository
-      .createQueryBuilder()
-      .update(Article)
-      .set({
-        reading: () => 'reading + 1',
-      })
-      .where('id = :id', { id })
-      .execute();
+    try {
+      this.articleRepository
+        .createQueryBuilder()
+        .update(Article)
+        .set({
+          reading: () => 'reading + 1',
+        })
+        .where('id = :id', { id })
+        .execute();
+    } catch (err) {
+      console.log(err, 'err');
+    }
     return await this.articleRepository
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.author', 'author')
