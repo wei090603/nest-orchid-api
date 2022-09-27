@@ -37,15 +37,6 @@ export class UserController {
   //   return this.userService.registerCode(registerCode);
   // }
 
-  // @Get('article')
-  // @ApiOperation({ description: '获取当前用户文章', summary: '获取当前用户文章' })
-  // // 此接口需要传递token;
-  // @ApiBearerAuth()
-  // @UseGuards(JwtAuthGuard)
-  // getArticle(@user() user: User) {
-  //   return this.userService.getArticle(user);
-  // }
-
   // @Get('tag')
   // @ApiOperation({ description: '获取当前用户标签', summary: '获取当前用户标签' })
   // // 此接口需要传递token;
@@ -63,6 +54,15 @@ export class UserController {
   // updateTag(@Body() tag: UpdateUserTagDto, @user() user: User) {
   //   return this.userService.updateTag(tag, user);
   // }
+
+  @Get('article/:id')
+  @ApiOperation({
+    description: '根据用户id获取文章',
+    summary: '根据用户id获取文章',
+  })
+  getArticle(@Param('id') id: string) {
+    return this.userService.getArticle(+id);
+  }
 
   @Get(':id')
   // @UseInterceptors(ClassSerializerInterceptor) // 不返回密码 使用注册dto

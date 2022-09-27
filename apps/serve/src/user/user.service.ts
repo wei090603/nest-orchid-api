@@ -11,7 +11,6 @@ import { Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 // import { EmailService } from '@libs/email';
 import { Article } from '@libs/db/entity/article.entity';
-// import { Cache } from 'cache-manager';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 
 @Injectable()
@@ -33,16 +32,16 @@ export class UserService {
   }
 
   // 根据用户id获取用户文章列表
-  // async getArticle(user: User): Promise<Article[]> {
-  //   return await this.articleRepository.find({
-  //     relations: ['tag'],
-  //     where: { author: user },
-  //     order: {
-  //       isTop: 'DESC',
-  //       id: 'DESC',
-  //     },
-  //   });
-  // }
+  async getArticle(id: number): Promise<Article[]> {
+    return await this.articleRepository.find({
+      relations: ['tag'],
+      where: { author: { id } },
+      order: {
+        isTop: 'DESC',
+        id: 'DESC',
+      },
+    });
+  }
 
   findAll() {
     return `This action returns all user`;

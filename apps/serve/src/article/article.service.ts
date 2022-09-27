@@ -6,6 +6,7 @@ import { User } from '@libs/db/entity/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PageResult } from 'apps/shared/dto/page.dto';
+import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { In, IsNull, Like, Not, Repository } from 'typeorm';
 import {
   ArticleDto,
@@ -149,19 +150,7 @@ export class ArticleService {
 
   // 查询文章详情
   async findOne(id: number, user: User) {
-    try {
-      this.articleRepository
-        .createQueryBuilder()
-        .update(Article)
-        .set({
-          reading: () => 'reading + 1',
-        })
-        .where('id = :id', { id })
-        .execute();
-    } catch (err) {
-      console.log(err, 'err');
-    }
-    return await this.articleRepository
+    const article = await this.articleRepository
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.author', 'author')
       .leftJoinAndSelect('article.category', 'category')
@@ -181,6 +170,16 @@ export class ArticleService {
       )
       .where('article.id = :id', { id })
       .getOne();
+    if (!article) throw new ApiException(10400, '文章不存在');
+    this.articleRepository
+      .createQueryBuilder()
+      .update(Article)
+      .set({
+        reading: () => 'reading + 1',
+      })
+      .where('id = :id', { id })
+      .execute();
+    return article;
   }
 
   // 添加文章点赞
