@@ -9,9 +9,10 @@ import { AuthModule } from './auth/auth.module';
 import { ArticleModule } from './article/article.module';
 import { TagModule } from './tag/tag.module';
 import { CommentModule } from './comment/comment.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
-  imports: [CommonModule, UserModule, AdvertiseModule, NavgationModule, AuthModule, ArticleModule, TagModule, CommentModule],
+  imports: [CommonModule, UserModule, AdvertiseModule, NavgationModule, AuthModule, ArticleModule, TagModule, CommentModule, CategoryModule],
   controllers: [ServeController],
   providers: [ServeService],
 })

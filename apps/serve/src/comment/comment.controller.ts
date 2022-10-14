@@ -42,6 +42,7 @@ export class CommentController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: '删除评论' })
   remove(@Param('id') id: string) {
     return this.commentService.remove(+id);
   }
