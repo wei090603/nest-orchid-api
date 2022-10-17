@@ -34,7 +34,7 @@ export class UserService {
   // 根据用户id获取用户文章列表
   async getArticle(id: number): Promise<Article[]> {
     return await this.articleRepository.find({
-      relations: ['tag'],
+      relations: ['tag', 'author', 'category'],
       where: { author: { id } },
       order: {
         isTop: 'DESC',
@@ -50,7 +50,7 @@ export class UserService {
   // 根据用户id获取用户信息及文章
   async findOne(id: number): Promise<User> {
     return await this.userRepository.findOneOrFail({
-      select: ['nickName', 'account', 'avatar', 'sign'],
+      select: ['nickName', 'account', 'avatar', 'sign', 'createdAt'],
       where: { id },
     });
   }
