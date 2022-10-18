@@ -17,6 +17,7 @@ import { Tag } from './entity/tag.entity';
 import { User } from './entity/user.entity';
 import { Comment } from './entity/comment.entity';
 import { UserTag } from './entity/userTag.entity';
+import { Follow } from './entity/follow.entity';
 
 const table = [
   Category,
@@ -24,6 +25,7 @@ const table = [
   Article,
   ArticleLike,
   Collect,
+  Follow,
   Comment,
   User,
   UserTag,

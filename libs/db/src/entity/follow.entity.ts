@@ -3,13 +3,14 @@ import { Article } from './article.entity';
 import { Base } from './base.entity';
 import { User } from './user.entity';
 
-@Entity({ name: 'collect' })
-export class Collect extends Base {
+// 关注
+@Entity({ name: 'follow' })
+export class Follow extends Base {
   @OneToOne(() => Article)
   @JoinColumn({ name: 'article_id' })
   public article: Article;
 
-  @ManyToOne(() => User, (user) => user.collect)
+  @ManyToOne(() => User, (user) => user.follow)
   @JoinColumn({ name: 'user_id' })
   public user: User;
 }
