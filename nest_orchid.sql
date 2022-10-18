@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2022-10-17 18:19:31
+Date: 2022-10-18 17:41:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -74,7 +74,7 @@ CREATE TABLE `article` (
 -- ----------------------------
 INSERT INTO `article` VALUES ('1', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '111', '1658382145923.jpeg', '1', '1', '0', null, '4', '3', '1', '0', '10', '2022-10-17 17:19:14.573963', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('2', '<p><br></p>', '地方', '', '0', '2', '0', null, '0', '0', '1', '0', '10', '2022-09-14 11:41:09.970583', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
-INSERT INTO `article` VALUES ('3', '<p><br></p>', '的', '1659892913785.jpeg', '0', '1', '0', null, '2', '4', '1', '0', '1', '2022-10-17 17:19:43.216211', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
+INSERT INTO `article` VALUES ('3', '<p><br></p>', '的', '1659892913785.jpeg', '1', '1', '0', null, '2', '4', '1', '0', '1', '2022-10-18 17:19:02.000000', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('4', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '111', '1658382145923.jpeg', '0', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-14 11:41:10.415852', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('5', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '111', '1658382145923.jpeg', '0', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-14 11:41:10.451653', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('6', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '111', '1658382145923.jpeg', '0', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-14 11:41:10.591346', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
@@ -92,7 +92,7 @@ INSERT INTO `article` VALUES ('17', '<p>测试发测试「时光不负，创作�
 INSERT INTO `article` VALUES ('18', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '4', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-21 11:46:00.000000', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('19', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '2', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-21 11:34:25.782300', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('20', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '2', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-21 11:34:25.829219', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
-INSERT INTO `article` VALUES ('21', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '58', '1', '0', null, '0', '0', '1', '0', '10', '2022-10-17 11:21:14.000000', '2022-07-28 15:10:32', null, '这不又来事了，这两天又爆了互联网大裁员。继阿里“向社会输送人才”之后，京东又搞了个“毕业礼”，整的小伙伴们人心惶惶。副业的关注度又一波升级。那今天我们就来聊聊，程序员做副业这件事。', '1658382145923.jpeg');
+INSERT INTO `article` VALUES ('21', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '60', '1', '0', null, '0', '0', '1', '0', '10', '2022-10-17 18:26:23.000000', '2022-07-28 15:10:32', null, '这不又来事了，这两天又爆了互联网大裁员。继阿里“向社会输送人才”之后，京东又搞了个“毕业礼”，整的小伙伴们人心惶惶。副业的关注度又一波升级。那今天我们就来聊聊，程序员做副业这件事。', '1658382145923.jpeg');
 
 -- ----------------------------
 -- Table structure for article_like
@@ -174,13 +174,13 @@ CREATE TABLE `collect` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新日期',
   `delete_at` timestamp(6) NULL DEFAULT NULL COMMENT '软删除时间',
-  `articleId` int(11) DEFAULT NULL COMMENT '主键id',
-  `userId` int(11) DEFAULT NULL COMMENT '主键id',
+  `article_id` int(11) DEFAULT NULL COMMENT '主键id',
+  `user_id` int(11) DEFAULT NULL COMMENT '主键id',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `REL_54569140f8529db8c856904c72` (`articleId`),
-  KEY `FK_046900799ba1e2244ceffff87b4` (`userId`),
-  CONSTRAINT `FK_046900799ba1e2244ceffff87b4` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_54569140f8529db8c856904c726` FOREIGN KEY (`articleId`) REFERENCES `article` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `REL_feff53bb6d88602e0a3da68f8b` (`article_id`),
+  KEY `FK_046900799ba1e2244ceffff87b4` (`user_id`),
+  CONSTRAINT `FK_7c373025d1a6a2f69abb86e8fed` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_feff53bb6d88602e0a3da68f8bc` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -228,6 +228,28 @@ INSERT INTO `comment` VALUES ('8', '2022-09-22 13:08:44', '2022-09-22 13:08:44.3
 INSERT INTO `comment` VALUES ('9', '2022-09-22 13:31:12', '2022-09-22 13:31:12.792440', null, '22', '0', '1', '1', '16', null, null);
 INSERT INTO `comment` VALUES ('10', '2022-09-22 13:31:25', '2022-09-22 13:31:25.110147', null, '33', '0', '1', '1', '16', null, null);
 INSERT INTO `comment` VALUES ('11', '2022-09-22 13:32:20', '2022-09-22 13:32:20.100426', null, '44', '0', '1', '1', '16', null, null);
+
+-- ----------------------------
+-- Table structure for follow
+-- ----------------------------
+DROP TABLE IF EXISTS `follow`;
+CREATE TABLE `follow` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新日期',
+  `delete_at` timestamp(6) NULL DEFAULT NULL COMMENT '软删除时间',
+  `article_id` int(11) DEFAULT NULL COMMENT '主键id',
+  `user_id` int(11) DEFAULT NULL COMMENT '主键id',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `REL_3e5b4f1242847e77b09d5606be` (`article_id`),
+  KEY `FK_d3b514cd26ff6190a8f836f9b28` (`user_id`),
+  CONSTRAINT `FK_3e5b4f1242847e77b09d5606be0` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_d3b514cd26ff6190a8f836f9b28` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of follow
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for links
@@ -328,7 +350,7 @@ DROP TABLE IF EXISTS `manager`;
 CREATE TABLE `manager` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `account` varchar(32) NOT NULL COMMENT '用户登录账号',
-  `password` varchar(200) NOT NULL DEFAULT '$2a$10$1naPaiZH/71bDPQxP.wcOeeLE3EdLTbUTfNWAF.NtF7jkJpJWCMVi' COMMENT '用户登录密码',
+  `password` varchar(200) NOT NULL DEFAULT '$2a$10$3ZbP6XE.PxWkyFW4zQX40.5eWLn1I9WD20rlPq0pGyXwXiHcaSq7m' COMMENT '用户登录密码',
   `name` varchar(32) NOT NULL COMMENT '用户显示的名称',
   `phone` varchar(11) DEFAULT NULL COMMENT '用户手机号码',
   `email` varchar(200) DEFAULT NULL COMMENT '邮箱地址',
