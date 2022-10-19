@@ -4,7 +4,7 @@ import { Base } from './base.entity';
 import { User } from './user.entity';
 
 @Entity({ name: 'collect' })
-export class Collect extends Base {
+export class ArticleCollect extends Base {
   @OneToOne(() => Article)
   @JoinColumn({ name: 'article_id' })
   public article: Article;

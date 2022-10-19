@@ -6,7 +6,7 @@ import { Advertise } from './entity/advertise.entity';
 import { Article } from './entity/article.entity';
 import { ArticleLike } from './entity/articleLike.entity';
 import { Category } from './entity/category.entity';
-import { Collect } from './entity/collect.entity';
+import { ArticleCollect } from './entity/articleCollect.entity';
 import { LoginLogger } from './entity/loginLogger.entity';
 import { Manager } from './entity/manager.entity';
 import { Navgation } from './entity/navgation.entity';
@@ -24,7 +24,7 @@ const table = [
   Tag,
   Article,
   ArticleLike,
-  Collect,
+  ArticleCollect,
   Follow,
   Comment,
   User,

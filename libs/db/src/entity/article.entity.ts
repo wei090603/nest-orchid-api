@@ -14,6 +14,7 @@ import { Tag } from './tag.entity';
 import { User } from './user.entity';
 import { Comment } from './comment.entity';
 import { ArticleLike } from './articleLike.entity';
+import { ArticleCollect } from './articleCollect.entity';
 
 @Entity('article')
 export class Article extends Base {
@@ -123,6 +124,10 @@ export class Article extends Base {
   // 点赞用户
   @OneToMany(() => ArticleLike, (articleLike) => articleLike.article)
   public like: ArticleLike[];
+
+  // 收藏用户
+  @OneToMany(() => ArticleCollect, (articleCollect) => articleCollect.article)
+  public collect: ArticleCollect[];
 
   @OneToMany(() => Comment, (comment) => comment.article, { cascade: true })
   public comment: Comment[];

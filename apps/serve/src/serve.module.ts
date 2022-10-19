@@ -10,9 +10,11 @@ import { ArticleModule } from './article/article.module';
 import { TagModule } from './tag/tag.module';
 import { CommentModule } from './comment/comment.module';
 import { CategoryModule } from './category/category.module';
+import { CollectModule } from './collect/collect.module';
+import { FollowModule } from './follow/follow.module';
 
 @Module({
-  imports: [CommonModule, UserModule, AdvertiseModule, NavgationModule, AuthModule, ArticleModule, TagModule, CommentModule, CategoryModule],
+  imports: [CommonModule, UserModule, AdvertiseModule, NavgationModule, AuthModule, ArticleModule, TagModule, CommentModule, CategoryModule, CollectModule, FollowModule],
   controllers: [ServeController],
   providers: [ServeService],
 })

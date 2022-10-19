@@ -64,6 +64,33 @@ export class UserController {
     return this.userService.getArticle(+id);
   }
 
+  @Get('collect/:id')
+  @ApiOperation({
+    description: '根据用户id获取收藏列表',
+    summary: '根据用户id获取收藏列表',
+  })
+  getCollect(@Param('id') id: string) {
+    return this.userService.getCollect(+id);
+  }
+
+  @Get('like/:id')
+  @ApiOperation({
+    description: '根据用户id获取点赞列表',
+    summary: '根据用户id获取点赞列表',
+  })
+  getLike(@Param('id') id: string) {
+    return this.userService.getLike(+id);
+  }
+
+  @Get('follow/:id')
+  @ApiOperation({
+    description: '根据用户id获取关注列表',
+    summary: '根据用户id获取关注列表',
+  })
+  getFollow(@Param('id') id: string) {
+    return this.userService.getFollow(+id);
+  }
+
   @Get(':id')
   // @UseInterceptors(ClassSerializerInterceptor) // 不返回密码 使用注册dto
   @ApiOperation({
@@ -79,6 +106,6 @@ export class UserController {
   // @UseGuards(JwtAuthGuard)
   // @ApiOperation({ summary: '修改用户信息', description: '修改用户信息' })
   // update(@user() user: User, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.userService.update(user, updateUserDto);
+  //   return this.userService.update(user.id, updateUserDto);
   // }
 }

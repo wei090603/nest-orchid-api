@@ -12,6 +12,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 // import { EmailService } from '@libs/email';
 import { Article } from '@libs/db/entity/article.entity';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
+import { ArticleCollect } from '@libs/db/entity/articleCollect.entity';
+import { ArticleLike } from '@libs/db/entity/articleLike.entity';
+import { Follow } from '@libs/db/entity/follow.entity';
 
 @Injectable()
 export class UserService {
@@ -19,6 +22,12 @@ export class UserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Article)
     private readonly articleRepository: Repository<Article>,
+    @InjectRepository(ArticleCollect)
+    private readonly collectRepository: Repository<ArticleCollect>,
+    @InjectRepository(ArticleLike)
+    private readonly likeRepository: Repository<ArticleLike>,
+    @InjectRepository(Follow)
+    private readonly followRepository: Repository<Follow>,
   ) {}
 
   async create(data: CreateUserDto) {
@@ -43,6 +52,47 @@ export class UserService {
     });
   }
 
+  async getCollect(id: number): Promise<ArticleCollect[]> {
+    return await this.collectRepository.find({
+      relations: ['article', 'article.author'],
+      where: { user: { id } },
+      order: {
+        id: 'DESC',
+      },
+    });
+  }
+
+  async getLike(id: number): Promise<ArticleLike[]> {
+    return await this.likeRepository.find({
+      relations: ['article', 'article.author', 'article.category'],
+      where: { user: { id } },
+      order: {
+        id: 'DESC',
+      },
+    });
+  }
+
+  async getFollow(id: number): Promise<Follow[]> {
+    return await this.followRepository.find({
+      select: {
+        id: true,
+        follow: {
+          id: true,
+          nickName: true,
+          avatar: true,
+          sign: true,
+        },
+      },
+      relations: {
+        follow: true,
+      },
+      where: { user: { id } },
+      order: {
+        id: 'DESC',
+      },
+    });
+  }
+
   findAll() {
     return `This action returns all user`;
   }
@@ -60,13 +110,15 @@ export class UserService {
   // }
 
   // 修改用户信息
-  async update(user: User, dto: UpdateUserDto) {
-    user.avatar = dto.avatar;
-    user.age = dto.age;
-    user.position = dto.position;
-    user.location = dto.location;
-    user.sex = dto.sex;
-    user.nickName = dto.nickName;
-    await this.userRepository.save(user);
+  async update(id: number, dto: UpdateUserDto) {
+    const { avatar, age, position, location, sex, nickName } = dto;
+    await this.userRepository.update(id, {
+      avatar,
+      age,
+      position,
+      location,
+      sex,
+      nickName,
+    });
   }
 }

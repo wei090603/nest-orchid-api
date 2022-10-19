@@ -168,6 +168,12 @@ export class ArticleService {
       .loadRelationCountAndMap('article.isLike', 'article.like', 'like', (qb) =>
         qb.andWhere('like.user = :user', { user: user.id }),
       )
+      .loadRelationCountAndMap(
+        'article.isCollect',
+        'article.collect',
+        'collect',
+        (qb) => qb.andWhere('collect.user = :user', { user: user.id }),
+      )
       .where('article.id = :id', { id })
       .getOne();
     if (!article) throw new ApiException(10400, '文章不存在');

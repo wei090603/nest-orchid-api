@@ -9,7 +9,7 @@ import {
 import { Base } from './base.entity';
 import { Article } from './article.entity';
 import { ArticleLike } from './articleLike.entity';
-import { Collect } from './collect.entity';
+import { ArticleCollect } from './articleCollect.entity';
 import { UserTag } from './userTag.entity';
 import { hashSync } from 'bcryptjs';
 import { Follow } from './follow.entity';
@@ -159,8 +159,9 @@ export class User extends Base {
   @JoinColumn({ name: 'article_like' })
   public articleLike: ArticleLike[];
 
-  @OneToMany(() => Collect, (collect) => collect.user)
-  public collect: Collect[];
+  @OneToMany(() => ArticleCollect, (ArticleCollect) => ArticleCollect.user)
+  @JoinColumn({ name: 'article_collect' })
+  public collect: ArticleCollect[];
 
   @OneToMany(() => Follow, (follow) => follow.user)
   public follow: Follow[];
