@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2022-10-18 17:41:18
+Date: 2022-10-19 18:32:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -92,7 +92,7 @@ INSERT INTO `article` VALUES ('17', '<p>测试发测试「时光不负，创作�
 INSERT INTO `article` VALUES ('18', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '4', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-21 11:46:00.000000', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('19', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '2', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-21 11:34:25.782300', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('20', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '2', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-21 11:34:25.829219', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
-INSERT INTO `article` VALUES ('21', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '60', '1', '0', null, '0', '0', '1', '0', '10', '2022-10-17 18:26:23.000000', '2022-07-28 15:10:32', null, '这不又来事了，这两天又爆了互联网大裁员。继阿里“向社会输送人才”之后，京东又搞了个“毕业礼”，整的小伙伴们人心惶惶。副业的关注度又一波升级。那今天我们就来聊聊，程序员做副业这件事。', '1658382145923.jpeg');
+INSERT INTO `article` VALUES ('21', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '100', '1', '0', null, '0', '0', '1', '0', '10', '2022-10-19 11:15:44.000000', '2022-07-28 15:10:32', null, '这不又来事了，这两天又爆了互联网大裁员。继阿里“向社会输送人才”之后，京东又搞了个“毕业礼”，整的小伙伴们人心惶惶。副业的关注度又一波升级。那今天我们就来聊聊，程序员做副业这件事。', '1658382145923.jpeg');
 
 -- ----------------------------
 -- Table structure for article_like
@@ -110,7 +110,7 @@ CREATE TABLE `article_like` (
   KEY `FK_bbb15e03751797dcf09194affdb` (`user_id`),
   CONSTRAINT `FK_bbb15e03751797dcf09194affdb` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_d16b31406987f24b39f36c5ce04` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of article_like
@@ -178,14 +178,15 @@ CREATE TABLE `collect` (
   `user_id` int(11) DEFAULT NULL COMMENT '主键id',
   PRIMARY KEY (`id`),
   UNIQUE KEY `REL_feff53bb6d88602e0a3da68f8b` (`article_id`),
-  KEY `FK_046900799ba1e2244ceffff87b4` (`user_id`),
+  KEY `FK_7c373025d1a6a2f69abb86e8fed` (`user_id`),
   CONSTRAINT `FK_7c373025d1a6a2f69abb86e8fed` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_feff53bb6d88602e0a3da68f8bc` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of collect
 -- ----------------------------
+INSERT INTO `collect` VALUES ('4', '2022-10-19 11:10:20', '2022-10-19 11:10:20.484901', null, '21', '1');
 
 -- ----------------------------
 -- Table structure for comment
@@ -238,18 +239,20 @@ CREATE TABLE `follow` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新日期',
   `delete_at` timestamp(6) NULL DEFAULT NULL COMMENT '软删除时间',
-  `article_id` int(11) DEFAULT NULL COMMENT '主键id',
+  `follow_id` int(11) DEFAULT NULL COMMENT '主键id',
   `user_id` int(11) DEFAULT NULL COMMENT '主键id',
+  `type` int(11) NOT NULL COMMENT '公告类型（2关注我 1我关注）',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `REL_3e5b4f1242847e77b09d5606be` (`article_id`),
+  UNIQUE KEY `REL_a28c498eea8b783e08c326e5d0` (`follow_id`),
   KEY `FK_d3b514cd26ff6190a8f836f9b28` (`user_id`),
-  CONSTRAINT `FK_3e5b4f1242847e77b09d5606be0` FOREIGN KEY (`article_id`) REFERENCES `article` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_a28c498eea8b783e08c326e5d02` FOREIGN KEY (`follow_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_d3b514cd26ff6190a8f836f9b28` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of follow
 -- ----------------------------
+INSERT INTO `follow` VALUES ('2', '2022-10-19 16:53:44', '2022-10-19 18:15:47.907577', null, '10', '1', '1');
 
 -- ----------------------------
 -- Table structure for links
@@ -350,7 +353,7 @@ DROP TABLE IF EXISTS `manager`;
 CREATE TABLE `manager` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `account` varchar(32) NOT NULL COMMENT '用户登录账号',
-  `password` varchar(200) NOT NULL DEFAULT '$2a$10$3ZbP6XE.PxWkyFW4zQX40.5eWLn1I9WD20rlPq0pGyXwXiHcaSq7m' COMMENT '用户登录密码',
+  `password` varchar(200) NOT NULL DEFAULT '$2a$10$1yANIu3at.fCgHeioyfB0ekF.f53crHjwYkeIvlLpaL9Y4wYBejlC' COMMENT '用户登录密码',
   `name` varchar(32) NOT NULL COMMENT '用户显示的名称',
   `phone` varchar(11) DEFAULT NULL COMMENT '用户手机号码',
   `email` varchar(200) DEFAULT NULL COMMENT '邮箱地址',
@@ -730,6 +733,24 @@ INSERT INTO `user` VALUES ('7', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZ
 INSERT INTO `user` VALUES ('8', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, null, '0', '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-11 13:33:13.892615', '2022-07-28 15:10:29', null);
 INSERT INTO `user` VALUES ('9', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, null, '0', '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-11 13:33:14.619960', '2022-07-28 15:10:29', null);
 INSERT INTO `user` VALUES ('10', 'test3', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试', '17223110317', 'fewfew@qq.com', '0', '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-18 14:09:17.457710', '2022-07-28 15:10:29', null);
+
+-- ----------------------------
+-- Table structure for user_follow_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `user_follow_relation`;
+CREATE TABLE `user_follow_relation` (
+  `follow_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`follow_id`,`user_id`),
+  KEY `IDX_faee8b0622454f464f76c56b2c` (`follow_id`),
+  KEY `IDX_8e04947f9b143713ddef5543bc` (`user_id`),
+  CONSTRAINT `FK_8e04947f9b143713ddef5543bc3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_faee8b0622454f464f76c56b2cd` FOREIGN KEY (`follow_id`) REFERENCES `follow` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_follow_relation
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for user_tag
