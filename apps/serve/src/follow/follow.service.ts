@@ -16,16 +16,16 @@ export class FollowService {
 
   async create(dto: FollowDto, user: User) {
     const { followId } = dto;
-    
+
     const existing = await this.userRepository.findOneBy({ id: followId });
     if (!existing) throw new ApiException(10404, '用户不存在');
-    await this.followRepository.insert({ user, follow: existing });
+    await this.followRepository.insert({ user, followUser: existing });
   }
 
   async delete(id: number, user: User) {
     const collect = await this.followRepository.findOneByOrFail({
-      // article: { id },
-      // user: { id: user.id },
+      followUser: { id },
+      user: { id: user.id },
     });
     await this.followRepository.remove(collect);
   }

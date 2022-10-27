@@ -12,6 +12,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, RegisterCode, UpdateUserDto } from './dto';
@@ -19,6 +20,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
 import { user } from 'apps/shared/decorators/user.decorator';
 import { User } from '@libs/db/entity/user.entity';
+import { OptionAuthGuard } from 'apps/shared/guards/option.strategy';
 
 @ApiTags('用户管理')
 @Controller('user')
@@ -87,8 +89,8 @@ export class UserController {
     description: '根据用户id获取关注列表',
     summary: '根据用户id获取关注列表',
   })
-  getFollow(@Param('id') id: string) {
-    return this.userService.getFollow(+id);
+  getFollow(@Param('id') id: string, @Query('type') type: string) {
+    return this.userService.getFollow(+id, +type);
   }
 
   @Get(':id')
@@ -97,8 +99,9 @@ export class UserController {
     summary: '获取用户详情信息',
     description: '获取用户详情信息',
   })
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @UseGuards(OptionAuthGuard)
+  findOne(@Param('id') id: string, @user() user: User) {
+    return this.userService.findOne(+id, user);
   }
 
   // @Patch()

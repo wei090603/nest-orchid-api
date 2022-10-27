@@ -22,12 +22,4 @@ export class FollowDto {
   })
   @IsNumber({}, { message: '用户id不是有效的数据' })
   readonly followId: number;
-
-  @ApiProperty({
-    description: '关注类型 1-我关注 2-关注我',
-    example: 1,
-    required: true,
-  })
-  @IsNumber({}, { message: '关注类型不是有效数据' })
-  readonly type: number;
 }

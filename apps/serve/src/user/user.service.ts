@@ -72,37 +72,79 @@ export class UserService {
     });
   }
 
-  async getFollow(id: number): Promise<Follow[]> {
-    return await this.followRepository.find({
-      select: {
-        id: true,
-        follow: {
+  // 我关注的用户
+  async getFollow(id: number, type: number): Promise<Follow[]> {
+    if (type === 1) {
+      return await this.followRepository.find({
+        select: {
           id: true,
-          nickName: true,
-          avatar: true,
-          sign: true,
+          followUser: {
+            id: true,
+            nickName: true,
+            avatar: true,
+            sign: true,
+          },
         },
-      },
-      relations: {
-        follow: true,
-      },
-      where: { user: { id } },
-      order: {
-        id: 'DESC',
-      },
-    });
+        relations: {
+          followUser: true,
+        },
+        where: { user: { id } },
+        order: {
+          id: 'DESC',
+        },
+      });
+    }
+
+    if (type === 2) {
+      return await this.followRepository.find({
+        select: {
+          id: true,
+          user: {
+            id: true,
+            nickName: true,
+            avatar: true,
+            sign: true,
+          },
+        },
+        relations: {
+          user: true,
+        },
+        where: { followUser: { id } },
+        order: {
+          id: 'DESC',
+        },
+      });
+    }
   }
 
-  findAll() {
-    return `This action returns all user`;
-  }
+  // 根据用户id获取用户信息
+  async findOne(id: number, user: User): Promise<User> {
+    // return await this.userRepository.findOneOrFail({
+    //   select: ['nickName', 'account', 'avatar', 'sign', 'createdAt'],
+    //   where: { id },
+    // });
 
-  // 根据用户id获取用户信息及文章
-  async findOne(id: number): Promise<User> {
-    return await this.userRepository.findOneOrFail({
-      select: ['nickName', 'account', 'avatar', 'sign', 'createdAt'],
-      where: { id },
-    });
+    const userInfo = await this.userRepository
+      .createQueryBuilder('user')
+      .select([
+        'user.nickName',
+        'user.account',
+        'user.avatar',
+        'user.sign',
+        'user.createdAt',
+      ])
+      .loadRelationCountAndMap(
+        'user.followCount',
+        'user.follow',
+        'follow',
+        (qb) => qb.andWhere('follow.user = :user', { user: { id } }),
+      )
+      .where('user.id = :id', { id })
+      .getOne();
+
+    console.log(userInfo, 'userInfo');
+
+    return userInfo;
   }
 
   // async registerCode({ email }: RegisterCode) {

@@ -7,12 +7,13 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiOperation, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { user } from 'apps/shared/decorators/user.decorator';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
 import { FollowDto } from './dto';
 import { FollowService } from './follow.service';
 
+@ApiTags('关注管理')
 @Controller('follow')
 export class FollowController {
   constructor(private readonly followService: FollowService) {}
@@ -26,7 +27,7 @@ export class FollowController {
     return this.followService.create(dto, user);
   }
 
-  @Delete()
+  @Delete('/:id')
   @ApiOperation({ description: '删除关注', summary: '删除关注' })
   // 此接口需要传递token;
   @ApiBearerAuth()

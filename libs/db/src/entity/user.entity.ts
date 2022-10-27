@@ -5,6 +5,7 @@ import {
   JoinColumn,
   ManyToMany,
   BeforeInsert,
+  ManyToOne,
 } from 'typeorm';
 import { Base } from './base.entity';
 import { Article } from './article.entity';
@@ -164,7 +165,12 @@ export class User extends Base {
   public collect: ArticleCollect[];
 
   @OneToMany(() => Follow, (follow) => follow.user)
+  @JoinColumn({ name: 'follow_id' })
   public follow: Follow[];
+
+  @OneToMany(() => Follow, (follow) => follow.user)
+  @JoinColumn({ name: 'follow_user_id' })
+  public followUser: Follow[];
 
   @ManyToMany(() => UserTag, (userTag) => userTag.user)
   public userTag: UserTag[];
