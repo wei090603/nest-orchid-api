@@ -6,6 +6,7 @@ import {
   ManyToMany,
   BeforeInsert,
   ManyToOne,
+  JoinTable,
 } from 'typeorm';
 import { Base } from './base.entity';
 import { Article } from './article.entity';
@@ -13,7 +14,6 @@ import { ArticleLike } from './articleLike.entity';
 import { ArticleCollect } from './articleCollect.entity';
 import { UserTag } from './userTag.entity';
 import { hashSync } from 'bcryptjs';
-import { Follow } from './follow.entity';
 
 @Entity('user')
 export class User extends Base {
@@ -163,14 +163,6 @@ export class User extends Base {
   @OneToMany(() => ArticleCollect, (ArticleCollect) => ArticleCollect.user)
   @JoinColumn({ name: 'article_collect' })
   public collect: ArticleCollect[];
-
-  @OneToMany(() => Follow, (follow) => follow.user)
-  @JoinColumn({ name: 'follow_id' })
-  public follow: Follow[];
-
-  @OneToMany(() => Follow, (follow) => follow.user)
-  @JoinColumn({ name: 'follow_user_id' })
-  public followUser: Follow[];
 
   @ManyToMany(() => UserTag, (userTag) => userTag.user)
   public userTag: UserTag[];

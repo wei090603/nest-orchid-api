@@ -74,47 +74,13 @@ export class UserService {
 
   // 我关注的用户
   async getFollow(id: number, type: number): Promise<Follow[]> {
-    if (type === 1) {
-      return await this.followRepository.find({
-        select: {
-          id: true,
-          followUser: {
-            id: true,
-            nickName: true,
-            avatar: true,
-            sign: true,
-          },
-        },
-        relations: {
-          followUser: true,
-        },
-        where: { user: { id } },
-        order: {
-          id: 'DESC',
-        },
-      });
-    }
-
-    if (type === 2) {
-      return await this.followRepository.find({
-        select: {
-          id: true,
-          user: {
-            id: true,
-            nickName: true,
-            avatar: true,
-            sign: true,
-          },
-        },
-        relations: {
-          user: true,
-        },
-        where: { followUser: { id } },
-        order: {
-          id: 'DESC',
-        },
-      });
-    }
+    const list = await this.followRepository.find({
+      where: {
+        userId: id,
+      },
+    });
+    console.log(list, 'list');
+    return [];
   }
 
   // 根据用户id获取用户信息
@@ -133,16 +99,14 @@ export class UserService {
         'user.sign',
         'user.createdAt',
       ])
-      .loadRelationCountAndMap(
-        'user.followCount',
-        'user.follow',
-        'follow',
-        (qb) => qb.andWhere('follow.user = :user', { user: { id } }),
-      )
+      // .loadRelationCountAndMap(
+      //   'user.followCount',
+      //   'user.follow',
+      //   'follow',
+      //   (qb) => qb.andWhere('follow.user = :user', { user: { id } }),
+      // )
       .where('user.id = :id', { id })
       .getOne();
-
-    console.log(userInfo, 'userInfo');
 
     return userInfo;
   }

@@ -19,13 +19,16 @@ export class FollowService {
 
     const existing = await this.userRepository.findOneBy({ id: followId });
     if (!existing) throw new ApiException(10404, '用户不存在');
-    await this.followRepository.insert({ user, followUser: existing });
+    await this.followRepository.insert({
+      userId: user.id,
+      followId: existing.id,
+    });
   }
 
   async delete(id: number, user: User) {
     const collect = await this.followRepository.findOneByOrFail({
-      followUser: { id },
-      user: { id: user.id },
+      followId: id,
+      userId: user.id,
     });
     await this.followRepository.remove(collect);
   }
