@@ -16,7 +16,6 @@ export class FollowService {
 
   async create(dto: FollowDto, user: User) {
     const { followId } = dto;
-
     const existing = await this.userRepository.findOneBy({ id: followId });
     if (!existing) throw new ApiException(10404, '用户不存在');
     await this.followRepository.insert({

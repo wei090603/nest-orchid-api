@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto, RegisterCode, UpdateUserDto } from './dto';
 import { User } from '@libs/db/entity/user.entity';
-import { Not, Repository } from 'typeorm';
+import { In, Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 // import { EmailService } from '@libs/email';
 import { Article } from '@libs/db/entity/article.entity';
@@ -73,14 +73,25 @@ export class UserService {
   }
 
   // 我关注的用户
-  async getFollow(id: number, type: number): Promise<Follow[]> {
+  async getFollow(id: number, type: number): Promise<User[]> {
+    const wherekey = type === 1 ? 'userId' : 'followId';
+    const selectKey = type === 2 ? 'userId' : 'followId';
+
+    // let uesrList: Partial<User>[] = [];
     const list = await this.followRepository.find({
+      select: [selectKey],
       where: {
-        userId: id,
+        [wherekey]: id,
       },
     });
-    console.log(list, 'list');
-    return [];
+    if (list.length === 0) return [];
+    const ids = list.map((item) => item[selectKey]);
+    return await this.userRepository.find({
+      select: ['id', 'nickName', 'avatar'],
+      where: {
+        id: In(ids),
+      },
+    });
   }
 
   // 根据用户id获取用户信息

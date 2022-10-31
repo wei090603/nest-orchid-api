@@ -1,22 +1,22 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
 import { Base } from './base.entity';
 
 // 关注
 @Entity({ name: 'follow' })
-export class Follow extends Base {
-  @Column({
+export class Follow {
+  @PrimaryColumn({
     type: 'int',
-    nullable: false,
     name: 'follow_id',
     comment: '关注的用户id',
   })
+  @Index()
   public followId: number;
 
-  @Column({
+  @PrimaryColumn({
     type: 'int',
-    nullable: false,
     name: 'user_id',
     comment: '当前用户id',
   })
+  @Index()
   public userId: number;
 }
