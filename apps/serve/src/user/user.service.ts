@@ -73,7 +73,7 @@ export class UserService {
   }
 
   // 我关注的用户
-  async getFollow(id: number, type: number): Promise<User[]> {
+  async getFollow(id: number, type: number, user: User): Promise<User[]> {
     const wherekey = type === 1 ? 'userId' : 'followId';
     const selectKey = type === 2 ? 'userId' : 'followId';
 

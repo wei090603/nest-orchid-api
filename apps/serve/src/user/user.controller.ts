@@ -89,8 +89,13 @@ export class UserController {
     description: '根据用户id获取关注列表',
     summary: '根据用户id获取关注列表',
   })
-  getFollow(@Param('id') id: string, @Query('type') type: string) {
-    return this.userService.getFollow(+id, +type);
+  @UseGuards(OptionAuthGuard)
+  getFollow(
+    @Param('id') id: string,
+    @Query('type') type: string,
+    @user() user: User,
+  ) {
+    return this.userService.getFollow(+id, +type, user);
   }
 
   @Get(':id')
