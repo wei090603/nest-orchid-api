@@ -13,6 +13,7 @@ import {
   Delete,
   UseGuards,
   Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, RegisterCode, UpdateUserDto, UserInfoDto } from './dto';
@@ -110,15 +111,15 @@ export class UserController {
   })
   @UseGuards(OptionAuthGuard)
   async findOne(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @user() user: User,
   ): Promise<UserInfoDto> {
     // followNum: 自己关注的人数
     // followedNum: 关注自己的人数
     const [userInfo, followNum, followedNum] = await Promise.all([
-      this.userService.findOne(+id),
-      this.followService.getMyFollowerCount(+id),
-      this.followService.getMyFollowederCount(+id),
+      this.userService.findOne(id),
+      this.followService.getMyFollowerCount(id),
+      this.followService.getMyFollowederCount(id),
     ]);
     const userInfoDto = {
       ...userInfo,
