@@ -95,14 +95,12 @@ export class UserService {
   }
 
   // 根据用户id获取用户信息
-  async findOne(id: number, user: User): Promise<User> {
+  async findOne(id: number, user?: User): Promise<User> {
     // return await this.userRepository.findOneOrFail({
     //   select: ['nickName', 'account', 'avatar', 'sign', 'createdAt'],
     //   where: { id },
     // });
-
-
-    const userInfo = await this.userRepository
+    const userInfo = this.userRepository
       .createQueryBuilder('user')
       .select([
         'user.nickName',
@@ -119,7 +117,6 @@ export class UserService {
       // )
       .where('user.id = :id', { id })
       .getOne();
-
     return userInfo;
   }
 
@@ -139,5 +136,4 @@ export class UserService {
       nickName,
     });
   }
-
 }

@@ -15,17 +15,21 @@ import {
   Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto, RegisterCode, UpdateUserDto } from './dto';
+import { CreateUserDto, RegisterCode, UpdateUserDto, UserInfoDto } from './dto';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
 import { user } from 'apps/shared/decorators/user.decorator';
 import { User } from '@libs/db/entity/user.entity';
 import { OptionAuthGuard } from 'apps/shared/guards/option.strategy';
+import { FollowService } from '../follow/follow.service';
 
 @ApiTags('用户管理')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly followService: FollowService,
+  ) {}
 
   @Post()
   @ApiOperation({ summary: '用户注册', description: '用户注册' })
@@ -105,8 +109,23 @@ export class UserController {
     description: '获取用户详情信息',
   })
   @UseGuards(OptionAuthGuard)
-  findOne(@Param('id') id: string, @user() user: User) {
-    return this.userService.findOne(+id, user);
+  async findOne(
+    @Param('id') id: string,
+    @user() user: User,
+  ): Promise<UserInfoDto> {
+    // followNum: 自己关注的人数
+    // followedNum: 关注自己的人数
+    const [userInfo, followNum, followedNum] = await Promise.all([
+      this.userService.findOne(+id),
+      this.followService.getMyFollowerCount(+id),
+      this.followService.getMyFollowederCount(+id),
+    ]);
+    const userInfoDto = {
+      ...userInfo,
+      followedNum,
+      followNum,
+    } as UserInfoDto;
+    return userInfoDto;
   }
 
   // @Patch()

@@ -6,10 +6,11 @@
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
+import { FollowModule } from '../follow/follow.module';
 // import { EmailModule } from '@libs/email';
 
 @Module({
-  imports: [],
+  imports: [FollowModule],
   controllers: [UserController],
   providers: [UserService],
 })
