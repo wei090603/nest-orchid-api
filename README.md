@@ -28,14 +28,24 @@
   ```
 
 * 4、安装依赖包
-  ```shell
-  yarn install
+  ```bash
+  # note: npm i yarn -g
+  yarn
   ```
 
 * 5、启动项目
 
-  ```shell
-  nest start -w **
+  ```bash
+  # dev env build
+  docker-composer up -d
+  # docker ps check redis and mysql start
+  docker ps
+  # sql import
+  docker cp ./nest_orchid.sql mysql:/tmp/init.sql
+  docker exec -it mysql /bin/sh
+  cd tmp && mysql -u root -pabc123456 nest_orchid < init.sql
+  # run dev serve
+  yarn start:serve:dev
   ```
 * 6、如果你想初始化数据,可以直接导入文件种sql数据
 

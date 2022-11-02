@@ -10,16 +10,16 @@ db:
     host: 127.0.0.1
     port: 3306
     username: root
-    password: weitao
+    password: abc123456
     database: nest_orchid
     logging: ['error']
-    synchronize: true
+    synchronize: false
     timezone: '+08:00'
     cache: { duration: 0 }
 # CACHE REDIS
 redis:
   host: 127.0.0.1
-  password: 123456
+  password: 123456aa
   port: 6379
 
 # JWT AUTH

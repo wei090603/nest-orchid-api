@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    command: --lower-case-table-names=1
+    environment:
+      MYSQL_ROOT_PASSWORD: abc123456
+      TZ: Asia/Shanghai
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - ~/nest-orchid-api/mysql/data:/var/lib/mysql
+      - ~/nest-orchid-api/mysql/config:/etc/mysql/conf.d
+  
+  redis:
+    container_name: redis
+    image: redis:6.0.10
+    command: redis-server --requirepass 123456aa
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - 6379:6379
+    expose:
+      # Opens port 3306 on the container
+      - 6379
+    volumes:
+      - ~/nest-orchid-api/redis/conf:/usr/local/etc/redis/redis.conf
+      - ~/nest-orchid-api/redis/data:/data
+      - ~/nest-orchid-api/redis/logs:/logs

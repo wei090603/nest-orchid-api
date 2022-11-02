@@ -8,6 +8,7 @@ import {
   IsNumber,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '@libs/db/entity/user.entity';
 
 export class RegisterCode {
   @ApiProperty({
@@ -77,4 +78,9 @@ export class UpdateUserDto {
     description: '当前位置',
   })
   readonly location: string;
+}
+
+export class UserInfoDto extends User {
+  followNum: number;
+  followedNum: number;
 }
