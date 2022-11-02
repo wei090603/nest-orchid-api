@@ -31,4 +31,6 @@ export class FollowService {
     });
     await this.followRepository.remove(collect);
   }
+
+  
 }

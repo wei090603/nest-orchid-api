@@ -101,6 +101,7 @@ export class UserService {
     //   where: { id },
     // });
 
+
     const userInfo = await this.userRepository
       .createQueryBuilder('user')
       .select([
@@ -138,4 +139,5 @@ export class UserService {
       nickName,
     });
   }
+
 }
