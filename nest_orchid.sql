@@ -1,17 +1,17 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : nest
+ Source Server         : root
  Source Server Type    : MySQL
- Source Server Version : 50736
- Source Host           : 139.155.172.199:3306
+ Source Server Version : 50740
+ Source Host           : 127.0.0.1:3306
  Source Schema         : nest_orchid
 
  Target Server Type    : MySQL
- Target Server Version : 50736
+ Target Server Version : 50740
  File Encoding         : 65001
 
- Date: 02/11/2022 21:45:38
+ Date: 03/11/2022 23:44:14
 */
 
 SET NAMES utf8mb4;
@@ -298,25 +298,21 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `follow`;
 CREATE TABLE `follow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
-  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新日期',
-  `delete_at` timestamp(6) NULL DEFAULT NULL COMMENT '软删除时间',
-  `follow_id` int(11) DEFAULT NULL COMMENT '主键id',
-  `user_id` int(11) DEFAULT NULL COMMENT '主键id',
-  `type` int(11) NOT NULL COMMENT '公告类型（2关注我 1我关注）',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `REL_a28c498eea8b783e08c326e5d0` (`follow_id`),
-  KEY `FK_d3b514cd26ff6190a8f836f9b28` (`user_id`),
-  CONSTRAINT `FK_a28c498eea8b783e08c326e5d02` FOREIGN KEY (`follow_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_d3b514cd26ff6190a8f836f9b28` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `follow_id` int(11) NOT NULL COMMENT '关注的用户id',
+  `user_id` int(11) NOT NULL COMMENT '当前用户id',
+  PRIMARY KEY (`follow_id`,`user_id`),
+  KEY `IDX_a28c498eea8b783e08c326e5d0` (`follow_id`),
+  KEY `IDX_d3b514cd26ff6190a8f836f9b2` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of follow
 -- ----------------------------
 BEGIN;
-INSERT INTO `follow` VALUES (2, '2022-10-19 16:53:44', '2022-10-19 18:15:47.907577', NULL, 10, 1, 1);
+INSERT INTO `follow` VALUES (1, 10);
+INSERT INTO `follow` VALUES (2, 10);
+INSERT INTO `follow` VALUES (3, 10);
+INSERT INTO `follow` VALUES (10, 1);
 COMMIT;
 
 -- ----------------------------
@@ -416,7 +412,7 @@ DROP TABLE IF EXISTS `manager`;
 CREATE TABLE `manager` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `account` varchar(32) NOT NULL COMMENT '用户登录账号',
-  `password` varchar(200) NOT NULL DEFAULT '$2a$10$1yANIu3at.fCgHeioyfB0ekF.f53crHjwYkeIvlLpaL9Y4wYBejlC' COMMENT '用户登录密码',
+  `password` varchar(200) NOT NULL DEFAULT '$2a$10$iZPPA0tNzorij67/TdcUVemOynJjRfk/fOn32SHV/BNAoSJ6YMGYC' COMMENT '用户登录密码',
   `name` varchar(32) NOT NULL COMMENT '用户显示的名称',
   `phone` varchar(11) DEFAULT NULL COMMENT '用户手机号码',
   `email` varchar(200) DEFAULT NULL COMMENT '邮箱地址',
@@ -805,7 +801,7 @@ CREATE TABLE `user` (
 BEGIN;
 INSERT INTO `user` VALUES (1, 'test', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '测试1', '17802093443', '1176022890@qq.com', 0, 0, 0, 1, '', 1, NULL, '来将可留姓名~', 0, 'default_avatar.png', NULL, 1, '2022-09-18 16:59:04.558908', '2022-07-28 15:10:29', NULL);
 INSERT INTO `user` VALUES (2, 'test2', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试2', '17802093444', '1@qq.com', 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-09-18 14:10:06.944549', '2022-07-28 15:10:29', NULL);
-INSERT INTO `user` VALUES (3, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', NULL, '2@qq.com', 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.pngdefault_avatar', NULL, 1, '2022-09-11 13:33:17.156031', '2022-07-28 15:10:29', NULL);
+INSERT INTO `user` VALUES (3, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', NULL, '2@qq.com', 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-11-03 20:14:43.912485', '2022-07-28 15:10:29', NULL);
 INSERT INTO `user` VALUES (4, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', NULL, NULL, 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-09-11 13:33:09.236057', '2022-07-28 15:10:29', NULL);
 INSERT INTO `user` VALUES (5, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', NULL, NULL, 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-09-11 13:33:10.756890', '2022-07-28 15:10:29', NULL);
 INSERT INTO `user` VALUES (6, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', NULL, NULL, 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-09-11 13:33:13.068212', '2022-07-28 15:10:29', NULL);
@@ -814,20 +810,6 @@ INSERT INTO `user` VALUES (8, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjf
 INSERT INTO `user` VALUES (9, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', NULL, NULL, 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-09-11 13:33:14.619960', '2022-07-28 15:10:29', NULL);
 INSERT INTO `user` VALUES (10, 'test3', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试', '17223110317', 'fewfew@qq.com', 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-09-18 14:09:17.457710', '2022-07-28 15:10:29', NULL);
 COMMIT;
-
--- ----------------------------
--- Table structure for user_follow_relation
--- ----------------------------
-DROP TABLE IF EXISTS `user_follow_relation`;
-CREATE TABLE `user_follow_relation` (
-  `follow_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`follow_id`,`user_id`),
-  KEY `IDX_faee8b0622454f464f76c56b2c` (`follow_id`),
-  KEY `IDX_8e04947f9b143713ddef5543bc` (`user_id`),
-  CONSTRAINT `FK_8e04947f9b143713ddef5543bc3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_faee8b0622454f464f76c56b2cd` FOREIGN KEY (`follow_id`) REFERENCES `follow` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for user_tag
