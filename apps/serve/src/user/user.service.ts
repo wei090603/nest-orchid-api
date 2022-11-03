@@ -5,7 +5,12 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { CreateUserDto, RegisterCode, UpdateUserDto } from './dto';
+import {
+  CreateUserDto,
+  RegisterCode,
+  UpdateUserDto,
+  UserFollowDto,
+} from './dto';
 import { User } from '@libs/db/entity/user.entity';
 import { In, Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,6 +20,7 @@ import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { ArticleCollect } from '@libs/db/entity/articleCollect.entity';
 import { ArticleLike } from '@libs/db/entity/articleLike.entity';
 import { Follow } from '@libs/db/entity/follow.entity';
+import { FollowService } from '../follow/follow.service';
 
 @Injectable()
 export class UserService {
@@ -26,8 +32,7 @@ export class UserService {
     private readonly collectRepository: Repository<ArticleCollect>,
     @InjectRepository(ArticleLike)
     private readonly likeRepository: Repository<ArticleLike>,
-    @InjectRepository(Follow)
-    private readonly followRepository: Repository<Follow>,
+    private readonly followService: FollowService,
   ) {}
 
   async create(data: CreateUserDto) {
@@ -73,25 +78,37 @@ export class UserService {
   }
 
   // 我关注的用户
-  async getFollow(id: number, type: number, user: User): Promise<User[]> {
+  async getFollow(
+    id: number,
+    type: number,
+    user: User,
+  ): Promise<UserFollowDto[]> {
     const wherekey = type === 1 ? 'userId' : 'followId';
     const selectKey = type === 2 ? 'userId' : 'followId';
 
     // let uesrList: Partial<User>[] = [];
-    const list = await this.followRepository.find({
-      select: [selectKey],
-      where: {
-        [wherekey]: id,
-      },
-    });
-    if (list.length === 0) return [];
-    const ids = list.map((item) => item[selectKey]);
-    return await this.userRepository.find({
-      select: ['id', 'nickName', 'avatar'],
-      where: {
-        id: In(ids),
-      },
-    });
+    // 传入用户关注列表
+    // 当前登录用户关注列表
+    const [otherFollow, meFollow] = await Promise.all([
+      this.followService.getFollowList(id, wherekey, selectKey),
+      this.followService.getFollowList(user.id, 'userId', 'followId'),
+    ]);
+
+    const [otherFollowInfo, meFollowInfo] = await Promise.all([
+      this.getUserInfoList(otherFollow),
+      this.getUserInfoList(meFollow),
+    ]);
+
+    const meFollowId = meFollowInfo.map((item) => item.id);
+
+    const followList = otherFollowInfo.map((item) => ({
+      id: item.id,
+      nickName: item.nickName,
+      avatar: item.avatar,
+      isFollow: meFollowId.includes(item.id),
+    }));
+
+    return followList;
   }
 
   // 根据用户id获取用户信息
@@ -135,5 +152,15 @@ export class UserService {
       sex,
       nickName,
     });
+  }
+
+  // 获取用户列表信息
+  async getUserInfoList(idList: number[]) {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .select(['user.id', 'user.nickName', 'user.avatar'])
+      .orderBy('user.id', 'DESC')
+      .whereInIds(idList)
+      .getMany();
   }
 }

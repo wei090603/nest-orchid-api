@@ -32,12 +32,13 @@ export class FollowService {
     await this.followRepository.remove(collect);
   }
 
-  async isMyFollowed(myId: number, userId: number): Promise<Boolean> {
+  // 查看我是否关注该用户
+  async isMyFollowed(myId: number, userId: number): Promise<boolean> {
     const num = await this.followRepository.count({
       where: {
         userId: myId,
         followId: userId,
-      }
+      },
     });
     return !!num;
   }
@@ -60,5 +61,22 @@ export class FollowService {
       },
     });
     return num;
+  }
+
+  // 查看关注的列表
+  async getFollowList(
+    id: number,
+    wherekey: 'userId' | 'followId',
+    selectKey: 'userId' | 'followId',
+  ): Promise<number[]> {
+    if (!id) return [];
+    const list = await this.followRepository.find({
+      select: [selectKey],
+      where: {
+        [wherekey]: id,
+      },
+    });
+    if (list.length === 0) return [];
+    return list?.map((item) => item[selectKey]) || [];
   }
 }

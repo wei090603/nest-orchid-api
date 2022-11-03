@@ -116,16 +116,18 @@ export class UserController {
   ): Promise<UserInfoDto> {
     // followNum: 自己关注的人数
     // followedNum: 关注自己的人数
-    const [userInfo, followNum, followedNum] = await Promise.all([
+    const [userInfo, followNum, followedNum, isFollow] = await Promise.all([
       this.userService.findOne(id),
       this.followService.getMyFollowerCount(id),
       this.followService.getMyFollowederCount(id),
+      this.followService.isMyFollowed(user.id, id),
     ]);
     const userInfoDto = {
       ...userInfo,
       followedNum,
       followNum,
-    } as UserInfoDto;
+      isFollow,
+    };
     return userInfoDto;
   }
 

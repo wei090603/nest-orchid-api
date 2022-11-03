@@ -7,7 +7,7 @@ import {
   IsOptional,
   IsNumber,
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { User } from '@libs/db/entity/user.entity';
 
 export class RegisterCode {
@@ -80,7 +80,12 @@ export class UpdateUserDto {
   readonly location: string;
 }
 
-export class UserInfoDto extends User {
+export class UserInfoDto extends PartialType(User) {
   followNum: number;
   followedNum: number;
+  isFollow: boolean;
+}
+
+export class UserFollowDto extends PartialType(User) {
+  isFollow: boolean;
 }
