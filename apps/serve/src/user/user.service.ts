@@ -19,7 +19,6 @@ import { Article } from '@libs/db/entity/article.entity';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { ArticleCollect } from '@libs/db/entity/articleCollect.entity';
 import { ArticleLike } from '@libs/db/entity/articleLike.entity';
-import { Follow } from '@libs/db/entity/follow.entity';
 import { FollowService } from '../follow/follow.service';
 
 @Injectable()
@@ -93,30 +92,20 @@ export class UserService {
       this.followService.getFollowList(id, wherekey, selectKey),
       this.followService.getFollowList(user.id, 'userId', 'followId'),
     ]);
-
-    const [otherFollowInfo, meFollowInfo] = await Promise.all([
-      this.getUserInfoList(otherFollow),
-      this.getUserInfoList(meFollow),
-    ]);
-
-    const meFollowId = meFollowInfo.map((item) => item.id);
+    const otherFollowInfo = await this.getUserInfoList(otherFollow);
 
     const followList = otherFollowInfo.map((item) => ({
       id: item.id,
       nickName: item.nickName,
       avatar: item.avatar,
-      isFollow: meFollowId.includes(item.id),
+      isFollow: meFollow.includes(item.id),
     }));
 
     return followList;
   }
 
   // 根据用户id获取用户信息
-  async findOne(id: number, user?: User): Promise<User> {
-    // return await this.userRepository.findOneOrFail({
-    //   select: ['nickName', 'account', 'avatar', 'sign', 'createdAt'],
-    //   where: { id },
-    // });
+  async findOne(id: number): Promise<User> {
     const userInfo = this.userRepository
       .createQueryBuilder('user')
       .select([
@@ -126,12 +115,18 @@ export class UserService {
         'user.sign',
         'user.createdAt',
       ])
-      // .loadRelationCountAndMap(
-      //   'user.followCount',
-      //   'user.follow',
-      //   'follow',
-      //   (qb) => qb.andWhere('follow.user = :user', { user: { id } }),
-      // )
+      .loadRelationCountAndMap(
+        'user.likeNum',
+        'user.articleLike',
+        'like',
+        (qb) => qb.andWhere('like.user = :user', { user: id }),
+      )
+      .loadRelationCountAndMap(
+        'user.collectNum',
+        'user.collect',
+        'collect',
+        (qb) => qb.andWhere('collect.user = :user', { user: id }),
+      )
       .where('user.id = :id', { id })
       .getOne();
     return userInfo;
