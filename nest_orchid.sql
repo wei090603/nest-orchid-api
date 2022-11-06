@@ -11,7 +11,7 @@
  Target Server Version : 50740
  File Encoding         : 65001
 
- Date: 03/11/2022 23:44:14
+ Date: 06/11/2022 23:16:59
 */
 
 SET NAMES utf8mb4;
@@ -412,7 +412,7 @@ DROP TABLE IF EXISTS `manager`;
 CREATE TABLE `manager` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `account` varchar(32) NOT NULL COMMENT '用户登录账号',
-  `password` varchar(200) NOT NULL DEFAULT '$2a$10$iZPPA0tNzorij67/TdcUVemOynJjRfk/fOn32SHV/BNAoSJ6YMGYC' COMMENT '用户登录密码',
+  `password` varchar(200) NOT NULL DEFAULT '$2a$10$14ti3MtyRcU5dHObcG9olOiZCCe9htiWghM8ZqTh3CVlXQxIDf3gS' COMMENT '用户登录密码',
   `name` varchar(32) NOT NULL COMMENT '用户显示的名称',
   `phone` varchar(11) DEFAULT NULL COMMENT '用户手机号码',
   `email` varchar(200) DEFAULT NULL COMMENT '邮箱地址',
@@ -710,6 +710,25 @@ INSERT INTO `roles_resources` VALUES (5, 5);
 COMMIT;
 
 -- ----------------------------
+-- Table structure for sign
+-- ----------------------------
+DROP TABLE IF EXISTS `sign`;
+CREATE TABLE `sign` (
+  `user_id` int(11) NOT NULL COMMENT '当前用户id',
+  `favs` int(11) NOT NULL COMMENT '签到获得积分数量',
+  `created_at` date NOT NULL COMMENT '创建日期',
+  PRIMARY KEY (`user_id`,`created_at`),
+  KEY `IDX_bf50b9453f76930a85c7ad2ffd` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sign
+-- ----------------------------
+BEGIN;
+INSERT INTO `sign` VALUES (10, 5, '2022-11-05');
+COMMIT;
+
+-- ----------------------------
 -- Table structure for tag
 -- ----------------------------
 DROP TABLE IF EXISTS `tag`;
@@ -781,7 +800,7 @@ CREATE TABLE `user` (
   `date_birth` varchar(255) DEFAULT '' COMMENT '出生日期',
   `position` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否允许获取位置',
   `location` varchar(200) DEFAULT NULL COMMENT '城市',
-  `sign` varchar(100) DEFAULT NULL COMMENT '个性签名',
+  `sign_text` varchar(100) DEFAULT NULL COMMENT '个性签名',
   `vip` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否会员',
   `avatar` varchar(200) NOT NULL DEFAULT 'default_avatar.png' COMMENT '头像地址',
   `open_id` varchar(200) DEFAULT NULL COMMENT '微信用户openid',
@@ -808,7 +827,7 @@ INSERT INTO `user` VALUES (6, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjf
 INSERT INTO `user` VALUES (7, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', NULL, NULL, 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-09-11 13:33:11.988109', '2022-07-28 15:10:29', NULL);
 INSERT INTO `user` VALUES (8, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', NULL, NULL, 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-09-11 13:33:13.892615', '2022-07-28 15:10:29', NULL);
 INSERT INTO `user` VALUES (9, NULL, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', NULL, NULL, 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-09-11 13:33:14.619960', '2022-07-28 15:10:29', NULL);
-INSERT INTO `user` VALUES (10, 'test3', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试', '17223110317', 'fewfew@qq.com', 0, 0, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-09-18 14:09:17.457710', '2022-07-28 15:10:29', NULL);
+INSERT INTO `user` VALUES (10, 'test3', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试', '17223110317', 'fewfew@qq.com', 10, 1, 0, 1, '', 1, NULL, NULL, 0, 'default_avatar.png', NULL, 1, '2022-11-06 22:45:05.000000', '2022-07-28 15:10:29', NULL);
 COMMIT;
 
 -- ----------------------------
