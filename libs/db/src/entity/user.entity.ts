@@ -14,6 +14,7 @@ import { ArticleLike } from './articleLike.entity';
 import { ArticleCollect } from './articleCollect.entity';
 import { UserTag } from './userTag.entity';
 import { hashSync } from 'bcryptjs';
+import { Sign } from './sign.entity';
 
 @Entity('user')
 export class User extends Base {
@@ -118,10 +119,10 @@ export class User extends Base {
   @Column('varchar', {
     nullable: true,
     length: 100,
-    name: 'sign',
+    name: 'sign_text',
     comment: '个性签名',
   })
-  public sign: string;
+  public signText: string;
 
   @Column('boolean', {
     name: 'vip',
@@ -157,11 +158,11 @@ export class User extends Base {
   public article: Article[];
 
   @OneToMany(() => ArticleLike, (like) => like.user)
-  @JoinColumn({ name: 'article_like' })
+  // @JoinColumn({ name: 'article_like' })
   public articleLike: ArticleLike[];
 
   @OneToMany(() => ArticleCollect, (ArticleCollect) => ArticleCollect.user)
-  @JoinColumn({ name: 'article_collect' })
+  // @JoinColumn({ name: 'article_collect' })
   public collect: ArticleCollect[];
 
   @ManyToMany(() => UserTag, (userTag) => userTag.user)

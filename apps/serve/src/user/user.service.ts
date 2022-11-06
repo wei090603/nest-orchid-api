@@ -20,6 +20,7 @@ import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { ArticleCollect } from '@libs/db/entity/articleCollect.entity';
 import { ArticleLike } from '@libs/db/entity/articleLike.entity';
 import { FollowService } from '../follow/follow.service';
+import { Sign } from '@libs/db/entity/sign.entity';
 
 @Injectable()
 export class UserService {
@@ -32,6 +33,8 @@ export class UserService {
     @InjectRepository(ArticleLike)
     private readonly likeRepository: Repository<ArticleLike>,
     private readonly followService: FollowService,
+    @InjectRepository(Sign)
+    private readonly signRepository: Repository<Sign>,
   ) {}
 
   async create(data: CreateUserDto) {
@@ -112,7 +115,7 @@ export class UserService {
         'user.nickName',
         'user.account',
         'user.avatar',
-        'user.sign',
+        'user.signText',
         'user.createdAt',
       ])
       .loadRelationCountAndMap(

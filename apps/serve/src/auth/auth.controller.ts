@@ -16,7 +16,7 @@ import { AuthService } from './auth.service';
 import { user } from 'apps/shared/decorators/user.decorator';
 import { User } from '@libs/db/entity/user.entity';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
-import { LoginDto, WxLoginDto } from './type';
+import { LoginDto, WxLoginDto } from './dto';
 import { CacheService } from 'apps/shared/redis';
 
 @ApiTags('登录管理')

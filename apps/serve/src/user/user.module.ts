@@ -7,10 +7,11 @@ import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { FollowModule } from '../follow/follow.module';
+import { SignModule } from '../sign/sign.module';
 // import { EmailModule } from '@libs/email';
 
 @Module({
-  imports: [FollowModule],
+  imports: [FollowModule, SignModule],
   controllers: [UserController],
   providers: [UserService],
 })

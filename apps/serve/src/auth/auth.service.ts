@@ -10,7 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { compareSync } from 'bcryptjs';
 import { Repository } from 'typeorm';
 import { User } from '@libs/db/entity/user.entity';
-import { WxLoginDto, WxUser } from './type';
+import { UserInfo, WxLoginDto, WxUser } from './dto';
 import { ConfigService } from '@nestjs/config';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import WXBizDataCrypt from './utils/WXBizDataCrypt';
@@ -19,6 +19,7 @@ import { getTemAccount } from 'apps/shared/utils';
 import axios from 'axios';
 import * as crypto from 'crypto';
 import { CacheService } from 'apps/shared/redis';
+import { SignService } from '../sign/sign.service';
 
 @Injectable()
 export class AuthService {
@@ -27,6 +28,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly redisService: CacheService,
+    private readonly signService: SignService,
   ) {}
 
   // 生成token
@@ -125,10 +127,26 @@ export class AuthService {
    * @param {number} id
    * @return {*}
    */
-  async findMe(id: number): Promise<User> {
+  async findMe(id: number): Promise<UserInfo> {
     const userInfo: string = await this.redisService.get(`user-info-${id}`);
     if (userInfo) return JSON.parse(userInfo);
-    const user = await this.userRepository.findOne({
+    // 查询用户信息 今日签到状态
+    const [user, isSign] = await Promise.all([
+      this.findMeInfo(id),
+      this.signService.isMeSign(id),
+    ]);
+
+    const userAllInfo = {
+      ...user,
+      isSign,
+    };
+
+    // await this.redisService.set(`user-info-${id}`, userAllInfo, 60 * 60 * 24);
+    return userAllInfo;
+  }
+
+  async findMeInfo(id: number) {
+    return await this.userRepository.findOne({
       select: {
         userTag: {
           id: true,
@@ -140,7 +158,5 @@ export class AuthService {
       },
       where: { id },
     });
-    await this.redisService.set(`user-info-${id}`, user, 60 * 60 * 24);
-    return user;
   }
 }

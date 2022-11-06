@@ -18,6 +18,7 @@ import { User } from './entity/user.entity';
 import { Comment } from './entity/comment.entity';
 import { UserTag } from './entity/userTag.entity';
 import { Follow } from './entity/follow.entity';
+import { Sign } from './entity/sign.entity';
 
 const table = [
   Category,
@@ -36,6 +37,7 @@ const table = [
   LoginLogger,
   Notice,
   Advertise,
+  Sign,
 ];
 
 const entity = TypeOrmModule.forFeature(table);
