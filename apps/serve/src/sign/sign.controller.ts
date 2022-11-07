@@ -17,4 +17,13 @@ export class SignController {
   create(@user() user: User) {
     return this.signService.create(user);
   }
+
+  @Get('record')
+  @ApiOperation({ description: '用户签到记录', summary: '用户签到记录' })
+  // 此接口需要传递token;
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  findRecord(@user() user: User) {
+    return this.signService.findRecord(user);
+  }
 }

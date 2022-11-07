@@ -3,16 +3,9 @@ import {
   Column,
   Entity,
   Index,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Base } from './base.entity';
-import { User } from './user.entity';
 
 @Entity('sign')
 export class Sign {

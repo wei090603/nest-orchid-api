@@ -43,7 +43,3 @@ TENCENT_MAP_KEY: NT4BZ-XI7K3-YY23I-YKHUR-H2UTV-JMFUU
 wx:
   AppID: wx59041a0a02ca0be9
   AppSecret: 450f4143cb6ea83bbd63e4980e48dd89
-
-service:
-  sign:
-    signDays: 5
