@@ -75,14 +75,14 @@ export class SignService {
           result.favsTotal = user.favs + fav;
         } else {
           this.firstSign(user);
-          result.favs = 5;
-          result.favsTotal = user.favs + 5;
+          result.favs = 50;
+          result.favsTotal = user.favs + 50;
         }
       }
     } else {
       this.firstSign(user);
-      result.favs = 5;
-      result.favsTotal = user.favs + 5;
+      result.favs = 50;
+      result.favsTotal = user.favs + 50;
     }
     return result;
   }
@@ -118,14 +118,14 @@ export class SignService {
   async firstSign(user: User) {
     await this.signRepository.insert({
       userId: user.id,
-      favs: 5,
+      favs: 50,
       createdAt: dayjs().format('YYYY-MM-DD'),
     });
     await this.userRepository
       .createQueryBuilder()
       .update(User)
       .set({
-        favs: () => 'favs + 5',
+        favs: () => 'favs + 50',
         signInCount: 1,
       })
       .where('id = :id', { id: user.id })
@@ -133,31 +133,44 @@ export class SignService {
   }
 
   // 查询用户签到记录
-  async findRecord(user: User, month: number = 11): Promise<Sign[]> {
-    const date = new Date();
-    date.setDate(1);
-    // const dateStart = date.getFullYear() + '-' + month + '-' + date.getDate();
-    const dateStart = dayjs(
-      `${date.getFullYear()}-${month}-${date.getDate()}`,
-    ).format('YYYY-MM-DD');
-    const dateEnd = dayjs(`${date.getFullYear()}-${month}-00`).format(
-      'YYYY-MM-DD',
-    );
-    console.log(dateStart, dateEnd, 'lastDay');
-
-    console.log(user.id, 'user');
+  async findRecord(user: User, month: number): Promise<Sign[]> {
+    const dateStart = new Date(new Date().getFullYear(), month - 1, 1); //这个月的第一天
+    const dateEnd = new Date(new Date().getFullYear(), month, 0); //是0而不是-1
     return this.signRepository.find({
-      select: ['createdAt'],
+      select: ['createdAt', 'favs'],
       where: {
-        userId: 10,
+        userId: user.id,
         createdAt: Between(
           dayjs(dateStart).format('YYYY-MM-DD') as unknown as Date,
-          dayjs('2022-11-7').format('YYYY-MM-DD') as unknown as Date,
+          dayjs(dateEnd).format('YYYY-MM-DD') as unknown as Date,
         ),
       },
       order: {
         createdAt: 'ASC',
       },
     });
+  }
+
+  // 查询用户总签到次数
+  async getSignTotalCount(user: User) {
+    return this.signRepository.count({
+      where: {
+        userId: user.id,
+      },
+    });
+  }
+
+  // 查询用户连续签到天数
+  async getSignContinuousCount(user: User) {
+    const result = await this.signRepository.findOne({
+      where: {
+        userId: user.id,
+        createdAt: dayjs()
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD') as unknown as Date,
+      },
+    });
+
+    return result ? user.signInCount : 0;
   }
 }
