@@ -14,7 +14,6 @@ import { ArticleLike } from './articleLike.entity';
 import { ArticleCollect } from './articleCollect.entity';
 import { UserTag } from './userTag.entity';
 import { hashSync } from 'bcryptjs';
-import { Sign } from './sign.entity';
 
 @Entity('user')
 export class User extends Base {
