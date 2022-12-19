@@ -13,9 +13,10 @@ import { CategoryModule } from './category/category.module';
 import { CollectModule } from './collect/collect.module';
 import { FollowModule } from './follow/follow.module';
 import { SignModule } from './sign/sign.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
-  imports: [CommonModule, UserModule, AdvertiseModule, NavgationModule, AuthModule, ArticleModule, TagModule, CommentModule, CategoryModule, CollectModule, FollowModule, SignModule],
+  imports: [CommonModule, UserModule, AdvertiseModule, NavgationModule, AuthModule, ArticleModule, TagModule, CommentModule, CategoryModule, CollectModule, FollowModule, SignModule, UploadModule],
   controllers: [ServeController],
   providers: [ServeService],
 })
