@@ -19,6 +19,7 @@ import { Comment } from './entity/comment.entity';
 import { UserTag } from './entity/userTag.entity';
 import { Follow } from './entity/follow.entity';
 import { Sign } from './entity/sign.entity';
+import { UserReadLike } from './entity/userReadLike.entity';
 
 const table = [
   Category,
@@ -30,6 +31,7 @@ const table = [
   Comment,
   User,
   UserTag,
+  UserReadLike,
   Manager,
   Roles,
   Resources,

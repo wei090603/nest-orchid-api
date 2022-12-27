@@ -1,19 +1,15 @@
 import { Article } from '@libs/db/entity/article.entity';
-import { ArticleLike } from '@libs/db/entity/articleLike.entity';
+import { ArticleCollect } from '@libs/db/entity/articleCollect.entity';
 import { Category } from '@libs/db/entity/category.entity';
 import { Tag } from '@libs/db/entity/tag.entity';
 import { User } from '@libs/db/entity/user.entity';
+import { UserReadLike } from '@libs/db/entity/userReadLike.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PageResult } from 'apps/shared/dto/page.dto';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { In, IsNull, Like, Not, Repository } from 'typeorm';
-import {
-  ArticleDto,
-  CreateArticleLikeDto,
-  FindArticleDto,
-  SearchArticleDto,
-} from './dto';
+import { ArticleDto, FindArticleDto, SearchArticleDto } from './dto';
 
 @Injectable()
 export class ArticleService {
@@ -23,13 +19,14 @@ export class ArticleService {
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
     @InjectRepository(Tag) private readonly tagRepository: Repository<Tag>,
-    @InjectRepository(ArticleLike)
-    private readonly articleLikeRepository: Repository<ArticleLike>,
+    @InjectRepository(UserReadLike)
+    private readonly userReadLikeRepository: Repository<UserReadLike>,
   ) {}
 
   // 创建新文章
   async create(params: ArticleDto, user: User) {
-    const { title, content, image, tag, categoryId } = params;
+    const { title, content, image, tag, categoryId, coverPicture, type } =
+      params;
     const category = await this.categoryRepository.findOneBy({
       id: categoryId,
     });
@@ -42,12 +39,14 @@ export class ArticleService {
       category,
       author: user,
       tag: tagData,
+      coverPicture,
+      type,
+      summary: this.getSimpleText(content),
     });
   }
 
   async findAll(
     params: FindArticleDto,
-    user: User,
   ): Promise<{ list: Article[]; total: number }> {
     const { categoryId, page = 1, limit = 10 } = params;
     let ids: number[] = [];
@@ -79,9 +78,6 @@ export class ArticleService {
         'category.id',
         'category.title',
       ])
-      .loadRelationCountAndMap('article.isLike', 'article.like', 'like', (qb) =>
-        qb.andWhere('like.user = :user', { user: user.id }),
-      )
       .orderBy('article.id', 'DESC')
       .skip(limit * (page - 1))
       .take(limit)
@@ -149,7 +145,8 @@ export class ArticleService {
   }
 
   // 查询文章详情
-  async findOne(id: number, user: User) {
+  async findOne(id: number) {
+    console.log(id, 'id');
     const article = await this.articleRepository
       .createQueryBuilder('article')
       .leftJoinAndSelect('article.author', 'author')
@@ -165,61 +162,86 @@ export class ArticleService {
         'tag.id',
         'tag.name',
       ])
-      .loadRelationCountAndMap('article.isLike', 'article.like', 'like', (qb) =>
-        qb.andWhere('like.user = :user', { user: user.id }),
-      )
-      .loadRelationCountAndMap(
-        'article.isCollect',
-        'article.collect',
-        'collect',
-        (qb) => qb.andWhere('collect.user = :user', { user: user.id }),
-      )
+      // .loadRelationCountAndMap('article.isLike', 'article.like', 'like', (qb) =>
+      //   qb.andWhere('like.user = :user', { user: user.id }),
+      // )
+      // .loadRelationCountAndMap(
+      //   'article.isCollect',
+      //   'article.collect',
+      //   'collect',
+      //   (qb) => qb.andWhere('collect.user = :user', { user: user.id }),
+      // )
       .where('article.id = :id', { id })
       .getOne();
     if (!article) throw new ApiException(10400, '文章不存在');
+
     this.articleRepository
       .createQueryBuilder()
-      .update(Article)
+      .update()
       .set({
         reading: () => 'reading + 1',
       })
       .where('id = :id', { id })
       .execute();
+
+    const userReadLikeRecord = await this.userReadLikeRepository.findOneBy({
+      userId: article.author.id,
+    });
+
+    if (userReadLikeRecord) {
+      this.userReadLikeRepository
+        .createQueryBuilder()
+        .update()
+        .set({
+          readTotal: () => 'read_total + 1',
+        })
+        .where('userId = :userId', { userId: article.author.id })
+        .execute();
+    } else {
+      this.userReadLikeRepository.save({
+        userId: article.author.id,
+        readCount: 1,
+      });
+    }
+
     return article;
   }
 
-  // 添加文章点赞
-  async like(dto: CreateArticleLikeDto, user: User) {
-    const { articleId } = dto;
-    const article = await this.articleRepository.findOneByOrFail({
-      id: articleId,
+  // 根据id 获取文章列表 收藏 点赞列表
+  async getCollectLikeList(list: ArticleCollect[]) {
+    const ids = list?.map((item) => item.articleId) || [];
+    return await this.articleRepository.find({
+      select: {
+        id: true,
+        title: true,
+        summary: true,
+        coverPicture: true,
+        createdAt: true,
+        reading: true,
+        likeCount: true,
+        commentCount: true,
+        author: {
+          id: true,
+          nickName: true,
+        },
+        category: {
+          id: true,
+          title: true,
+        },
+      },
+      relations: {
+        author: true,
+        category: true,
+      },
+      where: {
+        id: In(ids),
+      },
     });
-    await this.articleLikeRepository.insert({ user, article });
-
-    await this.articleRepository
-      .createQueryBuilder()
-      .update(Article)
-      .set({
-        likeCount: () => 'like_count + 1',
-      })
-      .where('id = :id', { id: articleId })
-      .execute();
   }
 
-  // 文章取消点赞
-  async likeDel(id: number, user: User) {
-    const like = await this.articleLikeRepository.findOneByOrFail({
-      article: { id },
-      user: { id: user.id },
-    });
-    await this.articleLikeRepository.remove(like);
-    await this.articleLikeRepository
-      .createQueryBuilder()
-      .update(Article)
-      .set({
-        likeCount: () => 'like_count - 1',
-      })
-      .where('id = :id', { id })
-      .execute();
+  getSimpleText(html: string) {
+    const re1 = new RegExp('<.+?>', 'g'); //匹配html标签的正则表达式，"g"是搜索匹配多个符合的内容
+    const msg = html.replace(re1, ''); //执行替换成空字符
+    return msg.substring(0, 30);
   }
 }

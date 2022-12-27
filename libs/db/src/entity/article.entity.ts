@@ -13,8 +13,6 @@ import { Category } from './category.entity';
 import { Tag } from './tag.entity';
 import { User } from './user.entity';
 import { Comment } from './comment.entity';
-import { ArticleLike } from './articleLike.entity';
-import { ArticleCollect } from './articleCollect.entity';
 
 @Entity('article')
 export class Article extends Base {
@@ -96,7 +94,7 @@ export class Article extends Base {
     comment: '0-文本 1-富文本',
     default: false,
   })
-  public type: boolean;
+  public type: number;
 
   @Column({
     type: 'int',
@@ -120,14 +118,6 @@ export class Article extends Base {
 
   @ManyToMany(() => Tag, (tag) => tag.article, { cascade: true }) // cascade 如果标签不存在则会自动添加
   public tag: Tag[];
-
-  // 点赞用户
-  @OneToMany(() => ArticleLike, (articleLike) => articleLike.article)
-  public like: ArticleLike[];
-
-  // 收藏用户
-  @OneToMany(() => ArticleCollect, (articleCollect) => articleCollect.article)
-  public collect: ArticleCollect[];
 
   @OneToMany(() => Comment, (comment) => comment.article, { cascade: true })
   public comment: Comment[];

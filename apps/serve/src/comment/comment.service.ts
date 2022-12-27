@@ -13,7 +13,6 @@ export class CommentService {
     private readonly commentRepository: Repository<Comment>,
     @InjectRepository(Article)
     private readonly articleRepository: Repository<Article>,
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
   // 添加评论
@@ -37,10 +36,7 @@ export class CommentService {
 
   // 添加子级评论
   async createSub(params: CreateCommenSubtDto, user: User) {
-    const { parentId, replyId, content, articleId } = params;
-    // const parent = await this.commentRepository.findOneBy({
-    //   id: parentId,
-    // });
+    const { parentId, content, articleId, replyId } = params;
     await this.commentRepository.insert({
       parent: { id: parentId },
       content,

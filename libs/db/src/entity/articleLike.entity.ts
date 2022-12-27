@@ -1,16 +1,21 @@
-import { Entity, Column, ManyToOne, OneToOne, JoinColumn, OneToMany } from "typeorm";
-import { Article } from "./article.entity";
-import { Base } from "./base.entity";
-import { User } from "./user.entity";
+import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
 
-@Entity({name: 'article_like'})
-export class ArticleLike extends Base {
+// 关注
+@Entity({ name: 'article_like' })
+export class ArticleLike {
+  @PrimaryColumn({
+    type: 'int',
+    name: 'article_id',
+    comment: '点赞文章id',
+  })
+  @Index()
+  public articleId: number;
 
-  @ManyToOne(() => Article, (article) => article.like)
-  @JoinColumn({name: 'article_id'})
-  public article: Article;
-
-  @ManyToOne(() => User, (user) => user.articleLike)
-  @JoinColumn({name: 'user_id'})
-  public user: User;
+  @PrimaryColumn({
+    type: 'int',
+    name: 'user_id',
+    comment: '当前用户id',
+  })
+  @Index()
+  public userId: number;
 }

@@ -1,5 +1,5 @@
 import { Tag } from '@libs/db/entity/tag.entity';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { PageOptionsDto } from 'apps/shared/dto/page.dto';
 import {
   IsString,
@@ -28,8 +28,16 @@ export class ArticleDto {
     description: '帖子图片',
     required: false,
   })
-  @IsArray({ message: '帖子内容不是有效的数据' })
+  @IsOptional()
+  @IsArray({ message: '帖子图片不是有效的数据' })
   readonly image: string[];
+
+  @ApiProperty({
+    description: '帖子封面图',
+    required: false,
+  })
+  @IsString({ message: '帖子封面图不是有效的数据' })
+  readonly coverPicture: string;
 
   @ApiProperty({
     description: '帖子分类',
@@ -48,7 +56,7 @@ export class ArticleDto {
     description: '帖子类型',
     example: 1,
   })
-  readonly type: boolean;
+  readonly type: number;
 
   @ApiProperty({
     description: '帖子标签',
@@ -77,11 +85,20 @@ export class SearchArticleDto extends PageOptionsDto {
   readonly title: string;
 }
 
-export class CreateArticleLikeDto {
+export class ArticleListDto extends PartialType(ArticleDto) {
+  isLike: boolean;
+}
+
+
+export class PageArticleList {
   @ApiProperty({
-    description: '帖子ID',
+    description: '总数',
+    type: [ArticleListDto],
   })
-  @IsNumber({}, { message: '数据类型不正确' })
-  @IsNotEmpty({ message: '帖子ID不能为空' })
-  readonly articleId: number;
+  list: ArticleListDto[];
+
+  @ApiProperty({
+    description: '总数',
+  })
+  total: number;
 }

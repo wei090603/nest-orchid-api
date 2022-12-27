@@ -23,7 +23,7 @@ export class FindTagDto extends PageOptionsDto {
 
 export class PageTagList {
   @ApiProperty({
-    description: '总数',
+    description: '列表',
     type: [TagInfo],
   })
   list: TagInfo[];

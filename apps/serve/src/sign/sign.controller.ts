@@ -6,11 +6,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiOperation, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { user } from 'apps/shared/decorators/user.decorator';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
 import { SignService } from './sign.service';
 
+@ApiTags('签到管理')
 @Controller('sign')
 export class SignController {
   constructor(private readonly signService: SignService) {}

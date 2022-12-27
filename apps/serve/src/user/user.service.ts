@@ -21,6 +21,7 @@ import { ArticleCollect } from '@libs/db/entity/articleCollect.entity';
 import { ArticleLike } from '@libs/db/entity/articleLike.entity';
 import { FollowService } from '../follow/follow.service';
 import { Sign } from '@libs/db/entity/sign.entity';
+import { UserReadLike } from '@libs/db/entity/userReadLike.entity';
 
 @Injectable()
 export class UserService {
@@ -35,6 +36,8 @@ export class UserService {
     private readonly followService: FollowService,
     @InjectRepository(Sign)
     private readonly signRepository: Repository<Sign>,
+    @InjectRepository(UserReadLike)
+    private readonly userReadLikeRepository: Repository<UserReadLike>,
   ) {}
 
   async create(data: CreateUserDto) {
@@ -59,23 +62,11 @@ export class UserService {
     });
   }
 
-  async getCollect(id: number): Promise<ArticleCollect[]> {
-    return await this.collectRepository.find({
-      relations: ['article', 'article.author'],
-      where: { user: { id } },
-      order: {
-        id: 'DESC',
-      },
-    });
-  }
-
   async getLike(id: number): Promise<ArticleLike[]> {
     return await this.likeRepository.find({
       relations: ['article', 'article.author', 'article.category'],
-      where: { user: { id } },
-      order: {
-        id: 'DESC',
-      },
+      where: { userId: id },
+      order: {},
     });
   }
 
@@ -85,8 +76,11 @@ export class UserService {
     type: number,
     user: User,
   ): Promise<UserFollowDto[]> {
+    console.log(type, 'type');
     const wherekey = type === 1 ? 'userId' : 'followId';
     const selectKey = type === 2 ? 'userId' : 'followId';
+
+    console.log(wherekey, selectKey, 'params');
 
     // let uesrList: Partial<User>[] = [];
     // 传入用户关注列表
@@ -95,6 +89,9 @@ export class UserService {
       this.followService.getFollowList(id, wherekey, selectKey),
       this.followService.getFollowList(user.id, 'userId', 'followId'),
     ]);
+
+    console.log(otherFollow, meFollow, 'otherFollow');
+
     const otherFollowInfo = await this.getUserInfoList(otherFollow);
 
     const followList = otherFollowInfo.map((item) => ({
@@ -103,7 +100,6 @@ export class UserService {
       avatar: item.avatar,
       isFollow: meFollow.includes(item.id),
     }));
-
     return followList;
   }
 
@@ -118,21 +114,28 @@ export class UserService {
         'user.signText',
         'user.createdAt',
       ])
-      .loadRelationCountAndMap(
-        'user.likeNum',
-        'user.articleLike',
-        'like',
-        (qb) => qb.andWhere('like.user = :user', { user: id }),
-      )
-      .loadRelationCountAndMap(
-        'user.collectNum',
-        'user.collect',
-        'collect',
-        (qb) => qb.andWhere('collect.user = :user', { user: id }),
-      )
+      // .loadRelationCountAndMap(
+      //   'user.likeNum',
+      //   'user.articleLike',
+      //   'like',
+      //   (qb) => qb.andWhere('like.user = :user', { user: id }),
+      // )
+      // .loadRelationCountAndMap(
+      //   'user.collectNum',
+      //   'user.collect',
+      //   'collect',
+      //   (qb) => qb.andWhere('collect.user = :user', { user: id }),
+      // )
       .where('user.id = :id', { id })
       .getOne();
     return userInfo;
+  }
+
+  async getReadLikeTotal(id: number) {
+    return this.userReadLikeRepository.findOne({
+      select: ['likeTotal', 'readTotal'],
+      where: { userId: id },
+    });
   }
 
   // async registerCode({ email }: RegisterCode) {

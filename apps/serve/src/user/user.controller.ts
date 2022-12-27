@@ -17,7 +17,12 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, RegisterCode, UpdateUserDto, UserInfoDto } from './dto';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiTags,
+  PartialType,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
 import { user } from 'apps/shared/decorators/user.decorator';
 import { User } from '@libs/db/entity/user.entity';
@@ -71,24 +76,6 @@ export class UserController {
     return this.userService.getArticle(+id);
   }
 
-  @Get('collect/:id')
-  @ApiOperation({
-    description: '根据用户id获取收藏列表',
-    summary: '根据用户id获取收藏列表',
-  })
-  getCollect(@Param('id') id: string) {
-    return this.userService.getCollect(+id);
-  }
-
-  @Get('like/:id')
-  @ApiOperation({
-    description: '根据用户id获取点赞列表',
-    summary: '根据用户id获取点赞列表',
-  })
-  getLike(@Param('id') id: string) {
-    return this.userService.getLike(+id);
-  }
-
   @Get('follow/:id')
   @ApiOperation({
     description: '根据用户id获取关注列表',
@@ -116,15 +103,18 @@ export class UserController {
   ): Promise<UserInfoDto> {
     // followNum: 自己关注的人数
     // followedNum: 关注自己的人数
-    const [userInfo, followNum, followedNum, isFollow] =
+    const [userInfo, followNum, followedNum, isFollow, readLikeNum] =
       await Promise.all([
         this.userService.findOne(id),
         this.followService.getMyFollowerCount(id),
         this.followService.getMyFollowederCount(id),
         this.followService.isMyFollowed(user.id, id),
+        this.userService.getReadLikeTotal(id),
       ]);
+    console.log(readLikeNum, 'readLikeNum');
     const userInfoDto = {
       ...userInfo,
+      ...readLikeNum,
       followedNum,
       followNum,
       isFollow,

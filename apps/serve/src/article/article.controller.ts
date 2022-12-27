@@ -5,26 +5,40 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { user } from 'apps/shared/decorators/user.decorator';
+import { PageResult } from 'apps/shared/dto/page.dto';
 import { JwtAuthGuard } from 'apps/shared/guards/guard.strategy';
 import { OptionAuthGuard } from 'apps/shared/guards/option.strategy';
+import { CollectService } from '../collect/collect.service';
+import { LikeService } from '../like/like.service';
 import { ArticleService } from './article.service';
 import {
   ArticleDto,
-  CreateArticleLikeDto,
+  ArticleListDto,
   FindArticleDto,
+  PageArticleList,
   SearchArticleDto,
 } from './dto';
 
 @ApiTags('文章管理')
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) {}
+  constructor(
+    private readonly articleService: ArticleService,
+    private readonly collectService: CollectService,
+    private readonly likeService: LikeService,
+  ) {}
 
   @Post()
   @ApiBearerAuth()
@@ -35,10 +49,19 @@ export class ArticleController {
   }
 
   @Get()
+  @ApiOkResponse({ type: [PageArticleList] })
   @ApiOperation({ summary: '获取文章列表' })
   @UseGuards(OptionAuthGuard)
-  findAll(@Query() query: FindArticleDto, @user() user: User) {
-    return this.articleService.findAll(query, user);
+  async findAll(
+    @Query() query: FindArticleDto,
+    @user() user: User,
+  ): Promise<PageResult<ArticleListDto>> {
+    const { list, total } = await this.articleService.findAll(query);
+    const artileList = await this.likeService.isMyLikeList(user.id, list);
+    return {
+      list: artileList,
+      total,
+    };
   }
 
   @Get('search')
@@ -65,23 +88,16 @@ export class ArticleController {
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取文章详情' })
   @UseGuards(OptionAuthGuard)
-  findOne(@Param('id') id: string, @user() user: User) {
-    return this.articleService.findOne(+id, user);
-  }
-
-  @Post('like')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '添加点赞' })
-  like(@Body() dto: CreateArticleLikeDto, @user() user: User) {
-    return this.articleService.like(dto, user);
-  }
-
-  @Delete('like/:id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: '取消点赞' })
-  likeDel(@Param('id') id: string, @user() user: User) {
-    return this.articleService.likeDel(+id, user);
+  async findOne(@Param('id', ParseIntPipe) id: number, @user() user: User) {
+    const [articleInfo, isCollect, isLike] = await Promise.all([
+      this.articleService.findOne(id),
+      this.collectService.isMyCollect(user.id, id),
+      this.likeService.isMyLike(user.id, id),
+    ]);
+    return {
+      ...articleInfo,
+      isCollect,
+      isLike,
+    };
   }
 }

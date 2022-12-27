@@ -1,5 +1,4 @@
 import { Column, Entity, Index, PrimaryColumn } from 'typeorm';
-import { Base } from './base.entity';
 
 // 关注
 @Entity({ name: 'follow' })

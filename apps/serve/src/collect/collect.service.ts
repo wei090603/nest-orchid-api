@@ -20,14 +20,36 @@ export class CollectService {
     const { articleId } = dto;
     const existing = await this.articleRepository.findOneBy({ id: articleId });
     if (!existing) throw new ApiException(10404, '文章不存在');
-    await this.collectRepository.insert({ user, article: existing });
+    await this.collectRepository.insert({
+      userId: user.id,
+      articleId,
+    });
   }
 
   async delArticle(id: number, user: User) {
     const collect = await this.collectRepository.findOneByOrFail({
-      article: { id },
-      user: { id: user.id },
+      userId: user.id,
+      articleId: id,
     });
     await this.collectRepository.remove(collect);
+  }
+
+  // 查看我是否收藏该文章
+  async isMyCollect(userId: number, articleId: number): Promise<boolean> {
+    const num = await this.collectRepository.count({
+      where: {
+        userId,
+        articleId,
+      },
+    });
+    return !!num;
+  }
+
+  // 获取用户收藏列表
+  async findCollectList(id: number): Promise<ArticleCollect[]> {
+    return await this.collectRepository.find({
+      select: ['articleId'],
+      where: { userId: id },
+    });
   }
 }
