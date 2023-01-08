@@ -19,7 +19,10 @@ import { Comment } from './entity/comment.entity';
 import { UserTag } from './entity/userTag.entity';
 import { Follow } from './entity/follow.entity';
 import { Sign } from './entity/sign.entity';
-import { UserReadLike } from './entity/userReadLike.entity';
+import { MessageComment } from './entity/messageComment.entity';
+import { MessageLike } from './entity/messageLike.entity';
+import { MessageFollow } from './entity/messageFollow.entity';
+import { MessageSystem } from './entity/messageSystem.entity';
 
 const table = [
   Category,
@@ -31,7 +34,6 @@ const table = [
   Comment,
   User,
   UserTag,
-  UserReadLike,
   Manager,
   Roles,
   Resources,
@@ -40,6 +42,10 @@ const table = [
   Notice,
   Advertise,
   Sign,
+  MessageComment,
+  MessageLike,
+  MessageFollow,
+  MessageSystem,
 ];
 
 const entity = TypeOrmModule.forFeature(table);

@@ -51,7 +51,7 @@ async function bootstrap() {
   const { servePort } = config.get('http');
   await app.listen(servePort);
 
-  Logger.log(`http://localhost:${servePort}/swagger`, '服务器启动成功');
+  Logger.log(`http://localhost:${servePort}/swagger-json`, '服务器启动成功');
 }
 
 bootstrap();

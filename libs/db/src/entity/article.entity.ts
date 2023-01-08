@@ -7,6 +7,7 @@ import {
   JoinTable,
   OneToOne,
   JoinColumn,
+  Index,
 } from 'typeorm';
 import { Base } from './base.entity';
 import { Category } from './category.entity';
@@ -112,6 +113,14 @@ export class Article extends Base {
   })
   public commentCount: number;
 
+  @Column({
+    type: 'int',
+    name: 'user_id',
+    comment: '文章作者id',
+  })
+  @Index()
+  public userId: number;
+
   @ManyToOne(() => Category, (category) => category.article)
   @JoinColumn({ name: 'category_id' })
   public category: Category;
@@ -121,8 +130,4 @@ export class Article extends Base {
 
   @OneToMany(() => Comment, (comment) => comment.article, { cascade: true })
   public comment: Comment[];
-
-  @ManyToOne(() => User, (user) => user.article)
-  @JoinColumn({ name: 'author_id' })
-  public author: User;
 }

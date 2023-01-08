@@ -17,27 +17,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 // import { EmailService } from '@libs/email';
 import { Article } from '@libs/db/entity/article.entity';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
-import { ArticleCollect } from '@libs/db/entity/articleCollect.entity';
-import { ArticleLike } from '@libs/db/entity/articleLike.entity';
 import { FollowService } from '../follow/follow.service';
 import { Sign } from '@libs/db/entity/sign.entity';
-import { UserReadLike } from '@libs/db/entity/userReadLike.entity';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
     @InjectRepository(Article)
     private readonly articleRepository: Repository<Article>,
-    @InjectRepository(ArticleCollect)
-    private readonly collectRepository: Repository<ArticleCollect>,
-    @InjectRepository(ArticleLike)
-    private readonly likeRepository: Repository<ArticleLike>,
     private readonly followService: FollowService,
-    @InjectRepository(Sign)
-    private readonly signRepository: Repository<Sign>,
-    @InjectRepository(UserReadLike)
-    private readonly userReadLikeRepository: Repository<UserReadLike>,
   ) {}
 
   async create(data: CreateUserDto) {
@@ -50,26 +40,6 @@ export class UserService {
     await this.userRepository.insert({ email, password });
   }
 
-  // 根据用户id获取用户文章列表
-  async getArticle(id: number): Promise<Article[]> {
-    return await this.articleRepository.find({
-      relations: ['tag', 'author', 'category'],
-      where: { author: { id } },
-      order: {
-        isTop: 'DESC',
-        id: 'DESC',
-      },
-    });
-  }
-
-  async getLike(id: number): Promise<ArticleLike[]> {
-    return await this.likeRepository.find({
-      relations: ['article', 'article.author', 'article.category'],
-      where: { userId: id },
-      order: {},
-    });
-  }
-
   // 我关注的用户
   async getFollow(
     id: number,
@@ -80,8 +50,6 @@ export class UserService {
     const wherekey = type === 1 ? 'userId' : 'followId';
     const selectKey = type === 2 ? 'userId' : 'followId';
 
-    console.log(wherekey, selectKey, 'params');
-
     // let uesrList: Partial<User>[] = [];
     // 传入用户关注列表
     // 当前登录用户关注列表
@@ -89,8 +57,6 @@ export class UserService {
       this.followService.getFollowList(id, wherekey, selectKey),
       this.followService.getFollowList(user.id, 'userId', 'followId'),
     ]);
-
-    console.log(otherFollow, meFollow, 'otherFollow');
 
     const otherFollowInfo = await this.getUserInfoList(otherFollow);
 
@@ -102,40 +68,45 @@ export class UserService {
     }));
     return followList;
   }
-
-  // 根据用户id获取用户信息
-  async findOne(id: number): Promise<User> {
-    const userInfo = this.userRepository
-      .createQueryBuilder('user')
-      .select([
-        'user.nickName',
-        'user.account',
-        'user.avatar',
-        'user.signText',
-        'user.createdAt',
-      ])
-      // .loadRelationCountAndMap(
-      //   'user.likeNum',
-      //   'user.articleLike',
-      //   'like',
-      //   (qb) => qb.andWhere('like.user = :user', { user: id }),
-      // )
-      // .loadRelationCountAndMap(
-      //   'user.collectNum',
-      //   'user.collect',
-      //   'collect',
-      //   (qb) => qb.andWhere('collect.user = :user', { user: id }),
-      // )
-      .where('user.id = :id', { id })
-      .getOne();
-    return userInfo;
+  // 根据id获取用户信息
+  async getUserInfo(userId: number): Promise<User> {
+    return await this.userRepository.findOne({
+      select: ['id', 'nickName', 'avatar'],
+      where: { id: userId },
+    });
   }
 
-  async getReadLikeTotal(id: number) {
-    return this.userReadLikeRepository.findOne({
-      select: ['likeTotal', 'readTotal'],
-      where: { userId: id },
-    });
+  // 根据用户id获取用户信息
+  async findOne(
+    id: number,
+    select: string[] = [
+      'user.nickName',
+      'user.account',
+      'user.avatar',
+      'user.signText',
+      'user.createdAt',
+      'user.likeTotal',
+      'user.readTotal',
+    ],
+  ): Promise<User> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .select(select)
+      .where('user.id = :id', { id })
+      .getOne();
+
+    // .loadRelationCountAndMap(
+    //   'user.likeNum',
+    //   'user.articleLike',
+    //   'like',
+    //   (qb) => qb.andWhere('like.user = :user', { user: id }),
+    // )
+    // .loadRelationCountAndMap(
+    //   'user.collectNum',
+    //   'user.collect',
+    //   'collect',
+    //   (qb) => qb.andWhere('collect.user = :user', { user: id }),
+    // )
   }
 
   // async registerCode({ email }: RegisterCode) {
@@ -163,5 +134,32 @@ export class UserService {
       .orderBy('user.id', 'DESC')
       .whereInIds(idList)
       .getMany();
+  }
+
+  // 增加用户总阅读量
+  addUserRead(userId: number) {
+    this.userRepository
+      .createQueryBuilder()
+      .setLock('pessimistic_write')
+      .update()
+      .set({
+        readTotal: () => 'read_total + 1',
+      })
+      .where('id = :id', { id: userId })
+      .execute();
+  }
+
+  // 增加或减少文章点赞量
+  likeOpertion(id: number, type: 'add' | 'reduce') {
+    const sql = type === 'add' ? 'like_total + 1' : 'like_total - 1';
+    this.userRepository
+      .createQueryBuilder()
+      .setLock('pessimistic_write')
+      .update()
+      .set({
+        likeTotal: () => sql,
+      })
+      .where('id = :id', { id })
+      .execute();
   }
 }

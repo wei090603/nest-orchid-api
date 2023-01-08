@@ -52,4 +52,13 @@ export class CollectService {
       where: { userId: id },
     });
   }
+
+  // 获取用户收藏总数
+  async findCollectCount(userId: number) {
+    return await this.collectRepository.count({
+      where: {
+        userId,
+      },
+    });
+  }
 }

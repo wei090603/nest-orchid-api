@@ -1,6 +1,7 @@
 import { Entity, Column } from 'typeorm';
 import { Base } from './base.entity';
 
+// 公告
 @Entity({name: 'notice'})
 export class Notice extends Base {
   @Column({
@@ -11,13 +12,6 @@ export class Notice extends Base {
     comment: '标题',
   })
   public title: string;
-
-  @Column({
-    type: 'int',
-    name: 'type',
-    comment: '公告类型（1通知 2公告）',
-  })
-  public type: number
   
   @Column({
     type: 'boolean',

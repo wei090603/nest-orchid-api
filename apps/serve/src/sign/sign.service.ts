@@ -6,10 +6,20 @@ import { ApiException } from 'apps/shared/exceptions/api.exception';
 import * as dayjs from 'dayjs';
 import { Between, Repository } from 'typeorm';
 import { SignDayEnum } from 'apps/serve/common/contants/business.contants';
+import { UserService } from '../user/user.service';
 
 interface ISign {
   (): () => boolean;
 }
+
+const select = [
+  'user.id',
+  'user.nickName',
+  'user.account',
+  'user.avatar',
+  'user.favs',
+  'user.signText',
+];
 
 @Injectable()
 export class SignService {
@@ -18,6 +28,7 @@ export class SignService {
     private readonly signRepository: Repository<Sign>,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly userService: UserService,
   ) {}
 
   // 用户今日是否签到
@@ -64,7 +75,7 @@ export class SignService {
           const fav = this.getFavsSignDay(count);
           this.userRepository
             .createQueryBuilder()
-            .update(User)
+            .update()
             .set({
               favs: () => `favs + ${fav}`,
               signInCount: count,
@@ -116,6 +127,7 @@ export class SignService {
 
   // 第一次签到或中断签到
   async firstSign(user: User) {
+    console.log(user, '111');
     await this.signRepository.insert({
       userId: user.id,
       favs: 50,
@@ -123,7 +135,7 @@ export class SignService {
     });
     await this.userRepository
       .createQueryBuilder()
-      .update(User)
+      .update()
       .set({
         favs: () => 'favs + 50',
         signInCount: 1,
@@ -162,15 +174,77 @@ export class SignService {
 
   // 查询用户连续签到天数
   async getSignContinuousCount(user: User) {
+    // 昨天没有签到今天签到了 也需要展示连续签到天数
+    // 今天没有签到获取昨天是否签到 有直接展示连续签到天数
     const result = await this.signRepository.findOne({
-      where: {
-        userId: user.id,
-        createdAt: dayjs()
-          .subtract(1, 'days')
-          .format('YYYY-MM-DD') as unknown as Date,
+      where: [
+        {
+          userId: user.id,
+          createdAt: dayjs()
+            .subtract(1, 'days')
+            .format('YYYY-MM-DD') as unknown as Date,
+        },
+        {
+          userId: user.id,
+          createdAt: dayjs().format('YYYY-MM-DD') as unknown as Date,
+        },
+      ],
+    });
+    return result ? user.signInCount : 0;
+  }
+
+  // 最新签到列表
+  async findNewList() {
+    const list = await this.signRepository.find({
+      select: ['userId'],
+      take: 20,
+      order: {
+        id: 'DESC',
       },
     });
 
-    return result ? user.signInCount : 0;
+    return await Promise.all(
+      list.map(
+        async (item) => await this.userService.findOne(item.userId, select),
+      ),
+    );
+  }
+
+  // 今日最快签到列表
+  async findTodayList() {
+    const list = await this.signRepository.find({
+      select: ['userId'],
+      take: 20,
+      where: {
+        createdAt: dayjs().format('YYYY-MM-DD') as unknown as Date,
+      },
+      order: {
+        id: 'ASC',
+      },
+    });
+    return await Promise.all(
+      list.map(
+        async (item) => await this.userService.findOne(item.userId, select),
+      ),
+    );
+  }
+
+  // 总榜签到列表
+  async findRankList() {
+    const list = await this.signRepository
+      .createQueryBuilder('sign')
+      .select('Count(*)', 'count')
+      .addSelect('sign.userId', 'userId')
+      .groupBy('userId')
+      .orderBy('count', 'DESC')
+      .take(20)
+      .getRawMany();
+
+    return await Promise.all(
+      list.map(async (item) => ({
+        ...(await this.userService.findOne(item.userId, select)),
+        count: item.count,
+      })),
+    );
   }
 }

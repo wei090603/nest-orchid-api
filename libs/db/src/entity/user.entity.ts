@@ -72,7 +72,7 @@ export class User extends Base {
   @Column('int', {
     name: 'sign_in_count',
     default: 0,
-    comment: '签到次数',
+    comment: '连续签到次数',
   })
   public signInCount: number;
 
@@ -151,8 +151,21 @@ export class User extends Base {
   })
   public status: boolean;
 
-  @OneToMany(() => Article, (article) => article.author)
-  public article: Article[];
+  @Column({
+    type: 'int',
+    name: 'like_total',
+    default: 0,
+    comment: '文章点赞总数量',
+  })
+  public likeTotal: number;
+
+  @Column({
+    type: 'int',
+    name: 'read_total',
+    default: 0,
+    comment: '文章阅读总数量',
+  })
+  public readTotal: number;
 
   @ManyToMany(() => UserTag, (userTag) => userTag.user)
   public userTag: UserTag[];

@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository } from 'typeorm';
 import { Comment } from '@libs/db/entity/comment.entity';
 import { CreateCommenSubtDto, CreateCommentDto } from './dto';
+import { MessageService } from '../message/message.service';
+import { ArticleService } from '../article/article.service';
 
 @Injectable()
 export class CommentService {
@@ -13,6 +15,8 @@ export class CommentService {
     private readonly commentRepository: Repository<Comment>,
     @InjectRepository(Article)
     private readonly articleRepository: Repository<Article>,
+    private readonly messageService: MessageService,
+    private readonly articleService: ArticleService,
   ) {}
 
   // 添加评论
@@ -20,18 +24,12 @@ export class CommentService {
     const { articleId, content } = params;
     const article = await this.articleRepository.findOneBy({ id: articleId });
     await this.commentRepository.insert({
-      article,
+      article: { id: articleId },
       user,
       content,
     });
-    await this.articleRepository
-      .createQueryBuilder()
-      .update(Article)
-      .set({
-        commentCount: () => 'comment_count + 1',
-      })
-      .where('id = :id', { id: articleId })
-      .execute();
+    this.articleService.commentOpertion(articleId);
+    // this.messageService.createComment({articleId, })
   }
 
   // 添加子级评论

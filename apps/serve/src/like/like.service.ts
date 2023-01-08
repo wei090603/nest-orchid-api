@@ -1,10 +1,12 @@
 import { Article } from '@libs/db/entity/article.entity';
 import { ArticleLike } from '@libs/db/entity/articleLike.entity';
 import { User } from '@libs/db/entity/user.entity';
-import { UserReadLike } from '@libs/db/entity/userReadLike.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ArticleService } from '../article/article.service';
+import { MessageService } from '../message/message.service';
+import { UserService } from '../user/user.service';
 import { LikeDto } from './dto';
 
 @Injectable()
@@ -14,22 +16,16 @@ export class LikeService {
     private readonly likeRepository: Repository<ArticleLike>,
     @InjectRepository(Article)
     private readonly articleRepository: Repository<Article>,
-    @InjectRepository(UserReadLike)
-    private readonly userReadLikeRepository: Repository<UserReadLike>,
+    private readonly articleService: ArticleService,
+    private readonly userService: UserService,
+    private readonly messageService: MessageService,
   ) {}
 
   async add(dto: LikeDto, user: User) {
     const { articleId } = dto;
 
     const article = await this.articleRepository.findOne({
-      select: {
-        author: {
-          id: true,
-        },
-      },
-      relations: {
-        author: true,
-      },
+      select: ['userId'],
       where: {
         id: articleId,
       },
@@ -39,38 +35,11 @@ export class LikeService {
       userId: user.id,
       articleId,
     });
-
-    this.articleRepository
-      .createQueryBuilder()
-      .setLock('pessimistic_write')
-      .update()
-      .set({
-        likeCount: () => 'like_count + 1',
-      })
-      .where('id = :id', { id: articleId })
-      .execute();
-
-    // 点赞增加用户点赞总次数
-    const userReadLikeRecord = await this.userReadLikeRepository.findOneBy({
-      userId: article.author.id,
-    });
-
-    if (userReadLikeRecord) {
-      this.userReadLikeRepository
-        .createQueryBuilder()
-        .setLock('pessimistic_write')
-        .update()
-        .set({
-          likeTotal: () => 'like_total + 1',
-        })
-        .where('userId = :userId', { userId: article.author.id })
-        .execute();
-    } else {
-      this.userReadLikeRepository.save({
-        userId: article.author.id,
-        likeCount: 1,
-      });
+    if (user.id !== article.userId) {
+      await this.messageService.createLike(user.id, article.userId, articleId);
     }
+    this.articleService.likeOpertion(articleId, 'add');
+    this.userService.likeOpertion(article.userId, 'add');
   }
 
   // 文章取消点赞
@@ -81,39 +50,15 @@ export class LikeService {
     });
     await this.likeRepository.remove(like);
 
-    this.articleRepository
-      .createQueryBuilder()
-      .setLock('pessimistic_write')
-      .update()
-      .set({
-        likeCount: () => 'like_count - 1',
-      })
-      .where('id = :id', { id })
-      .execute();
+    this.articleService.likeOpertion(id, 'reduce');
 
     const article = await this.articleRepository.findOne({
-      select: {
-        author: {
-          id: true,
-        },
-      },
-      relations: {
-        author: true,
-      },
+      select: ['userId'],
       where: {
         id,
       },
     });
-
-    this.userReadLikeRepository
-      .createQueryBuilder()
-      .setLock('pessimistic_write')
-      .update()
-      .set({
-        likeTotal: () => 'like_total - 1',
-      })
-      .where('userId = :userId', { userId: article.author.id })
-      .execute();
+    this.userService.likeOpertion(article.userId, 'reduce');
   }
 
   // 查看我是否点赞该文章
@@ -141,6 +86,15 @@ export class LikeService {
     return await this.likeRepository.find({
       select: ['articleId'],
       where: { userId },
+    });
+  }
+
+  // 获取用户点赞总数
+  async findLikeCount(userId: number) {
+    return await this.likeRepository.count({
+      where: {
+        userId,
+      },
     });
   }
 }

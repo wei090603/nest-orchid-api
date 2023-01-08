@@ -19,6 +19,7 @@ import { UserService } from './user.service';
 import { CreateUserDto, RegisterCode, UpdateUserDto, UserInfoDto } from './dto';
 import {
   ApiBearerAuth,
+  ApiOkResponse,
   ApiOperation,
   ApiTags,
   PartialType,
@@ -28,6 +29,15 @@ import { user } from 'apps/shared/decorators/user.decorator';
 import { User } from '@libs/db/entity/user.entity';
 import { OptionAuthGuard } from 'apps/shared/guards/option.strategy';
 import { FollowService } from '../follow/follow.service';
+import { CollectService } from '../collect/collect.service';
+import { LikeService } from '../like/like.service';
+import {
+  ArticleListDto,
+  FindUserArticleDto,
+  PageArticleList,
+} from '../article/dto';
+import { PageResult } from 'apps/shared/dto/page.dto';
+import { ArticleService } from '../article/article.service';
 
 @ApiTags('用户管理')
 @Controller('user')
@@ -35,6 +45,9 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly followService: FollowService,
+    private readonly collectService: CollectService,
+    private readonly likeService: LikeService,
+    private readonly articleService: ArticleService,
   ) {}
 
   @Post()
@@ -67,15 +80,6 @@ export class UserController {
   //   return this.userService.updateTag(tag, user);
   // }
 
-  @Get('article/:id')
-  @ApiOperation({
-    description: '根据用户id获取文章',
-    summary: '根据用户id获取文章',
-  })
-  getArticle(@Param('id') id: string) {
-    return this.userService.getArticle(+id);
-  }
-
   @Get('follow/:id')
   @ApiOperation({
     description: '根据用户id获取关注列表',
@@ -103,23 +107,41 @@ export class UserController {
   ): Promise<UserInfoDto> {
     // followNum: 自己关注的人数
     // followedNum: 关注自己的人数
-    const [userInfo, followNum, followedNum, isFollow, readLikeNum] =
+    const [userInfo, followNum, followedNum, isFollow, collectNum, likeNum] =
       await Promise.all([
         this.userService.findOne(id),
         this.followService.getMyFollowerCount(id),
         this.followService.getMyFollowederCount(id),
         this.followService.isMyFollowed(user.id, id),
-        this.userService.getReadLikeTotal(id),
+        this.collectService.findCollectCount(id),
+        this.likeService.findLikeCount(id),
       ]);
-    console.log(readLikeNum, 'readLikeNum');
     const userInfoDto = {
       ...userInfo,
-      ...readLikeNum,
       followedNum,
       followNum,
       isFollow,
+      collectNum,
+      likeNum,
     };
     return userInfoDto;
+  }
+
+  @Get('article/:id')
+  @ApiOkResponse({ type: [PageArticleList] })
+  @ApiOperation({ summary: '获取文章列表' })
+  @UseGuards(OptionAuthGuard)
+  async getUserArticle(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() query: FindUserArticleDto,
+    @user() user: User,
+  ) {
+    const { list, total } = await this.articleService.getUserArticle(id, query);
+    const artileList = await this.likeService.isMyLikeList(user.id, list);
+    return {
+      list: artileList,
+      total,
+    };
   }
 
   // @Patch()

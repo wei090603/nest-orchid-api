@@ -1,12 +1,15 @@
 import { Tag } from '@libs/db/entity/tag.entity';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { PageOptionsDto } from 'apps/shared/dto/page.dto';
+import { Type } from 'class-transformer';
+
 import {
   IsString,
   IsNotEmpty,
   IsOptional,
   IsNumber,
   IsArray,
+  IsInt,
 } from 'class-validator';
 
 export class ArticleDto {
@@ -75,6 +78,18 @@ export class FindArticleDto extends PageOptionsDto {
   readonly categoryId: number;
 }
 
+export class FindUserArticleDto extends PageOptionsDto {
+  // @ApiProperty({
+  //   description: '用户id',
+  //   required: true,
+  //   example: 2,
+  // })
+  // @Type(() => Number)
+  // @IsInt()
+  // @IsNumber({ maxDecimalPlaces: 255 }, { message: '数据类型不正确' })
+  // readonly userId: number;
+}
+
 export class SearchArticleDto extends PageOptionsDto {
   @ApiProperty({
     description: '文章标题',
@@ -88,7 +103,6 @@ export class SearchArticleDto extends PageOptionsDto {
 export class ArticleListDto extends PartialType(ArticleDto) {
   isLike: boolean;
 }
-
 
 export class PageArticleList {
   @ApiProperty({

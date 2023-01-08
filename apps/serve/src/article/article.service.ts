@@ -3,13 +3,18 @@ import { ArticleCollect } from '@libs/db/entity/articleCollect.entity';
 import { Category } from '@libs/db/entity/category.entity';
 import { Tag } from '@libs/db/entity/tag.entity';
 import { User } from '@libs/db/entity/user.entity';
-import { UserReadLike } from '@libs/db/entity/userReadLike.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PageResult } from 'apps/shared/dto/page.dto';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { In, IsNull, Like, Not, Repository } from 'typeorm';
-import { ArticleDto, FindArticleDto, SearchArticleDto } from './dto';
+import { UserService } from '../user/user.service';
+import {
+  ArticleDto,
+  FindArticleDto,
+  FindUserArticleDto,
+  SearchArticleDto,
+} from './dto';
 
 @Injectable()
 export class ArticleService {
@@ -18,9 +23,9 @@ export class ArticleService {
     private readonly articleRepository: Repository<Article>,
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
-    @InjectRepository(Tag) private readonly tagRepository: Repository<Tag>,
-    @InjectRepository(UserReadLike)
-    private readonly userReadLikeRepository: Repository<UserReadLike>,
+    @InjectRepository(Tag)
+    private readonly tagRepository: Repository<Tag>,
+    private readonly userService: UserService,
   ) {}
 
   // 创建新文章
@@ -37,7 +42,7 @@ export class ArticleService {
       content,
       image,
       category,
-      author: user,
+      userId: user.id,
       tag: tagData,
       coverPicture,
       type,
@@ -65,9 +70,14 @@ export class ArticleService {
     ids.length === 0 ? qb : qb.where({ category: In(ids) });
 
     const [list, total] = await qb
-      .leftJoinAndSelect('article.author', 'author') // 控制返回参数
       .leftJoinAndSelect('article.tag', 'tag')
       .leftJoinAndSelect('article.category', 'category')
+      .leftJoinAndMapOne(
+        'article.author',
+        User,
+        'author',
+        'author.id=article.userId',
+      )
       .select([
         'article',
         'author.id',
@@ -100,12 +110,25 @@ export class ArticleService {
     return { list, total };
   }
 
-  findHotList() {
-    return this.articleRepository.find({
-      select: ['id', 'title', 'reading'],
-      take: 6,
+  async findHotList(limit = 6) {
+    const list = await this.articleRepository.find({
+      select: {
+        id: true,
+        title: true,
+        reading: true,
+        coverPicture: true,
+        createdAt: true,
+        userId: true,
+      },
+      take: limit,
       order: { reading: 'DESC' },
     });
+    return await Promise.all(
+      list.map(async ({ userId, ...rest }) => ({
+        ...rest,
+        author: await this.userService.getUserInfo(userId),
+      })),
+    );
   }
 
   // 根据分类Id 查询热门文章
@@ -146,71 +169,31 @@ export class ArticleService {
 
   // 查询文章详情
   async findOne(id: number) {
-    console.log(id, 'id');
     const article = await this.articleRepository
       .createQueryBuilder('article')
-      .leftJoinAndSelect('article.author', 'author')
       .leftJoinAndSelect('article.category', 'category')
       .leftJoinAndSelect('article.tag', 'tag')
       .select([
         'article',
-        'author.id',
-        'author.nickName',
-        'author.avatar',
         'category.id',
         'category.title',
         'tag.id',
         'tag.name',
       ])
-      // .loadRelationCountAndMap('article.isLike', 'article.like', 'like', (qb) =>
-      //   qb.andWhere('like.user = :user', { user: user.id }),
-      // )
-      // .loadRelationCountAndMap(
-      //   'article.isCollect',
-      //   'article.collect',
-      //   'collect',
-      //   (qb) => qb.andWhere('collect.user = :user', { user: user.id }),
-      // )
       .where('article.id = :id', { id })
       .getOne();
     if (!article) throw new ApiException(10400, '文章不存在');
-
-    this.articleRepository
-      .createQueryBuilder()
-      .update()
-      .set({
-        reading: () => 'reading + 1',
-      })
-      .where('id = :id', { id })
-      .execute();
-
-    const userReadLikeRecord = await this.userReadLikeRepository.findOneBy({
-      userId: article.author.id,
-    });
-
-    if (userReadLikeRecord) {
-      this.userReadLikeRepository
-        .createQueryBuilder()
-        .update()
-        .set({
-          readTotal: () => 'read_total + 1',
-        })
-        .where('userId = :userId', { userId: article.author.id })
-        .execute();
-    } else {
-      this.userReadLikeRepository.save({
-        userId: article.author.id,
-        readCount: 1,
-      });
-    }
-
-    return article;
+    const author = await this.userService.getUserInfo(article.userId);
+    this.readOpertion(id);
+    // 增加用户总阅读量
+    this.userService.addUserRead(article.userId);
+    return { ...article, author };
   }
 
   // 根据id 获取文章列表 收藏 点赞列表
   async getCollectLikeList(list: ArticleCollect[]) {
     const ids = list?.map((item) => item.articleId) || [];
-    return await this.articleRepository.find({
+    const artileList = await this.articleRepository.find({
       select: {
         id: true,
         title: true,
@@ -220,23 +203,96 @@ export class ArticleService {
         reading: true,
         likeCount: true,
         commentCount: true,
-        author: {
-          id: true,
-          nickName: true,
-        },
+        userId: true,
         category: {
           id: true,
           title: true,
         },
       },
       relations: {
-        author: true,
         category: true,
       },
       where: {
         id: In(ids),
       },
     });
+    if (artileList.length === 0) return [];
+    return await Promise.all(
+      artileList.map(async ({ userId, ...rest }) => ({
+        ...rest,
+        author: await this.userService.getUserInfo(userId),
+      })),
+    );
+  }
+
+  // 增加文章阅读量
+  readOpertion(id: number) {
+    this.articleRepository
+      .createQueryBuilder()
+      .setLock('pessimistic_write')
+      .update()
+      .set({
+        reading: () => 'reading + 1',
+      })
+      .where('id = :id', { id })
+      .execute();
+  }
+
+  // 增加或减少文章点赞量
+  likeOpertion(id: number, type: 'add' | 'reduce') {
+    const sql = type === 'add' ? 'like_count + 1' : 'like_count - 1';
+    this.articleRepository
+      .createQueryBuilder()
+      .setLock('pessimistic_write')
+      .update()
+      .set({
+        likeCount: () => sql,
+      })
+      .where('id = :id', { id })
+      .execute();
+  }
+
+  // 增加文章评论量
+  async commentOpertion(id: number) {
+    await this.articleRepository
+      .createQueryBuilder()
+      .setLock('pessimistic_write')
+      .update()
+      .set({
+        commentCount: () => 'comment_count + 1',
+      })
+      .where('id = :id', { id })
+      .execute();
+  }
+
+  // 根据用户id获取用户文章列表
+  async getUserArticle(
+    userId: number,
+    params: FindUserArticleDto,
+  ): Promise<{ list: any[]; total: number }> {
+    const { limit = 10, page = 1 } = params;
+    const [articleList, total] = await this.articleRepository.findAndCount({
+      select: {
+        id: true,
+        title: true,
+        reading: true,
+        coverPicture: true,
+        createdAt: true,
+        userId: true,
+      },
+      skip: limit * (page - 1),
+      take: limit,
+      where: { userId },
+      order: { id: 'DESC' },
+    });
+    const list = await Promise.all(
+      articleList.map(async ({ userId, ...rest }) => ({
+        ...rest,
+        author: await this.userService.getUserInfo(userId),
+      })),
+    );
+
+    return { list, total };
   }
 
   getSimpleText(html: string) {

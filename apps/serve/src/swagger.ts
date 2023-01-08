@@ -1,9 +1,7 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-
 export function setupSwagger(app: INestApplication): void {
-
   const swaggerConfig = new DocumentBuilder()
     .setTitle('前台管理系统')
     .setDescription('前台管理系统API接口文档')
@@ -21,7 +19,7 @@ export function setupSwagger(app: INestApplication): void {
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
 
-  SwaggerModule.setup('swagger', app, document, {
+  SwaggerModule.setup('swagger-json', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
     },

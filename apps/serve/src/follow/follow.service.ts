@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { Repository } from 'typeorm';
+import { MessageService } from '../message/message.service';
 import { FollowDto } from './dto';
 
 @Injectable()
@@ -11,7 +12,9 @@ export class FollowService {
   constructor(
     @InjectRepository(Follow)
     private readonly followRepository: Repository<Follow>,
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    private readonly messageService: MessageService,
   ) {}
 
   async create(dto: FollowDto, user: User) {
@@ -22,6 +25,7 @@ export class FollowService {
       userId: user.id,
       followId: existing.id,
     });
+    await this.messageService.createFollow(user.id, followId);
   }
 
   async delete(id: number, user: User) {

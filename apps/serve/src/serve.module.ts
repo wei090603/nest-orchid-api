@@ -15,9 +15,26 @@ import { FollowModule } from './follow/follow.module';
 import { SignModule } from './sign/sign.module';
 import { UploadModule } from './upload/upload.module';
 import { LikeModule } from './like/like.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
-  imports: [CommonModule, UserModule, AdvertiseModule, NavgationModule, AuthModule, ArticleModule, TagModule, CommentModule, CategoryModule, CollectModule, FollowModule, SignModule, UploadModule, LikeModule],
+  imports: [
+    CommonModule,
+    UserModule,
+    AdvertiseModule,
+    NavgationModule,
+    AuthModule,
+    ArticleModule,
+    TagModule,
+    CommentModule,
+    CategoryModule,
+    CollectModule,
+    FollowModule,
+    SignModule,
+    UploadModule,
+    LikeModule,
+    MessageModule,
+  ],
   controllers: [ServeController],
   providers: [ServeService],
 })

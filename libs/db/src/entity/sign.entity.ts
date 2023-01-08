@@ -9,7 +9,14 @@ import {
 
 @Entity('sign')
 export class Sign {
-  @PrimaryColumn({
+  @PrimaryGeneratedColumn({
+    type: 'int',
+    name: 'id',
+    comment: '主键id',
+  })
+  public id: number;
+
+  @Column({
     type: 'int',
     name: 'user_id',
     comment: '当前用户id',
@@ -23,10 +30,11 @@ export class Sign {
   })
   public favs: number;
 
-  @PrimaryColumn({
+  @Column({
     type: 'date',
     name: 'created_at',
-    comment: '创建日期',
+    comment: '签到日期',
   })
+  @Index()
   public createdAt: Date;
 }

@@ -27,6 +27,7 @@ import {
   ArticleDto,
   ArticleListDto,
   FindArticleDto,
+  FindUserArticleDto,
   PageArticleList,
   SearchArticleDto,
 } from './dto';

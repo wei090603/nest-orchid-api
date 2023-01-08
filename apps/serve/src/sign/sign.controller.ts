@@ -25,8 +25,6 @@ export class SignController {
     return this.signService.create(user);
   }
 
-  //
-
   @Get('record')
   @ApiOperation({ description: '用户签到记录', summary: '用户签到记录' })
   // 此接口需要传递token;
@@ -42,11 +40,36 @@ export class SignController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async findSignInfo(@user() user: User) {
-    const [signCount, continuousCount] = await Promise.all([
+    const [signCount, continuousCount, isSign] = await Promise.all([
       this.signService.getSignTotalCount(user),
       this.signService.getSignContinuousCount(user),
+      this.signService.isMeSign(user.id),
     ]);
 
-    return { signCount, continuousCount };
+    return { signCount, continuousCount, isSign };
+  }
+
+  @Get('new')
+  @ApiOperation({ description: '最新签到列表', summary: '最新签到列表' })
+  async findNewList() {
+    return await this.signService.findNewList();
+  }
+
+  @Get('today')
+  @ApiOperation({
+    description: '今日最快签到列表',
+    summary: '今日最快签到列表',
+  })
+  async findTodayList() {
+    return this.signService.findTodayList();
+  }
+
+  @Get('rank')
+  @ApiOperation({
+    description: '总榜签到列表',
+    summary: '总榜签到列表',
+  })
+  async findRankList() {
+    return this.signService.findRankList();
   }
 }
