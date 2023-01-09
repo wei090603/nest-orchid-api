@@ -126,6 +126,7 @@ export class MessageService {
 
     const list = await Promise.all(
       msgList.map(async (item) => ({
+        id: item.id,
         isRead: item.isRead,
         createdAt: item.createdAt,
         user: await this.userRepository.findOne({
@@ -136,10 +137,10 @@ export class MessageService {
           select: ['content'],
           where: { id: item.commentId },
         })),
-        ...(await this.articleRepository.findOne({
+        article: await this.articleRepository.findOne({
           select: ['id', 'title'],
           where: { id: item.articleId },
-        })),
+        }),
       })),
     );
 

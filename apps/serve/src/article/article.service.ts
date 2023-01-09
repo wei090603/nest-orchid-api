@@ -279,6 +279,14 @@ export class ArticleService {
         coverPicture: true,
         createdAt: true,
         userId: true,
+        summary: true,
+        category: {
+          id: true,
+          title: true,
+        },
+      },
+      relations: {
+        category: true,
       },
       skip: limit * (page - 1),
       take: limit,

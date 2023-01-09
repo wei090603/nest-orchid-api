@@ -23,13 +23,19 @@ export class CommentService {
   async create(params: CreateCommentDto, user: User) {
     const { articleId, content } = params;
     const article = await this.articleRepository.findOneBy({ id: articleId });
-    await this.commentRepository.insert({
+    const { raw } = await this.commentRepository.insert({
       article: { id: articleId },
       user,
       content,
     });
+
     this.articleService.commentOpertion(articleId);
-    // this.messageService.createComment({articleId, })
+    this.messageService.createComment({
+      commentId: raw.insertId,
+      userId: user.id,
+      cId: article.userId,
+      articleId,
+    });
   }
 
   // 添加子级评论

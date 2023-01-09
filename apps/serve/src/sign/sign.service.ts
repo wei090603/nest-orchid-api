@@ -63,7 +63,7 @@ export class SignService {
     if (signRecord) {
       // 判断签到时间是否时间是否是今天
       if (dayjs(signRecord.createdAt).format('YYYY-MM-DD') === currentDay) {
-        throw new ApiException(10500, '该用户已签到');
+        throw new ApiException(10500, '今日已签到');
       } else {
         // 有上一次签到记录 不与今天相同 判断是否是连续签到
         // 当前日期减去一天 是否相等

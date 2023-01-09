@@ -32,4 +32,15 @@ export class MessageController {
   getFollowList(@Query() query: FindMsgListDto, @user() user: User) {
     return this.messageService.getFollowList(query, +user.id);
   }
+
+  @Get('list/comment')
+  @ApiOperation({
+    description: '获取当前用户评论消息列表',
+    summary: '获取当前用户评论消息列表',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  getCommentList(@Query() query: FindMsgListDto, @user() user: User) {
+    return this.messageService.getCommentList(query, +user.id);
+  }
 }

@@ -15,18 +15,14 @@ import { User } from '@libs/db/entity/user.entity';
 import { In, Not, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 // import { EmailService } from '@libs/email';
-import { Article } from '@libs/db/entity/article.entity';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { FollowService } from '../follow/follow.service';
-import { Sign } from '@libs/db/entity/sign.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    @InjectRepository(Article)
-    private readonly articleRepository: Repository<Article>,
     private readonly followService: FollowService,
   ) {}
 
@@ -46,7 +42,6 @@ export class UserService {
     type: number,
     user: User,
   ): Promise<UserFollowDto[]> {
-    console.log(type, 'type');
     const wherekey = type === 1 ? 'userId' : 'followId';
     const selectKey = type === 2 ? 'userId' : 'followId';
 
