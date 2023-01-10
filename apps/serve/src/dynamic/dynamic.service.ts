@@ -35,29 +35,28 @@ export class DynamicService {
         Article,
         'article',
         'article.id = dynamic.articleId',
-        // leftJoinAndMapOne(
-        //   'article.user',
-        //   User,
-        //   'user',
-        //   'user.id = article.userId',
-        // ),
       )
-      .select([
-        'dynamic.id',
-        'dynamic.type',
-        'dynamic.createdAt',
-        'user.id',
-        'user.nickName',
-        'user.avatar',
-        'user.signText',
-        'follow.id',
-        'follow.nickName',
-        'follow.avatar',
+      .leftJoinAndMapOne(
+        'article.author',
+        User,
+        'author',
+        'author.id = article.userId',
+      )
+      .select(['dynamic.id', 'dynamic.type', 'dynamic.createdAt'])
+      .addSelect(['user.id', 'user.nickName', 'user.avatar', 'user.signText'])
+      .addSelect([
         'article.id',
         'article.title',
         'article.summary',
         'article.likeCount',
         'article.commentCount',
+      ])
+      .addSelect(['follow.id', 'follow.nickName', 'follow.avatar'])
+      .addSelect([
+        'author.id',
+        'author.nickName',
+        'author.avatar',
+        'author.signText',
       ])
       .where('dynamic.userId = :userId', { userId })
       .orderBy('dynamic.id', 'DESC')
