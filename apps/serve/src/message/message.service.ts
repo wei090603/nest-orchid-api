@@ -27,7 +27,7 @@ export class MessageService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     @InjectRepository(Comment)
-    private readonly commentRepository: Repository<Comment>, // private readonly userService: UserService,
+    private readonly commentRepository: Repository<Comment>,
   ) {}
 
   // 获取消息列表
@@ -114,7 +114,7 @@ export class MessageService {
     params: FindMsgListDto,
     userId: number,
   ): Promise<{ list: any[]; total: number }> {
-    const { page, limit } = params;
+    const { page = 1, limit = 10 } = params;
 
     const [msgList, total] = await this.msgCommentRepository.findAndCount({
       select: ['id', 'userId', 'articleId', 'commentId', 'createdAt'],
@@ -150,5 +150,9 @@ export class MessageService {
   // 添加评论消息
   async createComment(params: CommentDto) {
     await this.msgCommentRepository.insert(params);
+  }
+
+  getSystemList(params: FindMsgListDto) {
+    return { total: 0, list: [] };
   }
 }

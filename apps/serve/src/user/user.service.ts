@@ -17,6 +17,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 // import { EmailService } from '@libs/email';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { FollowService } from '../follow/follow.service';
+import { DynamicService } from '../dynamic/dynamic.service';
+import { PageOptionsDto } from 'apps/shared/dto/page.dto';
 
 @Injectable()
 export class UserService {
@@ -24,6 +26,7 @@ export class UserService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly followService: FollowService,
+    private readonly dynamicService: DynamicService,
   ) {}
 
   async create(data: CreateUserDto) {
@@ -63,6 +66,7 @@ export class UserService {
     }));
     return followList;
   }
+
   // 根据id获取用户信息
   async getUserInfo(userId: number): Promise<User> {
     return await this.userRepository.findOne({
@@ -129,6 +133,11 @@ export class UserService {
       .orderBy('user.id', 'DESC')
       .whereInIds(idList)
       .getMany();
+  }
+
+  // 个人动态列表
+  getDynamic(id: number, query: PageOptionsDto) {
+    return this.dynamicService.getDynamicList(id, query);
   }
 
   // 增加用户总阅读量

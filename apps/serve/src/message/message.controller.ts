@@ -43,4 +43,15 @@ export class MessageController {
   getCommentList(@Query() query: FindMsgListDto, @user() user: User) {
     return this.messageService.getCommentList(query, +user.id);
   }
+
+  @Get('list/system')
+  @ApiOperation({
+    description: '获取当前系统消息列表',
+    summary: '获取当前系统消息列表',
+  })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  getSystemList(@Query() query: FindMsgListDto) {
+    return this.messageService.getSystemList(query);
+  }
 }

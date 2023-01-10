@@ -16,6 +16,7 @@ import { SignModule } from './sign/sign.module';
 import { UploadModule } from './upload/upload.module';
 import { LikeModule } from './like/like.module';
 import { MessageModule } from './message/message.module';
+import { DynamicModule } from './dynamic/dynamic.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { MessageModule } from './message/message.module';
     UploadModule,
     LikeModule,
     MessageModule,
+    DynamicModule,
   ],
   controllers: [ServeController],
   providers: [ServeService],

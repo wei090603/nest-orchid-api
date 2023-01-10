@@ -11,11 +11,13 @@ import { SignModule } from '../sign/sign.module';
 import { LikeModule } from '../like/like.module';
 import { CollectModule } from '../collect/collect.module';
 import { ArticleModule } from '../article/article.module';
+import { DynamicModule } from '../dynamic/dynamic.module';
 // import { EmailModule } from '@libs/email';
 
 @Module({
   imports: [
     SignModule,
+    DynamicModule,
     forwardRef(() => FollowModule),
     forwardRef(() => LikeModule),
     forwardRef(() => CollectModule),

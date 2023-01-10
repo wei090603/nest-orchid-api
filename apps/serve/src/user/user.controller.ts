@@ -127,6 +127,18 @@ export class UserController {
     return userInfoDto;
   }
 
+  // 获取用户动态
+  @Get('dynamic/:id')
+  @ApiOperation({ summary: '获取用户动态列表' })
+  @UseGuards(OptionAuthGuard)
+  async getDynamic(
+    @Param('id', ParseIntPipe) id: number,
+    @Query() query: FindUserArticleDto,
+    @user() user: User,
+  ) {
+    return this.userService.getDynamic(id, query);
+  }
+
   @Get('article/:id')
   @ApiOkResponse({ type: [PageArticleList] })
   @ApiOperation({ summary: '获取文章列表' })
