@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2023-01-10 17:50:55
+Date: 2023-01-11 18:10:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -67,7 +67,7 @@ CREATE TABLE `article` (
   KEY `FK_cdd234ef147c8552a8abd42bd29` (`category_id`),
   KEY `IDX_fae0bad5f06a58f3d2b68e37f1` (`user_id`),
   CONSTRAINT `FK_cdd234ef147c8552a8abd42bd29` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of article
@@ -96,8 +96,11 @@ INSERT INTO `article` VALUES ('21', '<p>测试发测试「时光不负，创作�
 INSERT INTO `article` VALUES ('22', '<p>测试稳住文章</p>', '测试', null, '13', '1', '0', null, '1', '0', '5', '1', '1', '2023-01-09 14:41:50.000000', '2022-12-21 15:36:35', null, '测试稳住文章', '1671890013450.png');
 INSERT INTO `article` VALUES ('23', '<p>wezdaefwe<img src=\"http://127.0.0.1:4000/uploads/1671863567054.png\" alt=\"1671863567054.png\" data-href=\"\" style=\"width: 789.00px;height: 678.06px;\"/></p>', '测试文章2', null, '2', '1', '0', null, '0', '0', '2', '1', '1', '2023-01-09 15:17:15.000000', '2022-12-22 11:39:28', null, 'wezdaefwe', '1671848847576.png');
 INSERT INTO `article` VALUES ('24', '<p>wezdaefwe<img src=\"http://127.0.0.1:4000/uploads/1671863567054.png\" alt=\"1671863567054.png\" data-href=\"\" style=\"width: 789.00px;height: 678.06px;\"/></p>', '测试文章2', null, '56', '1', '0', null, '1', '0', '2', '1', '1', '2023-01-10 13:05:24.000000', '2022-12-22 11:39:37', null, 'wezdaefwe', '1671848847576.png');
-INSERT INTO `article` VALUES ('25', '<p>测试时玩了快解放了我<img src=\"http://127.0.0.1:4000/uploads/1671921522659.png\" alt=\"1671921522659.png\" data-href=\"\" style=\"\"/></p>', '测试文章3', null, '85', '1', '0', null, '2', '0', '7', '1', '1', '2023-01-10 13:01:31.000000', '2022-12-22 11:43:29', null, '测试时玩了快解放了我', '1671986730962.png');
+INSERT INTO `article` VALUES ('25', '<p>测试时玩了快解放了我<img src=\"http://127.0.0.1:4000/uploads/1671921522659.png\" alt=\"1671921522659.png\" data-href=\"\" style=\"\"/></p>', '测试文章3', null, '86', '1', '0', null, '2', '0', '7', '1', '1', '2023-01-11 09:50:53.000000', '2022-12-22 11:43:29', null, '测试时玩了快解放了我', '1671986730962.png');
 INSERT INTO `article` VALUES ('26', '<p>消息</p>', '666', null, '16', '1', '0', null, '1', '3', '5', '1', '1', '2023-01-10 13:07:59.000000', '2023-01-07 23:28:49', null, '消息', '1674019452838.png');
+INSERT INTO `article` VALUES ('27', '<p>111</p>', '11', null, '0', '1', '0', null, '0', '0', '5', '1', '1', '2023-01-11 13:38:15.636980', '2023-01-11 13:38:15', null, '111', '1673721620029.png');
+INSERT INTO `article` VALUES ('28', '<p>我要发表文章我要发表文章</p>', '我要发表文章', null, '1', '1', '0', null, '0', '0', '7', '1', '1', '2023-01-11 13:53:05.000000', '2023-01-11 13:45:38', null, '我要发表文章我要发表文章', '1673752214620.png');
+INSERT INTO `article` VALUES ('29', '<p>动态测试</p>', '动态测试', null, '1', '1', '0', null, '1', '0', '5', '1', '1', '2023-01-11 14:25:55.000000', '2023-01-11 14:23:34', null, '动态测试', '1674162641160.png');
 
 -- ----------------------------
 -- Table structure for article_collect
@@ -142,6 +145,7 @@ INSERT INTO `article_like` VALUES ('24', '1');
 INSERT INTO `article_like` VALUES ('25', '1');
 INSERT INTO `article_like` VALUES ('25', '10');
 INSERT INTO `article_like` VALUES ('26', '10');
+INSERT INTO `article_like` VALUES ('29', '1');
 
 -- ----------------------------
 -- Table structure for article_tag_tag
@@ -257,7 +261,7 @@ CREATE TABLE `dynamic` (
   `follow_id` int(11) DEFAULT NULL COMMENT '当前关注用户id',
   PRIMARY KEY (`id`),
   KEY `IDX_5fe41d8b1aae5a2ef04b972a81` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dynamic
@@ -265,6 +269,8 @@ CREATE TABLE `dynamic` (
 INSERT INTO `dynamic` VALUES ('1', '2023-01-10 16:23:24', '2023-01-10 16:23:24.124267', null, '2', '1', '9', null);
 INSERT INTO `dynamic` VALUES ('2', '2023-01-10 16:54:27', '2023-01-10 16:54:27.974097', null, '1', '1', '25', null);
 INSERT INTO `dynamic` VALUES ('3', '2023-01-10 16:55:39', '2023-01-10 16:55:39.825474', null, '3', '1', null, '10');
+INSERT INTO `dynamic` VALUES ('4', '2023-01-11 14:23:34', '2023-01-11 14:24:10.729005', null, '1', '1', '29', null);
+INSERT INTO `dynamic` VALUES ('5', '2023-01-11 14:25:55', '2023-01-11 14:25:55.658417', null, '2', '1', '29', null);
 
 -- ----------------------------
 -- Table structure for follow
@@ -386,7 +392,7 @@ DROP TABLE IF EXISTS `manager`;
 CREATE TABLE `manager` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `account` varchar(32) NOT NULL COMMENT '用户登录账号',
-  `password` varchar(200) NOT NULL DEFAULT '$2a$10$Pe/FxIit9qgYj2/GeVv34.S0ekGKm7jHGQU.xQwViCHdIbcAUJqC2' COMMENT '用户登录密码',
+  `password` varchar(200) NOT NULL DEFAULT '$2a$10$T0VoT3ZTSPISTsOLqwZoMu15zT1ok9E1hcpMg9AzV0ghyvQs60Zf.' COMMENT '用户登录密码',
   `name` varchar(32) NOT NULL COMMENT '用户显示的名称',
   `phone` varchar(11) DEFAULT NULL COMMENT '用户手机号码',
   `email` varchar(200) DEFAULT NULL COMMENT '邮箱地址',
@@ -576,7 +582,6 @@ CREATE TABLE `navgation` (
 -- ----------------------------
 INSERT INTO `navgation` VALUES ('1', '首页', '/', '1', '2022-09-21 09:55:04.114257', '2022-07-28 15:10:35', null);
 INSERT INTO `navgation` VALUES ('2', '视频', '/video', '3', '2022-12-30 11:34:48.020822', '2022-07-28 15:10:35', null);
-INSERT INTO `navgation` VALUES ('3', '新闻', '/news', '6', '2023-01-04 13:26:02.543777', '2022-07-28 15:10:35', null);
 INSERT INTO `navgation` VALUES ('4', '社区', '/article', '2', '2023-01-04 11:44:32.892607', '2022-09-23 10:56:44', null);
 INSERT INTO `navgation` VALUES ('5', '商城', '/shop', '4', '2022-12-30 11:35:25.195886', '2022-12-30 11:35:25', null);
 INSERT INTO `navgation` VALUES ('6', '活动', '/activity', '5', '2023-01-04 13:25:57.301520', '2023-01-04 13:25:57', null);
@@ -777,7 +782,7 @@ CREATE TABLE `sign` (
   PRIMARY KEY (`id`),
   KEY `IDX_bf50b9453f76930a85c7ad2ffd` (`user_id`),
   KEY `IDX_a656a8f5222c191721a98332c4` (`created_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sign
@@ -787,6 +792,7 @@ INSERT INTO `sign` VALUES ('2', '10', '50', '2022-12-29');
 INSERT INTO `sign` VALUES ('3', '10', '50', '2022-12-28');
 INSERT INTO `sign` VALUES ('4', '1', '50', '2023-01-06');
 INSERT INTO `sign` VALUES ('5', '1', '50', '2023-01-09');
+INSERT INTO `sign` VALUES ('6', '1', '50', '2023-01-11');
 
 -- ----------------------------
 -- Table structure for tag
@@ -838,11 +844,14 @@ INSERT INTO `tags_articles` VALUES ('3', '3');
 INSERT INTO `tags_articles` VALUES ('3', '22');
 INSERT INTO `tags_articles` VALUES ('3', '25');
 INSERT INTO `tags_articles` VALUES ('3', '26');
+INSERT INTO `tags_articles` VALUES ('3', '27');
+INSERT INTO `tags_articles` VALUES ('3', '28');
 INSERT INTO `tags_articles` VALUES ('4', '3');
 INSERT INTO `tags_articles` VALUES ('5', '2');
 INSERT INTO `tags_articles` VALUES ('6', '22');
 INSERT INTO `tags_articles` VALUES ('6', '23');
 INSERT INTO `tags_articles` VALUES ('6', '24');
+INSERT INTO `tags_articles` VALUES ('6', '29');
 
 -- ----------------------------
 -- Table structure for user
@@ -881,7 +890,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'test', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '测试1', '17802093443', '1176022890@qq.com', '350', '0', '1', '', '1', null, '来将可留姓名~', '0', 'default_avatar.png', null, '1', '2023-01-10 13:07:59.000000', '2022-07-28 15:10:29', null, '4', '63', '1');
+INSERT INTO `user` VALUES ('1', 'test', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '测试1', '17802093443', '1176022890@qq.com', '400', '0', '1', '', '1', null, '来将可留姓名~', '0', 'default_avatar.png', null, '1', '2023-01-11 15:48:52.000000', '2022-07-28 15:10:29', null, '5', '66', '1');
 INSERT INTO `user` VALUES ('2', 'test2', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试2', '17802093444', '1@qq.com', '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-18 14:10:06.944549', '2022-07-28 15:10:29', null, '0', '0', '0');
 INSERT INTO `user` VALUES ('3', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, '2@qq.com', '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-11-03 20:14:43.912485', '2022-07-28 15:10:29', null, '0', '0', '0');
 INSERT INTO `user` VALUES ('4', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, null, '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-11 13:33:09.236057', '2022-07-28 15:10:29', null, '0', '0', '0');
