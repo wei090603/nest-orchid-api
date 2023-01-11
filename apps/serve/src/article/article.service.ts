@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PageResult } from 'apps/shared/dto/page.dto';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { In, IsNull, Like, Not, Repository } from 'typeorm';
+import { DynamicService } from '../dynamic/dynamic.service';
 import { UserService } from '../user/user.service';
 import {
   ArticleDto,
@@ -26,6 +27,7 @@ export class ArticleService {
     @InjectRepository(Tag)
     private readonly tagRepository: Repository<Tag>,
     private readonly userService: UserService,
+    private readonly dynamicService: DynamicService,
   ) {}
 
   // 创建新文章
@@ -37,7 +39,7 @@ export class ArticleService {
     });
     // save 存在即更新不存在则插入
     const tagData = await this.tagRepository.save(tag);
-    await this.articleRepository.save({
+    const result = await this.articleRepository.save({
       title,
       content,
       image,
@@ -47,6 +49,12 @@ export class ArticleService {
       coverPicture,
       type,
       summary: this.getSimpleText(content),
+    });
+    // 记录动态
+    this.dynamicService.create({
+      type: 1,
+      userId: user.id,
+      articleId: result.id,
     });
   }
 

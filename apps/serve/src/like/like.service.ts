@@ -1,10 +1,12 @@
 import { Article } from '@libs/db/entity/article.entity';
 import { ArticleLike } from '@libs/db/entity/articleLike.entity';
+import { Dynamic } from '@libs/db/entity/dynamic.entity';
 import { User } from '@libs/db/entity/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ArticleService } from '../article/article.service';
+import { DynamicService } from '../dynamic/dynamic.service';
 import { MessageService } from '../message/message.service';
 import { UserService } from '../user/user.service';
 import { LikeDto } from './dto';
@@ -19,6 +21,7 @@ export class LikeService {
     private readonly articleService: ArticleService,
     private readonly userService: UserService,
     private readonly messageService: MessageService,
+    private readonly dynamicService: DynamicService,
   ) {}
 
   async add(dto: LikeDto, user: User) {
@@ -38,6 +41,8 @@ export class LikeService {
     if (user.id !== article.userId) {
       await this.messageService.createLike(user.id, article.userId, articleId);
     }
+    // 记录动态
+    this.dynamicService.create({ type: 2, userId: user.id, articleId });
     this.articleService.likeOpertion(articleId, 'add');
     this.userService.likeOpertion(article.userId, 'add');
   }
@@ -72,6 +77,7 @@ export class LikeService {
     return !!num;
   }
 
+  // 查询列表是否点赞
   async isMyLikeList(userId: number, list: Article[]) {
     return await Promise.all(
       list.map(async (item) => ({
@@ -97,4 +103,7 @@ export class LikeService {
       },
     });
   }
+
+  // 动态点赞文章
+  async isMyDynamicLikeList(userId: number, list: any[]) {}
 }

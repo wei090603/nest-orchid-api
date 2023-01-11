@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { Repository } from 'typeorm';
+import { DynamicService } from '../dynamic/dynamic.service';
 import { MessageService } from '../message/message.service';
 import { FollowDto } from './dto';
 
@@ -15,6 +16,7 @@ export class FollowService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly messageService: MessageService,
+    private readonly dynamicService: DynamicService,
   ) {}
 
   async create(dto: FollowDto, user: User) {
@@ -26,6 +28,12 @@ export class FollowService {
       followId: existing.id,
     });
     await this.messageService.createFollow(user.id, followId);
+    // 记录动态
+    this.dynamicService.create({
+      type: 2,
+      userId: user.id,
+      followId,
+    });
   }
 
   async delete(id: number, user: User) {

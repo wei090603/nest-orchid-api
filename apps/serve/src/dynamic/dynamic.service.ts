@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PageOptionsDto } from 'apps/shared/dto/page.dto';
 import { Repository } from 'typeorm';
+import { DynamiceDto } from './dto';
 
 @Injectable()
 export class DynamicService {
@@ -64,6 +65,26 @@ export class DynamicService {
       .take(limit)
       .getManyAndCount();
 
+    // return await Promise.all(
+    //   list.map(async (item) => {
+    //     if (item.type === 1 || item.type === 2) {
+    //       return {
+    //         ...item,
+    //         isLike: await this.likeService.isMyLike(userId, item.article.id),
+    //       };
+    //     } else {
+    //       return item;
+    //     }
+    //   }),
+    // );
+
     return { list, total };
   }
+
+  // 添加用户动态
+  async create(dto: DynamiceDto) {
+    this.dynamicRepository.insert(dto);
+  }
+
+  async delete(userId: number, articleId: number, followId: number) {}
 }
