@@ -73,6 +73,11 @@ export class SignService {
         ) {
           const count = user.signInCount + 1;
           const fav = this.getFavsSignDay(count);
+          await this.signRepository.insert({
+            userId: user.id,
+            favs: fav,
+            createdAt: dayjs().format('YYYY-MM-DD'),
+          });
           this.userRepository
             .createQueryBuilder()
             .update()
@@ -127,7 +132,6 @@ export class SignService {
 
   // 第一次签到或中断签到
   async firstSign(user: User) {
-    console.log(user, '111');
     await this.signRepository.insert({
       userId: user.id,
       favs: 50,
