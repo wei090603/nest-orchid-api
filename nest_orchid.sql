@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2023-01-11 18:10:47
+Date: 2023-01-13 18:01:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -392,7 +392,7 @@ DROP TABLE IF EXISTS `manager`;
 CREATE TABLE `manager` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `account` varchar(32) NOT NULL COMMENT '用户登录账号',
-  `password` varchar(200) NOT NULL DEFAULT '$2a$10$T0VoT3ZTSPISTsOLqwZoMu15zT1ok9E1hcpMg9AzV0ghyvQs60Zf.' COMMENT '用户登录密码',
+  `password` varchar(200) NOT NULL DEFAULT '$2a$10$A1NIwiN5oCsiKca.X33V1er17UXXqpYtaT8caYTUEZ7gwVrzGvQ4e' COMMENT '用户登录密码',
   `name` varchar(32) NOT NULL COMMENT '用户显示的名称',
   `phone` varchar(11) DEFAULT NULL COMMENT '用户手机号码',
   `email` varchar(200) DEFAULT NULL COMMENT '邮箱地址',
@@ -575,7 +575,7 @@ CREATE TABLE `navgation` (
   `delete_at` timestamp(6) NULL DEFAULT NULL COMMENT '软删除时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `IDX_fbc0d326d4a65a1984eb849108` (`title`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of navgation
@@ -586,6 +586,7 @@ INSERT INTO `navgation` VALUES ('4', '社区', '/article', '2', '2023-01-04 11:4
 INSERT INTO `navgation` VALUES ('5', '商城', '/shop', '4', '2022-12-30 11:35:25.195886', '2022-12-30 11:35:25', null);
 INSERT INTO `navgation` VALUES ('6', '活动', '/activity', '5', '2023-01-04 13:25:57.301520', '2023-01-04 13:25:57', null);
 INSERT INTO `navgation` VALUES ('7', '等你来答', '/question', '7', '2023-01-05 18:23:15.315152', '2023-01-05 18:23:15', null);
+INSERT INTO `navgation` VALUES ('8', '兰花百科', '/encyclopedias', '6', '2023-01-13 14:24:58.953254', '2023-01-13 14:24:58', null);
 
 -- ----------------------------
 -- Table structure for notice
@@ -782,7 +783,7 @@ CREATE TABLE `sign` (
   PRIMARY KEY (`id`),
   KEY `IDX_bf50b9453f76930a85c7ad2ffd` (`user_id`),
   KEY `IDX_a656a8f5222c191721a98332c4` (`created_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sign
@@ -793,6 +794,7 @@ INSERT INTO `sign` VALUES ('3', '10', '50', '2022-12-28');
 INSERT INTO `sign` VALUES ('4', '1', '50', '2023-01-06');
 INSERT INTO `sign` VALUES ('5', '1', '50', '2023-01-09');
 INSERT INTO `sign` VALUES ('6', '1', '50', '2023-01-11');
+INSERT INTO `sign` VALUES ('7', '1', '100', '2023-01-12');
 
 -- ----------------------------
 -- Table structure for tag
@@ -890,7 +892,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'test', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '测试1', '17802093443', '1176022890@qq.com', '400', '0', '1', '', '1', null, '来将可留姓名~', '0', 'default_avatar.png', null, '1', '2023-01-11 15:48:52.000000', '2022-07-28 15:10:29', null, '5', '66', '1');
+INSERT INTO `user` VALUES ('1', 'test', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '测试1', '17802093443', '1176022890@qq.com', '850', '0', '1', '', '1', null, '来将可留姓名~', '0', 'default_avatar.png', null, '1', '2023-01-12 14:27:35.000000', '2022-07-28 15:10:29', null, '5', '66', '7');
 INSERT INTO `user` VALUES ('2', 'test2', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试2', '17802093444', '1@qq.com', '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-18 14:10:06.944549', '2022-07-28 15:10:29', null, '0', '0', '0');
 INSERT INTO `user` VALUES ('3', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, '2@qq.com', '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-11-03 20:14:43.912485', '2022-07-28 15:10:29', null, '0', '0', '0');
 INSERT INTO `user` VALUES ('4', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, null, '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-11 13:33:09.236057', '2022-07-28 15:10:29', null, '0', '0', '0');

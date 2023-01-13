@@ -292,9 +292,16 @@ export class ArticleService {
           id: true,
           title: true,
         },
+        tag: {
+          id: true,
+          name: true,
+        },
+        commentCount: true,
+        likeCount: true,
       },
       relations: {
         category: true,
+        tag: true,
       },
       skip: limit * (page - 1),
       take: limit,
