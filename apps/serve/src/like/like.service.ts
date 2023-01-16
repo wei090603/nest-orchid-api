@@ -88,11 +88,23 @@ export class LikeService {
   }
 
   // 获取用户点赞列表
-  async findLikeList(userId: number): Promise<ArticleLike[]> {
-    return await this.likeRepository.find({
+  async findLikeList(userId: number): Promise<any[]> {
+    const like = await this.likeRepository.find({
       select: ['articleId'],
       where: { userId },
     });
+
+    const article = await this.articleService.getCollectLikeList(like);
+
+    if (article.length === 0) return [];
+
+    return await Promise.all(
+      article.map(async ({ userId: uid, ...rest }) => ({
+        ...rest,
+        isLike: await this.isMyLike(userId, rest.id),
+        author: await this.userService.getUserInfo(uid),
+      })),
+    );
   }
 
   // 获取用户点赞总数
@@ -103,7 +115,4 @@ export class LikeService {
       },
     });
   }
-
-  // 动态点赞文章
-  async isMyDynamicLikeList(userId: number, list: any[]) {}
 }

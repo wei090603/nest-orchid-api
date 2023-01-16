@@ -17,6 +17,7 @@ import { UploadModule } from './upload/upload.module';
 import { LikeModule } from './like/like.module';
 import { MessageModule } from './message/message.module';
 import { DynamicModule } from './dynamic/dynamic.module';
+import { EncyclopediasModule } from './encyclopedias/encyclopedias.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { DynamicModule } from './dynamic/dynamic.module';
     LikeModule,
     MessageModule,
     DynamicModule,
+    EncyclopediasModule,
   ],
   controllers: [ServeController],
   providers: [ServeService],

@@ -5,6 +5,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ApiException } from 'apps/shared/exceptions/api.exception';
 import { Repository } from 'typeorm';
+import { ArticleService } from '../article/article.service';
+import { LikeService } from '../like/like.service';
+import { UserService } from '../user/user.service';
 import { CollectDto } from './dto';
 
 @Injectable()
@@ -14,6 +17,9 @@ export class CollectService {
     private readonly collectRepository: Repository<ArticleCollect>,
     @InjectRepository(Article)
     private readonly articleRepository: Repository<Article>,
+    private readonly articleService: ArticleService,
+    private readonly likeService: LikeService,
+    private readonly userService: UserService,
   ) {}
 
   async addArticle(dto: CollectDto, user: User) {
@@ -46,11 +52,23 @@ export class CollectService {
   }
 
   // 获取用户收藏列表
-  async findCollectList(id: number): Promise<ArticleCollect[]> {
-    return await this.collectRepository.find({
+  async findCollectList(userId: number): Promise<any[]> {
+    const collect = await this.collectRepository.find({
       select: ['articleId'],
-      where: { userId: id },
+      where: { userId },
     });
+
+    const article = await this.articleService.getCollectLikeList(collect);
+
+    if (article.length === 0) return [];
+
+    return await Promise.all(
+      article.map(async ({ userId: uid, ...rest }) => ({
+        ...rest,
+        isLike: await this.likeService.isMyLike(userId, rest.id),
+        author: await this.userService.getUserInfo(uid),
+      })),
+    );
   }
 
   // 获取用户收藏总数

@@ -24,6 +24,8 @@ import { MessageLike } from './entity/messageLike.entity';
 import { MessageFollow } from './entity/messageFollow.entity';
 import { MessageSystem } from './entity/messageSystem.entity';
 import { Dynamic } from './entity/dynamic.entity';
+import { EncyclopediasCategory } from './entity/encyclopediasCategory.entity';
+import { Encyclopedias } from './entity/encyclopedias.entity';
 
 const table = [
   Category,
@@ -48,6 +50,8 @@ const table = [
   MessageFollow,
   MessageSystem,
   Dynamic,
+  EncyclopediasCategory,
+  Encyclopedias,
 ];
 
 const entity = TypeOrmModule.forFeature(table);

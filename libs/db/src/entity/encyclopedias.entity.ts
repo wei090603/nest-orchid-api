@@ -1,22 +1,7 @@
-import {
-  Entity,
-  Column,
-  ManyToOne,
-  ManyToMany,
-  OneToMany,
-  JoinTable,
-  OneToOne,
-  JoinColumn,
-  Index,
-} from 'typeorm';
+import { Entity, Column, Index } from 'typeorm';
 import { Base } from './base.entity';
-import { Category } from './category.entity';
-import { Tag } from './tag.entity';
-import { User } from './user.entity';
-import { Comment } from './comment.entity';
 
 // 百科
-
 @Entity('encyclopedias')
 export class Encyclopedias extends Base {
   @Column({
@@ -62,59 +47,17 @@ export class Encyclopedias extends Base {
 
   @Column({
     type: 'int',
-    name: 'status',
-    comment: '是否回复 1-打开回复 2-关闭回复 3-仅自己可见',
+    name: 'user_id',
+    comment: '管理员id',
     default: 1,
   })
-  public status: number;
-
-  @Column({
-    type: 'boolean',
-    name: 'is_top',
-    comment: '是否置顶 0-未置顶 1-已置顶',
-    default: false,
-  })
-  public isTop: boolean;
-
-  @Column({
-    type: 'int',
-    nullable: true,
-    name: 'sort',
-    comment: '排序',
-  })
-  public sort: number;
-
-  @Column({
-    type: 'int',
-    name: 'like_count',
-    default: 0,
-    comment: '点赞数量',
-  })
-  public likeCount: number;
-
-  @Column({
-    type: 'int',
-    name: 'comment_count',
-    default: 0,
-    comment: '评论数量',
-  })
-  public commentCount: number;
-
-  @Column({
-    type: 'int',
-    name: 'user_id',
-    comment: '文章作者id',
-  })
-  @Index()
   public userId: number;
 
-  @ManyToOne(() => Category, (category) => category.article)
-  @JoinColumn({ name: 'category_id' })
-  public category: Category;
-
-  @ManyToMany(() => Tag, (tag) => tag.article, { cascade: true }) // cascade 如果标签不存在则会自动添加
-  public tag: Tag[];
-
-  @OneToMany(() => Comment, (comment) => comment.article, { cascade: true })
-  public comment: Comment[];
+  @Column({
+    type: 'int',
+    name: 'category_id',
+    comment: '分类ID',
+  })
+  @Index()
+  public categoryId: number;
 }

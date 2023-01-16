@@ -46,8 +46,7 @@ export class LikeController {
     description: '根据用户id获取点赞列表',
     summary: '根据用户id获取点赞列表',
   })
-  async findLikeList(@Param('id') id: string) {
-    const likeList = await this.likeService.findLikeList(+id);
-    return await this.articleService.getCollectLikeList(likeList);
+  findLikeList(@Param('id') id: string) {
+    return this.likeService.findLikeList(+id);
   }
 }

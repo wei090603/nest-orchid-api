@@ -198,10 +198,14 @@ export class ArticleService {
     return { ...article, author };
   }
 
-  // 根据id 获取文章列表 收藏 点赞列表
+  /**
+   * 根据id 获取文章列表 收藏 点赞列表
+   * @param list
+   * @returns list [ArticleCollect]
+   */
   async getCollectLikeList(list: ArticleCollect[]) {
-    const ids = list?.map((item) => item.articleId) || [];
-    const artileList = await this.articleRepository.find({
+    const ids = list.map((item) => item.articleId);
+    return await this.articleRepository.find({
       select: {
         id: true,
         title: true,
@@ -224,13 +228,6 @@ export class ArticleService {
         id: In(ids),
       },
     });
-    if (artileList.length === 0) return [];
-    return await Promise.all(
-      artileList.map(async ({ userId, ...rest }) => ({
-        ...rest,
-        author: await this.userService.getUserInfo(userId),
-      })),
-    );
   }
 
   // 增加文章阅读量
