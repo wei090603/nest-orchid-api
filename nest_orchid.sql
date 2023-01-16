@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2023-01-13 18:01:43
+Date: 2023-01-16 15:48:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -72,7 +72,7 @@ CREATE TABLE `article` (
 -- ----------------------------
 -- Records of article
 -- ----------------------------
-INSERT INTO `article` VALUES ('1', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '111', '1658382145923.jpeg', '1', '1', '0', null, '4', '3', '1', '0', '10', '2022-10-17 17:19:14.573963', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
+INSERT INTO `article` VALUES ('1', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '111', '1658382145923.jpeg', '12', '1', '0', null, '4', '3', '1', '0', '10', '2023-01-15 17:23:30.000000', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('2', '<p><br></p>', '地方', '', '0', '2', '0', null, '0', '0', '1', '0', '10', '2022-09-14 11:41:09.970583', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('3', '<p><br></p>', '的', '1659892913785.jpeg', '2', '1', '0', null, '2', '4', '1', '0', '1', '2022-11-09 18:29:04.000000', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('4', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '111', '1658382145923.jpeg', '0', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-14 11:41:10.415852', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
@@ -89,18 +89,18 @@ INSERT INTO `article` VALUES ('14', '<p>测试发测试「时光不负，创作�
 INSERT INTO `article` VALUES ('15', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '111', '1658382145923.jpeg', '0', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-14 11:41:10.963943', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('16', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '111', '1658382145923.jpeg', '716', '1', '0', null, '3', '15', '1', '0', '10', '2023-01-10 13:05:34.000000', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('17', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '6', '1', '0', null, '1', '0', '1', '0', '10', '2022-09-21 11:34:25.659338', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
-INSERT INTO `article` VALUES ('18', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '4', '1', '0', null, '0', '0', '1', '0', '10', '2022-09-21 11:46:00.000000', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
+INSERT INTO `article` VALUES ('18', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '11', '1', '0', null, '1', '0', '1', '0', '10', '2023-01-16 14:37:19.000000', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('19', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '32', '1', '0', null, '1', '0', '1', '0', '10', '2023-01-06 15:05:44.000000', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('20', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '25', '1', '0', null, '0', '0', '1', '0', '10', '2022-12-23 13:43:36.000000', '2022-07-28 15:10:32', null, '以前有个朋友是恒大的，公司让买理财，宁死不屈，就说没钱就没买，躲过一劫。\n\n后来一个半月没发工资，扛不住了，就跳槽了。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('21', '<p>测试发测试「时光不负，创作不停，本文正在参加2022年中总结征文大赛」 落户 关于落户这个事, 就是一个很突然的想法,很突然, 得知天津有个\"海河英才计划\",只要是本科生, 就比较容易落户,所以就想着试一试,</p>', '如果你的项目是 ToB 项目，可能性能优化不会做到极致；', '1658382145923.jpeg', '363', '1', '0', null, '2', '4', '1', '0', '10', '2023-01-09 14:59:24.000000', '2022-07-28 15:10:32', null, '这不又来事了，这两天又爆了互联网大裁员。继阿里“向社会输送人才”之后，京东又搞了个“毕业礼”，整的小伙伴们人心惶惶。副业的关注度又一波升级。那今天我们就来聊聊，程序员做副业这件事。', '1658382145923.jpeg');
 INSERT INTO `article` VALUES ('22', '<p>测试稳住文章</p>', '测试', null, '13', '1', '0', null, '1', '0', '5', '1', '1', '2023-01-09 14:41:50.000000', '2022-12-21 15:36:35', null, '测试稳住文章', '1671890013450.png');
 INSERT INTO `article` VALUES ('23', '<p>wezdaefwe<img src=\"http://127.0.0.1:4000/uploads/1671863567054.png\" alt=\"1671863567054.png\" data-href=\"\" style=\"width: 789.00px;height: 678.06px;\"/></p>', '测试文章2', null, '2', '1', '0', null, '0', '0', '2', '1', '1', '2023-01-09 15:17:15.000000', '2022-12-22 11:39:28', null, 'wezdaefwe', '1671848847576.png');
 INSERT INTO `article` VALUES ('24', '<p>wezdaefwe<img src=\"http://127.0.0.1:4000/uploads/1671863567054.png\" alt=\"1671863567054.png\" data-href=\"\" style=\"width: 789.00px;height: 678.06px;\"/></p>', '测试文章2', null, '56', '1', '0', null, '1', '0', '2', '1', '1', '2023-01-10 13:05:24.000000', '2022-12-22 11:39:37', null, 'wezdaefwe', '1671848847576.png');
-INSERT INTO `article` VALUES ('25', '<p>测试时玩了快解放了我<img src=\"http://127.0.0.1:4000/uploads/1671921522659.png\" alt=\"1671921522659.png\" data-href=\"\" style=\"\"/></p>', '测试文章3', null, '86', '1', '0', null, '2', '0', '7', '1', '1', '2023-01-11 09:50:53.000000', '2022-12-22 11:43:29', null, '测试时玩了快解放了我', '1671986730962.png');
+INSERT INTO `article` VALUES ('25', '<p>测试时玩了快解放了我<img src=\"http://127.0.0.1:4000/uploads/1671921522659.png\" alt=\"1671921522659.png\" data-href=\"\" style=\"\"/></p>', '测试文章3', null, '87', '1', '0', null, '1', '0', '7', '1', '1', '2023-01-16 14:09:59.000000', '2022-12-22 11:43:29', null, '测试时玩了快解放了我', '1671986730962.png');
 INSERT INTO `article` VALUES ('26', '<p>消息</p>', '666', null, '16', '1', '0', null, '1', '3', '5', '1', '1', '2023-01-10 13:07:59.000000', '2023-01-07 23:28:49', null, '消息', '1674019452838.png');
-INSERT INTO `article` VALUES ('27', '<p>111</p>', '11', null, '0', '1', '0', null, '0', '0', '5', '1', '1', '2023-01-11 13:38:15.636980', '2023-01-11 13:38:15', null, '111', '1673721620029.png');
+INSERT INTO `article` VALUES ('27', '<p>111</p>', '11', null, '2', '1', '0', null, '0', '0', '5', '1', '1', '2023-01-16 11:30:51.000000', '2023-01-11 13:38:15', null, '111', '1673721620029.png');
 INSERT INTO `article` VALUES ('28', '<p>我要发表文章我要发表文章</p>', '我要发表文章', null, '1', '1', '0', null, '0', '0', '7', '1', '1', '2023-01-11 13:53:05.000000', '2023-01-11 13:45:38', null, '我要发表文章我要发表文章', '1673752214620.png');
-INSERT INTO `article` VALUES ('29', '<p>动态测试</p>', '动态测试', null, '1', '1', '0', null, '1', '0', '5', '1', '1', '2023-01-11 14:25:55.000000', '2023-01-11 14:23:34', null, '动态测试', '1674162641160.png');
+INSERT INTO `article` VALUES ('29', '<p>动态测试</p>', '动态测试', null, '13', '1', '0', null, '1', '0', '5', '1', '1', '2023-01-15 18:09:11.000000', '2023-01-11 14:23:34', null, '动态测试', '1674162641160.png');
 
 -- ----------------------------
 -- Table structure for article_collect
@@ -117,6 +117,7 @@ CREATE TABLE `article_collect` (
 -- ----------------------------
 -- Records of article_collect
 -- ----------------------------
+INSERT INTO `article_collect` VALUES ('18', '1');
 INSERT INTO `article_collect` VALUES ('21', '1');
 INSERT INTO `article_collect` VALUES ('25', '1');
 
@@ -135,14 +136,15 @@ CREATE TABLE `article_like` (
 -- ----------------------------
 -- Records of article_like
 -- ----------------------------
+INSERT INTO `article_like` VALUES ('9', '1');
 INSERT INTO `article_like` VALUES ('16', '1');
 INSERT INTO `article_like` VALUES ('17', '1');
+INSERT INTO `article_like` VALUES ('18', '1');
 INSERT INTO `article_like` VALUES ('19', '1');
 INSERT INTO `article_like` VALUES ('21', '1');
 INSERT INTO `article_like` VALUES ('22', '1');
 INSERT INTO `article_like` VALUES ('23', '1');
 INSERT INTO `article_like` VALUES ('24', '1');
-INSERT INTO `article_like` VALUES ('25', '1');
 INSERT INTO `article_like` VALUES ('25', '10');
 INSERT INTO `article_like` VALUES ('26', '10');
 INSERT INTO `article_like` VALUES ('29', '1');
@@ -261,7 +263,7 @@ CREATE TABLE `dynamic` (
   `follow_id` int(11) DEFAULT NULL COMMENT '当前关注用户id',
   PRIMARY KEY (`id`),
   KEY `IDX_5fe41d8b1aae5a2ef04b972a81` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dynamic
@@ -270,7 +272,62 @@ INSERT INTO `dynamic` VALUES ('1', '2023-01-10 16:23:24', '2023-01-10 16:23:24.1
 INSERT INTO `dynamic` VALUES ('2', '2023-01-10 16:54:27', '2023-01-10 16:54:27.974097', null, '1', '1', '25', null);
 INSERT INTO `dynamic` VALUES ('3', '2023-01-10 16:55:39', '2023-01-10 16:55:39.825474', null, '3', '1', null, '10');
 INSERT INTO `dynamic` VALUES ('4', '2023-01-11 14:23:34', '2023-01-11 14:24:10.729005', null, '1', '1', '29', null);
-INSERT INTO `dynamic` VALUES ('5', '2023-01-11 14:25:55', '2023-01-11 14:25:55.658417', null, '2', '1', '29', null);
+INSERT INTO `dynamic` VALUES ('6', '2023-01-16 10:42:18', '2023-01-16 10:42:18.430791', null, '2', '1', '18', null);
+
+-- ----------------------------
+-- Table structure for encyclopedias
+-- ----------------------------
+DROP TABLE IF EXISTS `encyclopedias`;
+CREATE TABLE `encyclopedias` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新日期',
+  `delete_at` timestamp(6) NULL DEFAULT NULL COMMENT '软删除时间',
+  `title` varchar(30) DEFAULT NULL COMMENT '文章标题',
+  `reading` int(11) NOT NULL DEFAULT '0' COMMENT '阅读数量',
+  `content` text NOT NULL COMMENT '文章内容富文本',
+  `summary` varchar(100) NOT NULL COMMENT '文章摘要',
+  `cover_picture` varchar(255) DEFAULT NULL COMMENT '文章封面图',
+  `user_id` int(11) NOT NULL DEFAULT '1' COMMENT '管理员id',
+  `category_id` int(11) NOT NULL COMMENT '分类ID',
+  PRIMARY KEY (`id`),
+  KEY `IDX_99005bb919f0ea958b4ad3dd6c` (`category_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of encyclopedias
+-- ----------------------------
+INSERT INTO `encyclopedias` VALUES ('1', '2023-01-15 14:05:54', '2023-01-15 15:07:57.274321', null, '春兰宋梅Cym.goeringii‘Song Mei’', '100', '宋梅（Cym.goeringii‘Song Mei’）全称：宋锦旋梅，草本植物、地生兰花。春兰宋梅于清朝乾隆间（1736-1795）年由绍兴宋锦璇选育，是中国春兰传统铭品，为梅瓣兰花的典型代表、为春兰梅瓣型中杰出名种。宋梅与万字、龙字、集圆一起列为春兰“四大开王”，因宋梅花品无可匹敌，在春兰中独占鳌头，并被推为“四大天王”之首，并被人誉为“春兰之王”，又与春兰“龙子”合称国兰双壁。春兰宋梅历经二百余年历史，即使名兰迭出，然梅瓣花无出其右者，属梅瓣花之精典范本。叶：宋梅叶弓形，叶长一般25cm-30cm、叶宽0.5cm-1.5cm，叶尾钝尖。叶质中厚、叶色深绿、光泽度好、中骨硬挺、极具弹性、叶姿半垂、叶缘具细齿；\r\n兰叶呈弓形、叶幅较宽、叶尖纯、叶色浓绿、叶面起光泽、新芽紫红色。\r\n花：宋梅花瓣有绒毛般的光泽、外三瓣特别紧圆、宛如梅花花瓣、紧边似镶白边，色泽青绿、双捧起兜、形似蚕蛾、故称蚕蛾捧；\r\n舌瓣短而圆、微朝上，舌尖起微兜、尤如童子之刘海、故称刘海舌，舌上有不轨则红点（偶有白舌，只有花舌根部尚存红块），外三瓣有时开荷形水仙、或梅形水仙；\r\n株型键壮时易起双苞并蒂花，主瓣中正圆整、副瓣平肩、中宫圆整、花容十分端正，花葶高昂，有时可高出叶面；\r\n苞叶上有二到三片箨壳，花杆有白、白带微红两种，也是芽变所致。', '宋梅（Cym.goeringii‘Song Mei’）全称：宋锦旋梅，草本植物、地生兰花。春兰宋梅于清朝乾隆间清朝乾隆间清朝乾隆间清朝乾隆间清朝乾隆间清朝乾隆间清朝乾隆间清朝乾隆间清朝乾隆间清朝乾隆间', 'http://www.lhbkw.com/wp-content/uploads/2018/07/04-2.jpg', '1', '1');
+
+-- ----------------------------
+-- Table structure for encyclopedias_ategory
+-- ----------------------------
+DROP TABLE IF EXISTS `encyclopedias_ategory`;
+CREATE TABLE `encyclopedias_ategory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
+  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6) COMMENT '更新日期',
+  `delete_at` timestamp(6) NULL DEFAULT NULL COMMENT '软删除时间',
+  `title` varchar(60) NOT NULL COMMENT '分类名称',
+  `route` varchar(60) NOT NULL COMMENT '路由名称',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `IDX_fd169f113c8e34a7b7969d7d13` (`title`),
+  UNIQUE KEY `IDX_1066af0bf5dc25734f5d7d0a5b` (`route`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of encyclopedias_ategory
+-- ----------------------------
+INSERT INTO `encyclopedias_ategory` VALUES ('1', '2023-01-15 09:45:15', '2023-01-15 12:21:34.529071', null, '春兰', 'chunlan', null);
+INSERT INTO `encyclopedias_ategory` VALUES ('2', '2023-01-15 09:45:22', '2023-01-15 12:21:37.734293', null, '蕙兰', 'huilan', null);
+INSERT INTO `encyclopedias_ategory` VALUES ('3', '2023-01-15 09:45:45', '2023-01-15 12:21:42.512885', null, '建兰', 'jianlan', null);
+INSERT INTO `encyclopedias_ategory` VALUES ('4', '2023-01-15 09:45:58', '2023-01-15 12:21:44.967962', null, '墨兰', 'molan', null);
+INSERT INTO `encyclopedias_ategory` VALUES ('5', '2023-01-15 09:46:03', '2023-01-15 12:21:47.445460', null, '寒兰', 'hanlan', null);
+INSERT INTO `encyclopedias_ategory` VALUES ('6', '2023-01-15 09:46:14', '2023-01-15 12:21:49.990241', null, '春剑', 'chunjian', null);
+INSERT INTO `encyclopedias_ategory` VALUES ('7', '2023-01-15 09:46:25', '2023-01-15 12:21:54.165355', null, '莲瓣兰', 'lianban', null);
+INSERT INTO `encyclopedias_ategory` VALUES ('8', '2023-01-15 09:46:30', '2023-01-15 12:21:56.488029', null, '其它', 'other', null);
+INSERT INTO `encyclopedias_ategory` VALUES ('9', '2023-01-15 11:22:15', '2023-01-15 13:25:49.486496', null, '全部', '', '1');
 
 -- ----------------------------
 -- Table structure for follow
@@ -392,7 +449,7 @@ DROP TABLE IF EXISTS `manager`;
 CREATE TABLE `manager` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `account` varchar(32) NOT NULL COMMENT '用户登录账号',
-  `password` varchar(200) NOT NULL DEFAULT '$2a$10$A1NIwiN5oCsiKca.X33V1er17UXXqpYtaT8caYTUEZ7gwVrzGvQ4e' COMMENT '用户登录密码',
+  `password` varchar(200) NOT NULL DEFAULT '$2a$10$3/e7FpPPgStSya5yo/qj8Oc/4UO3Et1h3vyUzqrUxSaynKUbwo7Ci' COMMENT '用户登录密码',
   `name` varchar(32) NOT NULL COMMENT '用户显示的名称',
   `phone` varchar(11) DEFAULT NULL COMMENT '用户手机号码',
   `email` varchar(200) DEFAULT NULL COMMENT '邮箱地址',
@@ -532,7 +589,7 @@ CREATE TABLE `message_like` (
   PRIMARY KEY (`id`),
   KEY `IDX_300ba2d8d8f843b434bc975776` (`user_id`),
   KEY `IDX_ed00b741f34db01ec98d5e4a51` (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of message_like
@@ -540,6 +597,7 @@ CREATE TABLE `message_like` (
 INSERT INTO `message_like` VALUES ('1', '2023-01-06 14:57:00', '2023-01-06 14:57:00.828846', null, '1', '10', '0', '19');
 INSERT INTO `message_like` VALUES ('2', '2023-01-10 09:42:20', '2023-01-10 09:42:20.510513', null, '10', '1', '0', '25');
 INSERT INTO `message_like` VALUES ('3', '2023-01-10 10:29:56', '2023-01-10 10:29:56.582133', null, '10', '1', '0', '26');
+INSERT INTO `message_like` VALUES ('4', '2023-01-16 10:42:18', '2023-01-16 10:42:18.343618', null, '1', '10', '0', '18');
 
 -- ----------------------------
 -- Table structure for message_system
@@ -583,10 +641,10 @@ CREATE TABLE `navgation` (
 INSERT INTO `navgation` VALUES ('1', '首页', '/', '1', '2022-09-21 09:55:04.114257', '2022-07-28 15:10:35', null);
 INSERT INTO `navgation` VALUES ('2', '视频', '/video', '3', '2022-12-30 11:34:48.020822', '2022-07-28 15:10:35', null);
 INSERT INTO `navgation` VALUES ('4', '社区', '/article', '2', '2023-01-04 11:44:32.892607', '2022-09-23 10:56:44', null);
-INSERT INTO `navgation` VALUES ('5', '商城', '/shop', '4', '2022-12-30 11:35:25.195886', '2022-12-30 11:35:25', null);
+INSERT INTO `navgation` VALUES ('5', '商城', '/shop', '4', '2023-01-15 10:35:08.756469', '2022-12-30 11:35:25', '2023-01-15 10:35:05.000000');
 INSERT INTO `navgation` VALUES ('6', '活动', '/activity', '5', '2023-01-04 13:25:57.301520', '2023-01-04 13:25:57', null);
 INSERT INTO `navgation` VALUES ('7', '等你来答', '/question', '7', '2023-01-05 18:23:15.315152', '2023-01-05 18:23:15', null);
-INSERT INTO `navgation` VALUES ('8', '兰花百科', '/encyclopedias', '6', '2023-01-13 14:24:58.953254', '2023-01-13 14:24:58', null);
+INSERT INTO `navgation` VALUES ('8', '兰花百科', '/encyclopedias', '6', '2023-01-15 15:59:27.027254', '2023-01-13 14:24:58', null);
 
 -- ----------------------------
 -- Table structure for notice
@@ -892,7 +950,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'test', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '测试1', '17802093443', '1176022890@qq.com', '850', '0', '1', '', '1', null, '来将可留姓名~', '0', 'default_avatar.png', null, '1', '2023-01-12 14:27:35.000000', '2022-07-28 15:10:29', null, '5', '66', '7');
+INSERT INTO `user` VALUES ('1', 'test', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '测试1', '17802093443', '1176022890@qq.com', '850', '0', '1', '', '1', null, '来将可留姓名~', '0', 'default_avatar.png', null, '1', '2023-01-16 14:09:59.000000', '2022-07-28 15:10:29', null, '4', '81', '7');
 INSERT INTO `user` VALUES ('2', 'test2', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试2', '17802093444', '1@qq.com', '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-18 14:10:06.944549', '2022-07-28 15:10:29', null, '0', '0', '0');
 INSERT INTO `user` VALUES ('3', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, '2@qq.com', '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-11-03 20:14:43.912485', '2022-07-28 15:10:29', null, '0', '0', '0');
 INSERT INTO `user` VALUES ('4', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, null, '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-11 13:33:09.236057', '2022-07-28 15:10:29', null, '0', '0', '0');
@@ -901,7 +959,7 @@ INSERT INTO `user` VALUES ('6', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZ
 INSERT INTO `user` VALUES ('7', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, null, '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-11 13:33:11.988109', '2022-07-28 15:10:29', null, '0', '0', '0');
 INSERT INTO `user` VALUES ('8', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, null, '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-11 13:33:13.892615', '2022-07-28 15:10:29', null, '0', '0', '0');
 INSERT INTO `user` VALUES ('9', null, '$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', 'test', null, null, '0', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2022-09-11 13:33:14.619960', '2022-07-28 15:10:29', null, '0', '0', '0');
-INSERT INTO `user` VALUES ('10', 'test3', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试', '17223110317', 'fewfew@qq.com', '285', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2023-01-10 13:05:34.000000', '2022-07-28 15:10:29', null, '1', '57', '1');
+INSERT INTO `user` VALUES ('10', 'test3', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试', '17223110317', 'fewfew@qq.com', '285', '0', '1', '', '1', null, null, '0', 'default_avatar.png', null, '1', '2023-01-16 14:37:19.000000', '2022-07-28 15:10:29', null, '2', '75', '1');
 INSERT INTO `user` VALUES ('11', 'test4', '$2a$10$lrIDbrWVSAIzshOKgFHNr.OEgRgIeOSQq3pWZjfCLLKbfDyCxxD1O', '我是测试3', '17323110316', 'feewfw@qq.com', '0', '0', '1', '', '1', null, '为什么', '0', 'default_avatar.png', null, '1', '2022-12-23 17:51:33.847387', '2022-12-23 17:48:50', null, '0', '0', '0');
 
 -- ----------------------------
