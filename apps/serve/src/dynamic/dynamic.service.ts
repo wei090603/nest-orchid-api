@@ -23,7 +23,7 @@ export class DynamicService {
   async getDynamicList(userId: number, params: PageOptionsDto) {
     const { page = 1, limit = 10 } = params;
 
-    const [list, total] = await this.dynamicRepository
+    const [list, total]: any = await this.dynamicRepository
       .createQueryBuilder('dynamic')
       .leftJoinAndMapOne(
         'dynamic.user',
@@ -98,7 +98,9 @@ export class DynamicService {
     const lists = list.map((item) => {
       if (item.type === 1 || item.type === 2) {
         item.article.isLike = like.some((p) => p.articleId === item.articleId);
-        item.article.isCollect = collect.some((p) => p.articleId === item.articleId);
+        item.article.isCollect = collect.some(
+          (p) => p.articleId === item.articleId,
+        );
       }
       return item;
     });

@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -30,6 +31,7 @@ import {
   FindUserArticleDto,
   PageArticleList,
   SearchArticleDto,
+  UpdateArticleDto,
 } from './dto';
 
 @ApiTags('文章管理')
@@ -65,6 +67,16 @@ export class ArticleController {
     };
   }
 
+  @Patch(':id')
+  @ApiOperation({ summary: '修改文章' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  update(
+    @Param('id') id: string,
+    @Body() createArticleDto: UpdateArticleDto,
+    @user() user: User,
+  ) {}
+
   @Get('search')
   @ApiOperation({ summary: '搜索文章列表' })
   @UseGuards(OptionAuthGuard)
@@ -86,7 +98,6 @@ export class ArticleController {
   }
 
   @Get(':id')
-  @ApiBearerAuth()
   @ApiOperation({ summary: '获取文章详情' })
   @UseGuards(OptionAuthGuard)
   async findOne(@Param('id', ParseIntPipe) id: number, @user() user: User) {

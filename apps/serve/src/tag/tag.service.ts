@@ -1,4 +1,3 @@
-import { Category } from '@libs/db/entity/category.entity';
 import { Tag } from '@libs/db/entity/tag.entity';
 import { User } from '@libs/db/entity/user.entity';
 import { Injectable } from '@nestjs/common';
@@ -41,11 +40,8 @@ export class TagService {
       .getRawMany();
   }
 
-  async findArticle(
-    { page = 1, limit = 10, ...params }: TagArticle,
-    user: User,
-  ) {
-    const { id } = params;
+  async findArticle(params: TagArticle, user: User) {
+    const { id, page = 1, limit = 10 } = params;
     const [list, total] = await this.tagRepository
       .createQueryBuilder('tag')
       .leftJoinAndSelect('tag.article', 'article')

@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdvertiseService } from './advertise.service';
-import { AdvertiseList, FindAdvertiseDto } from './dto';
+import { AdvertiseInfo, AdvertiseList, FindAdvertiseDto } from './dto';
 
 @ApiTags('广告管理')
 @Controller('advertise')

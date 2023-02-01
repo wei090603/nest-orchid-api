@@ -6,7 +6,12 @@
   "root": "apps/admin",
   "compilerOptions": {
     "webpack": true,
-    "tsConfigPath": "apps/admin/tsconfig.app.json"
+    "tsConfigPath": "apps/admin/tsconfig.app.json",
+    "deleteOutDir": true,
+    "plugins": ["@nestjs/swagger/plugin"]
+  },
+  "generateOptions": {
+    "spec": false
   },
   "projects": {
     "admin": {

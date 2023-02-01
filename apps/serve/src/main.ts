@@ -3,13 +3,13 @@ import {
   ExpressAdapter,
   NestExpressApplication,
 } from '@nestjs/platform-express';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { setupSwagger } from './swagger';
 import { ApiExceptionFilter } from 'apps/shared/filters/api-exception.filter';
 import { ApiTransformInterceptor } from 'apps/shared/interceptor/api-interceptor';
 import { ConfigService } from '@nestjs/config';
 import { ServeModule } from './serve.module';
-import { ValidationPipe } from 'apps/shared/pipes/validation.pipe';
+// import { ValidationPipe } from 'apps/shared/pipes/validation.pipe';
 import { LoggingInterceptor } from 'apps/shared/logger/logging';
 
 async function bootstrap() {
@@ -44,7 +44,16 @@ async function bootstrap() {
     new LoggingInterceptor(),
   );
   // 设置一个全局作用域的管道
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      forbidNonWhitelisted: true, // 如果出现多余参数 会直接抛错
+      whitelist: true, // 过滤前端传入dto 未申明属性
+      transform: true, // 管道 类型转换 dto 转换
+      transformOptions: {
+        enableImplicitConversion: true, // 类型转换
+      },
+    }),
+  );
 
   setupSwagger(app);
 

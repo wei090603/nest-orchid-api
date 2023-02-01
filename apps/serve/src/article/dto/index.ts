@@ -104,6 +104,9 @@ export class ArticleListDto extends PartialType(ArticleDto) {
   isLike: boolean;
 }
 
+export class UpdateArticleDto extends PartialType(ArticleDto) {
+}
+
 export class PageArticleList {
   @ApiProperty({
     description: '总数',

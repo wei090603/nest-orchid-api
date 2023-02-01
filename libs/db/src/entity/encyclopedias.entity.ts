@@ -60,4 +60,12 @@ export class Encyclopedias extends Base {
   })
   @Index()
   public categoryId: number;
+
+  @Column({
+    type: 'simple-array',
+    name: 'image',
+    nullable: true,
+    comment: '图片',
+  })
+  public image: string[];
 }
